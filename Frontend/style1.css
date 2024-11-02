@@ -24,8 +24,17 @@
 }
 
 .button {
-    color: rgb(203, 203, 198);
+    color: rgb(59, 59, 59);
     border-radius: 25px;
-    text-decoration: none;  
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    color: rgb(118, 98, 98);
+}
+
+body {
+    text-align: center;
 }
 
