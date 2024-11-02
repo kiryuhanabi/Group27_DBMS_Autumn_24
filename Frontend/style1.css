@@ -4,7 +4,6 @@
     padding : 0px;
     margin : 0px;
     overflow: hidden;
-
 }
 
 .navbar a{
@@ -36,5 +35,6 @@ h1 {
 
 body {
     text-align: center;
+    align-items: center;
 }
 
