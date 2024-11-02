@@ -22,3 +22,10 @@
 .navbar li{
     float: left;
 }
+
+.button {
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(203, 203, 198);
+    border-radius: 25px;
+    text-decoration: none;
+}
