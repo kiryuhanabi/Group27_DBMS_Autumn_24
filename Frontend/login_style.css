@@ -5,21 +5,24 @@ body.login-page {
     min-height: 100vh;
     background: url('agro_field.jpg') no-repeat center center fixed;
     background-size: cover;
+    margin: 0;
 }
 
 .login-container {
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 1.5rem 1rem;
     border-radius: 10px;
-    max-width: 400px;
+    max-width: 360px;
     width: 100%;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-
 h1 {
     color: rgb(118, 98, 98);
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
 }
 
 .button {
@@ -30,11 +33,28 @@ h1 {
     padding: 10px;
     border-radius: 25px;
     cursor: pointer;
-    font-size: 1.1rem;
+    font-size: 1rem;
     transition: all 0.3s;
 }
 
 .button:hover {
     background-color: #0056b3;
     transform: scale(1.05);
+}
+
+.form-control {
+    padding: 8px;
+    font-size: 1rem;
+    color: #495057;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    background-color: #f8f9fa;
+}
+
+#userType {
+    appearance: none;
+    background-image: none;
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px 12px;
 }
