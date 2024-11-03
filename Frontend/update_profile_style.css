@@ -1,0 +1,75 @@
+body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    background: url('agro_field_2.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.form {
+    width: 420px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+.title {
+    color: #4CAF50;
+    font-family: 'Lucida Sans';
+    margin: 0;
+    text-align: center;
+}
+
+p {
+    text-align: center;
+}
+
+.form input[type="text"],
+.form input[type="password"],
+.form select {
+    width: 90%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+}
+
+label, hr {
+    text-align: center;
+    display: block;
+    margin: 10px 0;
+}
+
+i {
+    margin-left: 8px;
+}
+
+input {
+    text-align: center;
+}
+
+select {
+    text-align: center;
+}
+
