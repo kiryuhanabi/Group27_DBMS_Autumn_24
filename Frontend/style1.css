@@ -1,9 +1,21 @@
+.navbar {
+    display: flex;
+    justify-content: center;
+    background-color: hsl(0, 1%, 23%);
+    padding: 0;
+    margin: 0;
+}
+
 .navbar ul{
     list-style-type: none;
     background-color: hsl(0, 1%, 23%);
     padding : 0px;
     margin : 0px;
     overflow: hidden;
+    text-align: center;
+}
+
+.ul li{
     text-align: center;
 }
 
