@@ -33,7 +33,7 @@ p {
 .form input[type="text"],
 .form input[type="password"],
 .form select {
-    width: 90%;
+    width: 100%;
     padding: 10px;
     margin: 5px 0;
     border: 1px solid #ddd;
@@ -41,18 +41,31 @@ p {
     box-sizing: border-box;
 }
 
-.submit-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
+.next-button {
+    display: block;
+    margin: 0 auto;
+    color: #fff;
+    background-color: #45a049;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    border: none; 
     cursor: pointer;
 }
 
-.submit-button:hover {
+.next-button a {
+    color: #fff;              
+    text-decoration: none;     
+    display: inline-block;     
+    width: 100%;              
+    height: 100%;
+    text-align: center;
+}
+
+.next-button:hover {
     background-color: #45a049;
+    color: #fffdfd;
 }
 
 label, hr {
