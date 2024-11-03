@@ -1,15 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style1.css">
+    <link rel="stylesheet" href="login_style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <title>Login</title>
 </head>
-<body>
-    <h1>Login to your account</h1>
-    Enter email or phone number <br>
-    <input type="text"> <br><br>
-    Enter your password <br>
-    <input type="password"> <br><br>
-    <button class="button" type="submit"><a href="index.html">Submit</a></button>
+<body class="login-page">
+    <div class="login-container">
+        <h1>Login to your account</h1>
+
+        <!-- User Dropdown -->
+        <div class="dropdown mb-4">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                User
+            </button>
+            <div class="dropdown-menu" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="inspector.html">Inspector</a>
+                <a class="dropdown-item" href="center.html">Processing Center</a>
+                <a class="dropdown-item" href="transport.html">Transport</a>
+                <a class="dropdown-item" href="storage.html">Storage</a>
+                <a class="dropdown-item" href="retailer.html">Retailer</a>
+            </div>
+        </div>
+
+        <p>Enter email or phone number</p>
+        <input type="text" class="form-control mb-3" placeholder="Email or Phone">
+        
+        <p>Enter your password</p>
+        <input type="password" class="form-control mb-3" placeholder="Password">
+        
+        <a href="index.html" class="btn btn-primary button">Sign in</a>
+    </div>
+
+    <!-- Bootstrap JS and dependencies (required for dropdowns to work) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
