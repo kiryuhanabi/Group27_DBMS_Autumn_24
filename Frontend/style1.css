@@ -1,4 +1,4 @@
-.navbar {
+/*.navbar {
     display: flex;
     justify-content: center;
     background-color: hsl(0, 1%, 23%);
@@ -33,9 +33,57 @@
 
 .navbar li{
     float: left;
+}*/
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
 }
 
-.button {
+h1 {
+    text-align: center;
+    color: #4CAF50;
+    margin-top: 20px;
+}
+
+.navbar {
+    background-color: #333;
+    padding: 10px 0;
+}
+
+.navbar .ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar .ul li {
+    margin: 0 15px;
+}
+
+.navbar .ul li a {
+    text-decoration: none;
+    color: white;
+    padding: 10px 15px;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar .ul li a:hover {
+    background-color: #4CAF50;
+}
+
+@media (max-width: 768px) {
+    .navbar .ul {
+        flex-direction: column;}
+    }
+
+/*.button {
     color: rgb(59, 59, 59);
     border-radius: 25px;
     text-align: center;
@@ -49,5 +97,5 @@ h1 {
 body {
     text-align: center;
     align-items: center;
-}
+}*/
 
