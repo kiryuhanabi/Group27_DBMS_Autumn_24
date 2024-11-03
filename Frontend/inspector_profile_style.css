@@ -4,6 +4,7 @@ body {
     padding: 0;
     background-color: #f4f4f4;
 }
+
 .container {
     width: 80%;
     margin: 20px auto;
@@ -31,15 +32,18 @@ body {
 .profile-section {
     margin: 20px 0;
 }
+
 .profile-section h2 {
     color: #333;
     border-bottom: 2px solid #4CAF50;
     padding-bottom: 5px;
 }
+
 .profile-section ul {
     list-style-type: none;
     padding: 0;
 }
+
 .profile-section ul li {
     padding: 8px 0;
     font-size: 1.1em;
@@ -49,18 +53,34 @@ body {
     text-align: center;
     margin: 20px 0;
 }
-.contact-btn {
-    display: inline-block;
+
+.edit-button {
+    display: block;
+    margin: 0 auto;
     color: #fff;
-    background-color: #4CAF50;
+    background-color: #4e4e4e;
     padding: 10px 20px;
     border-radius: 5px;
-    text-decoration: none;
     font-weight: bold;
-}
-.contact-btn:hover {
-    background-color: #45a049;
+    text-align: center;
+    border: none; 
+    cursor: pointer;
 }
 
+.edit-button a {
+    color: #fff;              
+    text-decoration: none;     
+    display: inline-block;     
+    width: 100%;              
+    height: 100%;
+    text-align: center;
+}
 
+.edit-button:hover {
+    background-color: #45a049; 
+}
+
+.edit-button a:hover {
+    color: #fff; 
+}
 
