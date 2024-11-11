@@ -16,7 +16,7 @@ body {
 
 h1 {
     text-align: center;
-    color: #4CAF50;
+    color: rgb(224, 244, 217);
     margin-top: 20px;
     font-family: 'Poppins';
 }
@@ -27,10 +27,16 @@ h2 {
     margin-top: 240px;
     font-family: 'Poppins';
 }
+
 .logo-img {
     width: 80px;             
     vertical-align: middle;   
     margin-right: 4px;        
+}
+
+nav {
+    background-color: #404340;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for a lifted look */
 }
 
 ul {
@@ -85,8 +91,70 @@ ul li:hover ul.dropdown {
 }
 
 @media (max-width: 768px) {
-    .navbar .ul {
-        flex-direction: column;
+.navbar .ul {
+    flex-direction: column;}
+}
+
+/* Table Container */
+.table-container {
+    margin: 2rem auto;
+    width: 80%;
+    max-width: 1000px;
+    margin-top: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    border-radius: 8px; /* Rounded corners for a modern look */
+    overflow: hidden; /* Ensures table edges fit within rounded corners */
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+}
+
+/* Header Styling */
+thead {
+    background-color: #404340;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+}
+
+th {
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+td {
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    color: #404340;
+}
+
+/* Body Row Styling */
+tbody tr {
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1; /* Light hover effect */
+    cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    th, td {
+        padding: 0.75rem;
+        font-size: 0.9em; /* Smaller font size on smaller screens */
     }
 }
 
