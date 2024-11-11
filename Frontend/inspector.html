@@ -1,24 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Inspector Dashboard</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
     <link rel="stylesheet" href="inspector_style.css">
-    <link href="logo.png" rel="icon" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
 </head>
 <body>
-    <h1>Food Safety & Traceability</h1>
-    <nav class="navbar">
+    <h1>
+        <img src="logo.png" alt="Agro Logo" class="logo-img">
+        Agro
+    </h1>
+    <nav class="nav">
         <ul class="ul">
-            <li><a href="inspector.html">Home</a></li>
-            <li><a href="inspections.html">Inspections</a></li>
-            <li><a href="farm_inspections.html">Farm Inspections</a></li>
-            <li><a href="product_checks.html" target="_blank">Product Checks</a></li>
-            <li><a href="center_inspections.html">Center Inspections</a></li>
-            <li><a href="report_issues.html">Report Issues</a></li>
-            <li><a href="compliance_reports.html">Compliance Reports</a></li>
-            <li><a href="inspector_profile.html" target="_blank">Profile</a></li>
-            <li><a href="starting_page.html">Logout</a></li>
+        <li><a href="#">Home</a></li>
+        <li>
+            <a href="#">Inspections</a>
+            <ul class="dropdown">
+                <li><a href="#">Farm</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#">Center</a></li>
+                <li><a href="#">xyz</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Reports</a>
+            <ul class="dropdown">
+                <li><a href="#">X</a></li>
+                <li><a href="#">Y</a></li>
+                <li><a href="#">Z</a></li>
+            </ul>           
+        </li>
+        <li><a href="#">Notifications</a></li>
+        <li><a href="inspector_profile.html">About</a></li>
+        <li><a href="#">Support</a></li>
+        <li><a href="login.html">Log out</a></li>
         </ul>
     </nav>
+    
 </body>
 </html>

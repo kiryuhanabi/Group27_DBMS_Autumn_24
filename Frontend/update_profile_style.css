@@ -10,6 +10,7 @@ body {
     background-size: cover;
 }
 
+
 .form {
     width: 420px;
     padding: 20px;
@@ -85,4 +86,5 @@ input {
 select {
     text-align: center;
 }
+
 
