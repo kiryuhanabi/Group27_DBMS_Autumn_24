@@ -1,39 +1,4 @@
-/*.navbar {
-    display: flex;
-    justify-content: center;
-    background-color: hsl(0, 1%, 23%);
-    padding: 0;
-    margin: 0;
-}
 
-.navbar ul{
-    list-style-type: none;
-    background-color: hsl(0, 1%, 23%);
-    padding : 0px;
-    margin : 0px;
-    overflow: hidden;
-    text-align: center;
-}
-
-.ul li{
-    text-align: center;
-}
-
-.navbar a{
-    color :antiquewhite;
-    text-decoration: none;
-    padding: 15px;
-    display: block;
-    text-align: center;  
-}
-
-.navbar a:hover{
-    background-color: black;
-}
-
-.navbar li{
-    float: left;
-}*/
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -83,19 +48,4 @@ h1 {
         flex-direction: column;}
     }
 
-/*.button {
-    color: rgb(59, 59, 59);
-    border-radius: 25px;
-    text-align: center;
-}
-
-h1 {
-    text-align: center;
-    color: rgb(118, 98, 98);
-}
-
-body {
-    text-align: center;
-    align-items: center;
-}*/
 
