@@ -7,12 +7,24 @@
 body, html {
     height: 100%;
     font-family: Arial, sans-serif;
+    overflow: hidden;
 }
 
-.background-image {
-    background-image: url('front_image.jpg');
-    background-size: cover;
-    background-position: center;
+/* Background video styling */
+.background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1; /* Ensures the video stays behind all other elements */
+}
+
+/* Overlay for content (text and navigation) */
+.content-overlay {
+    position: relative;
+    width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -35,6 +47,7 @@ h1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 1; /* Ensures navigation is clickable and above the video */
 }
 
 /* Logo styling */
@@ -54,6 +67,7 @@ h1 {
     color: rgb(0, 0, 0);
     font-weight: bold;
     transition: color 0.3s;
+    z-index: 1;
 }
 
 .nav-link:hover {
@@ -73,6 +87,7 @@ h1 {
     padding: 10px 15px;
     border-radius: 5px;
     transition: background-color 0.3s;
+    z-index: 1;
 }
 
 .btn:hover {

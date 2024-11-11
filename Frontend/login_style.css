@@ -3,7 +3,7 @@ body.login-page {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('agro_field.jpg') no-repeat center center fixed;
+    background: url('front_image.jpg') no-repeat center center fixed;
     background-size: cover;
     margin: 0;
 }
