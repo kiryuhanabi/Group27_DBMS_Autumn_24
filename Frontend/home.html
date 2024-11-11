@@ -20,10 +20,47 @@
             display: none;
             transition: opacity 0.3s;
         }
+
+        .stats-section {
+            padding: 30px 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .stats-section h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .stats-cards {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background-color: #ffffff;
+            color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            text-align: center;
+        }
+
+        .stat-card h4 {
+            font-size: 1.5rem;
+        }
+
+        .stat-card p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
-    <!-- Hero Section -->
     <header class="hero-section">
         <div class="hero-overlay">
             <img src="logo.png" alt="Company Logo" class="logo">
@@ -33,7 +70,24 @@
         </div>
     </header>
 
-    <!-- Purpose Section -->
+    <section class="stats-section">
+        <h3>Our Achievements</h3>
+        <div class="stats-cards">
+            <div class="stat-card">
+                <h4>Registered Farmers</h4>
+                <p id="farmersCount">0</p>
+            </div>
+            <div class="stat-card">
+                <h4>Registered Retailers</h4>
+                <p id="retailersCount">0</p>
+            </div>
+            <div class="stat-card">
+                <h4>Awards Won</h4>
+                <p id="awardsCount">0</p>
+            </div>
+        </div>
+    </section>
+
     <section class="purpose-section">
         <h2>Our Purpose</h2>
         <p>
@@ -57,53 +111,6 @@
         </div>
     </section>
     
-
-    <section class="process-section">
-        <h2>Ensuring Food Safety & Traceability</h2>
-        <div class="process-stages">
-            <div class="stage" onclick="showInfoModal('farm')">
-                <img src="farm_image.webp" alt="Farm Stage">
-                <h3>Farm</h3>
-                <p>
-                    Our journey begins at the farm, where we partner with farmers to implement sustainable and safe agricultural practices.
-                    Food inspectors conduct regular checks to ensure quality right from the start.
-                </p>
-            </div>
-            <div class="stage" onclick="showInfoModal('processing')">
-                <img src="processing_image.webp" alt="Processing Center">
-                <h3>Processing Center</h3>
-                <p>
-                    In processing centers, rigorous safety measures and quality control processes are in place.
-                    We ensure that food products meet our strict standards before moving forward in the supply chain.
-                </p>
-            </div>
-            <div class="stage" onclick="showInfoModal('storage')">
-                <img src="storage_image.jpg" alt="Storage Stage">
-                <h3>Storage</h3>
-                <p>
-                    Proper storage is crucial for maintaining food safety and freshness. Our storage facilities are equipped with temperature
-                    control and security systems to preserve product integrity.
-                </p>
-            </div>
-            <div class="stage" onclick="showInfoModal('transport')">
-                <img src="transport_image.webp" alt="Transport Stage">
-                <h3>Transport</h3>
-                <p>
-                    Our transport team ensures that food products are delivered safely and efficiently to retailers.
-                    Our inspectors monitor transportation conditions to minimize risks along the way.
-                </p>
-            </div>
-            <div class="stage" onclick="showInfoModal('retailer')">
-                <img src="retailer_image.jpg" alt="Retailer Stage">
-                <h3>Retailer</h3>
-                <p>
-                    Finally, our network of retailers brings safe food to consumers. We ensure that all products on shelves are fully traceable and meet
-                    our quality standards, providing confidence to every buyer.
-                </p>
-            </div>
-        </div>
-    </section>
-
     <footer>
         <p>&copy; <span id="year"></span> [Agro]. All rights reserved.</p>
         <div class="footer-links">
@@ -137,14 +144,12 @@
             }
         };
 
-        // Show modal with additional information
         function showInfoModal(stage) {
             const modal = document.getElementById("infoModal");
             const modalTitle = document.getElementById("modalTitle");
             const modalDescription = document.getElementById("modalDescription");
             modal.style.display = "block";
 
-            // Customize the modal content based on the stage
             if (stage === 'farm') {
                 modalTitle.textContent = "Farm";
                 modalDescription.textContent = "We work with farmers to ensure sustainable practices, regularly inspecting crops for safety and quality.";
@@ -163,10 +168,36 @@
             }
         }
 
-        // Close the modal
         function closeModal() {
             document.getElementById("infoModal").style.display = "none";
         }
+
+        const stats = {
+            farmers: 2034,
+            retailers: 1200,
+            awards: 25
+        };
+
+        function animateNumber(elementId, targetNumber, duration) {
+            const element = document.getElementById(elementId);
+            let startNumber = 0;
+            const stepTime = Math.abs(Math.floor(duration / targetNumber));
+
+            const counter = setInterval(function() {
+                startNumber += 1;
+                element.textContent = startNumber;
+                if (startNumber >= targetNumber) {
+                    clearInterval(counter);
+                    element.textContent = targetNumber;
+                }
+            }, stepTime);
+        }
+
+        window.onload = function() {
+            animateNumber("farmersCount", stats.farmers, 1000);
+            animateNumber("retailersCount", stats.retailers, 2000);
+            animateNumber("awardsCount", stats.awards, 2000);
+        };
     </script>
 </body>
 </html>

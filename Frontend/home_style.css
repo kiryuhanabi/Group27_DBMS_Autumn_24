@@ -7,7 +7,6 @@
 
 body, html {
     font-family: Arial, sans-serif;
-    height: 100%;
     background-color: #f4f4f4;
 }
 
@@ -123,17 +122,6 @@ body, html {
     font-size: 1rem;
     color: #555;
     margin-top: 10px;
-}
-
-/* Coverage Image and Text */
-.coverage-image {
-    width: 100%;
-    border-radius: 10px;
-}
-
-.coverage-text {
-    padding: 20px;
-    width: 50%;
 }
 
 /* Footer */
