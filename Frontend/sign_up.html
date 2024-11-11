@@ -10,21 +10,28 @@
     <div class="login-container">
         <img src="logo.png" alt="Logo" class="img-fluid mb-2" style="max-width: 100%; height: auto;">
         <h1>Sign Up</h1>
-        <form method="post" action="process_signup.php" id="signupForm">
-            <input type="text" class="form-control mb-3" placeholder="Full Name" required>
-            <input type="text" class="form-control mb-3" placeholder="Email or Phone" required>
-            <input type="password" class="form-control mb-3" placeholder="Password" required>
+        <form method="get" id="signupForm">
+            <input type="text" name="fullname" class="form-control mb-3" placeholder="Full Name" required>
+            <input type="text" name="emailOrPhone" class="form-control mb-3" placeholder="Email or Phone" required>
+            <input type="password" name="password" class="form-control mb-3" placeholder="Password" required>
             
-            <select id="userType" class="form-control mb-4" required>
+            <select id="userType" name="userType" class="form-control mb-4" required onchange="setFormAction()">
                 <option value="" disabled selected>Select User Type</option>
-                <option value="Inspector">Inspector</option>
-                <option value="Processing Center">Processing Center</option>
-                <option value="Transport">Transport</option>
-                <option value="Storage">Storage</option>
-                <option value="Retailer">Retailer</option>
+                <option value="inspector.html">Inspector</option>
+                <option value="center.html">Processing Center</option>
+                <option value="transport.html">Transport</option>
+                <option value="storage.html">Storage</option>
+                <option value="retailer.html">Retailer</option>
             </select>
             <button type="submit" class="btn btn-primary button">Sign Up</button>
         </form>
     </div>
+    
+    <script>
+        function setFormAction() {
+            const userType = document.getElementById("userType").value;
+            document.getElementById("signupForm").action = userType;
+        }
+    </script>
 </body>
 </html>
