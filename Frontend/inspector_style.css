@@ -36,7 +36,7 @@ h2 {
 
 nav {
     background-color: #404340;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for a lifted look */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
 }
 
 ul {
@@ -95,18 +95,17 @@ ul li:hover ul.dropdown {
     flex-direction: column;}
 }
 
-/* Table Container */
 .table-container {
     margin: 2rem auto;
     width: 80%;
     max-width: 1000px;
     margin-top: auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-    border-radius: 8px; /* Rounded corners for a modern look */
-    overflow: hidden; /* Ensures table edges fit within rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    border-radius: 8px; 
+    overflow: hidden; 
 }
 
-/* Table Styles */
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -114,7 +113,7 @@ table {
     background-color: #ffffff;
 }
 
-/* Header Styling */
+
 thead {
     background-color: #404340;
     color: #ffffff;
@@ -136,9 +135,9 @@ td {
     color: #404340;
 }
 
-/* Body Row Styling */
+
 tbody tr {
-    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+    transition: background-color 0.3s ease; 
 }
 
 tbody tr:nth-child(even) {
@@ -146,15 +145,15 @@ tbody tr:nth-child(even) {
 }
 
 tbody tr:hover {
-    background-color: #f1f1f1; /* Light hover effect */
+    background-color: #f1f1f1; 
     cursor: pointer;
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 768px) {
     th, td {
         padding: 0.75rem;
-        font-size: 0.9em; /* Smaller font size on smaller screens */
+        font-size: 0.9em; 
     }
 }
 
