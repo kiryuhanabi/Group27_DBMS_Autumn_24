@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Agro Food Safety</title>
+    <link rel="stylesheet" href="home_style.css">
+    <link href="logo.png" rel="icon" type="image/png">
+    <style>
+        #backToTop {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3d5a80;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+            transition: opacity 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="hero-overlay">
+            <img src="logo.png" alt="Company Logo" class="logo">
+            <h1>Welcome to [Agro]</h1>
+            <p>Ensuring Food Safety and Traceability at Every Step</p>
+            <a href="sign_up.html" class="cta-button">Join Us Today</a>
+        </div>
+    </header>
+
+    <!-- Purpose Section -->
+    <section class="purpose-section">
+        <h2>Our Purpose</h2>
+        <p>
+            At [Agro Company Name], we are committed to ensuring the safety and traceability of food from farm to table.
+            Our purpose is to create a transparent and safe food supply chain, leveraging modern technology and robust processes.
+            We partner with dedicated food inspectors and quality control teams at every step, ensuring that only the best reaches consumers.
+        </p>
+    </section>
+
+    <section class="coverage-section">
+        <h2>Our Reach</h2>
+        <div class="process-stages">
+            <div class="stage">
+                <img src="coverage_image.png" alt="Coverage Map" class="stage-image">
+                <h3>Expanding Across Regions</h3>
+                <p>
+                    With a network spanning <strong>50 districts</strong> and connections with over <strong>2,000 retailers</strong>, 
+                    we bring safe, quality food products to communities far and wide.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+
+    <section class="process-section">
+        <h2>Ensuring Food Safety & Traceability</h2>
+        <div class="process-stages">
+            <div class="stage" onclick="showInfoModal('farm')">
+                <img src="farm_image.webp" alt="Farm Stage">
+                <h3>Farm</h3>
+                <p>
+                    Our journey begins at the farm, where we partner with farmers to implement sustainable and safe agricultural practices.
+                    Food inspectors conduct regular checks to ensure quality right from the start.
+                </p>
+            </div>
+            <div class="stage" onclick="showInfoModal('processing')">
+                <img src="processing_image.webp" alt="Processing Center">
+                <h3>Processing Center</h3>
+                <p>
+                    In processing centers, rigorous safety measures and quality control processes are in place.
+                    We ensure that food products meet our strict standards before moving forward in the supply chain.
+                </p>
+            </div>
+            <div class="stage" onclick="showInfoModal('storage')">
+                <img src="storage_image.jpg" alt="Storage Stage">
+                <h3>Storage</h3>
+                <p>
+                    Proper storage is crucial for maintaining food safety and freshness. Our storage facilities are equipped with temperature
+                    control and security systems to preserve product integrity.
+                </p>
+            </div>
+            <div class="stage" onclick="showInfoModal('transport')">
+                <img src="transport_image.webp" alt="Transport Stage">
+                <h3>Transport</h3>
+                <p>
+                    Our transport team ensures that food products are delivered safely and efficiently to retailers.
+                    Our inspectors monitor transportation conditions to minimize risks along the way.
+                </p>
+            </div>
+            <div class="stage" onclick="showInfoModal('retailer')">
+                <img src="retailer_image.jpg" alt="Retailer Stage">
+                <h3>Retailer</h3>
+                <p>
+                    Finally, our network of retailers brings safe food to consumers. We ensure that all products on shelves are fully traceable and meet
+                    our quality standards, providing confidence to every buyer.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; <span id="year"></span> [Agro]. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact</a>
+            <a href="privacy.html">Privacy Policy</a>
+        </div>
+    </footer>
+
+    <button id="backToTop" onclick="scrollToTop()">Back to Top</button>
+
+    <div id="infoModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; padding:20px; border-radius:8px;">
+        <h3 id="modalTitle">Stage Info</h3>
+        <p id="modalDescription"></p>
+        <button onclick="closeModal()">Close</button>
+    </div>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.onscroll = function() {
+            const backToTopButton = document.getElementById("backToTop");
+            if (document.documentElement.scrollTop > 100) {
+                backToTopButton.style.display = "block";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        };
+
+        // Show modal with additional information
+        function showInfoModal(stage) {
+            const modal = document.getElementById("infoModal");
+            const modalTitle = document.getElementById("modalTitle");
+            const modalDescription = document.getElementById("modalDescription");
+            modal.style.display = "block";
+
+            // Customize the modal content based on the stage
+            if (stage === 'farm') {
+                modalTitle.textContent = "Farm";
+                modalDescription.textContent = "We work with farmers to ensure sustainable practices, regularly inspecting crops for safety and quality.";
+            } else if (stage === 'processing') {
+                modalTitle.textContent = "Processing Center";
+                modalDescription.textContent = "In processing centers, food is thoroughly tested for safety. We use advanced technology to ensure quality control.";
+            } else if (stage === 'storage') {
+                modalTitle.textContent = "Storage";
+                modalDescription.textContent = "We store food products in optimal conditions, with secure storage areas and temperature monitoring to ensure freshness.";
+            } else if (stage === 'transport') {
+                modalTitle.textContent = "Transport";
+                modalDescription.textContent = "Our transport team ensures the safe journey of food products, maintaining proper conditions to prevent spoilage.";
+            } else if (stage === 'retailer') {
+                modalTitle.textContent = "Retailer";
+                modalDescription.textContent = "At retail locations, our food products are available with clear traceability, ensuring consumer confidence in safety.";
+            }
+        }
+
+        // Close the modal
+        function closeModal() {
+            document.getElementById("infoModal").style.display = "none";
+        }
+    </script>
+</body>
+</html>
