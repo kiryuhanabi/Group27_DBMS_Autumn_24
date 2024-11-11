@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-image: url('transport_image.webp');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+}
+
+h1 {
+    text-align: center;
+    color: #4CAF50;
+    margin-top: 20px;
+    font-family: 'Poppins';
+}
+
+.logo-img {
+    width: 80px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+.nav {
+    display: flex;
+    justify-content: center;
+    background: #34495e;
+    padding: 10px 0;
+}
+
+.ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+.ul li {
+    position: relative;
+}
+
+.ul li a {
+    display: block;
+    padding: 15px 20px;
+    color: #FFF;
+    text-decoration: none;
+    font-size: 16px;
+    text-align: center;
+}
+
+.ul li a:hover {
+    background: #4CAF50;
+    border-radius: 4px;
+}
+
+/* Dropdown menu styling */
+.ul li ul.dropdown {
+    display: none;
+    position: absolute;
+    background-color: #34495e;
+    list-style: none;
+    padding: 0;
+    top: 100%;
+    left: 0;
+    min-width: 150px;
+    z-index: 1000;
+}
+
+.ul li ul.dropdown li a {
+    padding: 10px 15px;
+    display: block;
+    font-size: 15px;
+    color: #FFF;
+    text-align: left;
+}
+
+.ul li ul.dropdown li a:hover {
+    background: #4CAF50;
+}
+
+/* Display dropdown on hover */
+.ul li:hover ul.dropdown {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .ul {
+        flex-direction: column;
+        align-items: center;
+    }
+    .ul li a {
+        padding: 10px;
+    }
+}
