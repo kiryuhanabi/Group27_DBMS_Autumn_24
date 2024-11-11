@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-image: url('storage_image.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+}
+
+header h1 {
+    text-align: center;
+    color: #4CAF50;
+    margin-top: 20px;
+}
+
+.logo-img {
+    width: 50px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+.nav {
+    background: #34495e;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav ul {
+    list-style: none;
+    display: flex;
+}
+
+.nav ul li {
+    position: relative;
+}
+
+.nav ul li a {
+    color: #FFF;
+    text-decoration: none;
+    padding: 15px 20px;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.nav ul li a:hover {
+    background: #4CAF50;
+    border-radius: 4px;
+}
+
+
+.realtime-info {
+    position: relative;
+    margin: 20px auto;  
+    background: rgba(96, 154, 167, 0.8);
+    padding: 15px 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 16px;
+    color: #FFF;
+    width: 250px;
+    animation: scrollIn 2s ease-in-out forwards;
+}
+
+
+@keyframes scrollIn {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+.content {
+    margin: 50px auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    width: 80%;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    color: #333;
+}
+
+.table-container {
+    text-align: center;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    min-width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: slideIn 1s ease-out;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+table thead tr {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}

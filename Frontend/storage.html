@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storage Dashboard</title>
+    <link rel="stylesheet" href="storage.css">
+</head>
+<body>
+    
+    <header>
+        <h1>
+            <img src="logo.png" alt="Agro Logo" class="logo-img"> Agro Storage
+        </h1>
+    </header>
+
+    <nav class="nav">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Storage</a></li>
+            <li><a href="#">Reports</a></li>
+            <li><a href="#">Notifications</a></li>
+            <li><a href="inspector_profile.html">About</a></li>
+            <li><a href="login.html">Log out</a></li>
+        </ul>
+    </nav>
+
+            <div class="realtime-info">
+                <p id="datetime"></p>
+                <p id="temperature">Temperature: Loading...</p>
+            </div>
+
+
+    <section class="content">
+
+
+  
+        <div class="table-container">
+            <h2>Storage Overview</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Storage ID</th>
+                        <th>Type</th>
+                        <th>Duration</th>
+                        <th>Location</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td>ST001</td>
+                        <td>Freezing</td>
+                        <td>30 days</td>
+                        <td>Dhaka A</td>
+                    </tr>
+                </tbody>
+                <tbody>
+                   
+                    <tr>
+                        <td>ST002</td>
+                        <td>Common</td>
+                        <td>60 days</td>
+                        <td>Dhaka B</td>
+                    </tr>
+                </tbody>
+                <tbody>
+                    
+                    <tr>
+                        <td>ST003</td>
+                        <td>Dry</td>
+                        <td>90 days</td>
+                        <td>Dhaka B</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+  
+    <script>
+        
+        function updateDateTime() {
+            const now = new Date();
+            document.getElementById('datetime').textContent = now.toLocaleString();
+        }
+        setInterval(updateDateTime, 1000);
+
+        
+        function updateTemperature() {
+            const simulatedTemp = (Math.random() * 5 + 18).toFixed(1); 
+            document.getElementById('temperature').textContent = `Temperature: ${simulatedTemp}°C`;
+        }
+        setInterval(updateTemperature, 5000);
+    </script>
+</body>
+</html>
