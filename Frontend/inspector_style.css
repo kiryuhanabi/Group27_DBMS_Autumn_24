@@ -75,6 +75,7 @@ ul li ul.dropdown {
 
 ul li a:hover {
     background: #4CAF50;
+    border-radius: 4px;
 }
 
 ul li:hover ul.dropdown {
@@ -115,7 +116,7 @@ table {
 
 
 thead {
-    background-color: #404340;
+    background-color: #4CAF50;
     color: #ffffff;
     text-transform: uppercase;
     font-weight: bold;
