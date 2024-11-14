@@ -59,6 +59,7 @@ header h1 {
     border-radius: 5px;
 }
 
+
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
     header h1 {

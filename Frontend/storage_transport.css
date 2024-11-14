@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
-
 * {
     padding: 0;
     margin: 0;
@@ -9,13 +8,22 @@
 }
 
 body {
-    background-image: url('storage_image.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     color: white;
+    
+}
+.dashboard {
+    text-align: center;
+    text-decoration-color: #000;
 }
 
+.dashboard h2,
+.dashboard p {
+    color: #000;
+    margin: 10px;  
+}
 header h1 {
     text-align: center;
     color: #4CAF50;
@@ -53,23 +61,8 @@ header h1 {
     display: block;
     color: #FFF;
     text-decoration: none;
-    text-align: center;
     padding: 15px 20px;
-    display: block;
     transition: background-color 0.3s ease;
-}
-
-ul li ul.dropdown li {
-    display: block;
-    text-align: center;
-}
-
-ul li ul.dropdown {
-    width: 100%;
-    background: #34495e;
-    position: absolute;
-    z-index: 999;
-    display: none;
 }
 
 .nav ul li a:hover {
@@ -77,13 +70,30 @@ ul li ul.dropdown {
     border-radius: 4px;
 }
 
+ul li ul.dropdown {
+    background: #34495e;
+    position: absolute;
+    display: none;
+    z-index: 999;
+}
+
+ul li ul.dropdown li {
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+
 ul li:hover ul.dropdown {
     display: block;
 }
 
+.transport-filters label {
+    color: #010101;
+}
+
 .realtime-info {
     position: relative;
-    margin: 20px auto;  
+    margin: 20px auto;
     background: rgba(96, 154, 167, 0.8);
     padding: 15px 20px;
     border-radius: 8px;
@@ -94,13 +104,10 @@ ul li:hover ul.dropdown {
     animation: scrollIn 2s ease-in-out forwards;
 }
 
-
 @keyframes scrollIn {
     from { opacity: 0; transform: translateY(-30px); }
     to { opacity: 1; transform: translateY(0); }
 }
-
-
 
 .content {
     margin: 50px auto;
@@ -110,6 +117,80 @@ ul li:hover ul.dropdown {
     border-radius: 12px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     color: #333;
+}
+
+.transport-filters {
+    max-width: 640px;
+    margin: 10px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.transport-filters h3 {
+    text-align: center;
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    gap: 20px;
+}
+
+.left-column,
+.right-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.input-row label {
+    font-weight: bold;
+    color: #333;
+    min-width: 120px;
+    text-align: right;
+}
+
+.transport-filters label {
+    font-weight: bold;
+    color: #333;
+}
+
+.transport-filters input,
+.transport-filters select {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 160px;
+    background-color: #fff;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
 }
 
 .table-container {
@@ -141,8 +222,30 @@ table th, table td {
     padding: 12px 15px;
     border: 1px solid #ddd;
     text-align: center;
+    color: #000;
+}
+
+table tbody tr {
+    transition: background-color 0.3s ease;
 }
 
 table tbody tr:hover {
-    background-color:  rgba(76, 175, 80, 0.2);
+    background-color: rgba(76, 175, 80, 0.2);
+}
+.selected {
+    background-color: #d1e7dd !important;
+}
+
+.details-btn {
+    padding: 8px 12px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.details-btn:hover {
+    background-color: #0056b3;
 }
