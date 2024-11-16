@@ -14,6 +14,6 @@ document.getElementById('orderForm').addEventListener('submit', function (e) {
 
     document.getElementById('ordersBody').appendChild(orderRow);
 
-    // Clear the form
+    
     this.reset();
 });

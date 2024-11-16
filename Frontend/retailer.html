@@ -8,19 +8,39 @@
     <link rel="stylesheet" href="retailer_style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="logo.png" rel="icon" type="image/png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <h1>
         <img src="logo.png" alt="Retail Logo" class="logo-img">
-        Agro
+        Agro Retailer
     </h1>
+
+    <!-- Full-width Navigation bar -->
     <nav class="nav">
         <ul class="ul">
             <li><a href="retailer.html">Home</a></li>
-            <li><a href="#">Store</a></li>
+            <li><a href="retailer_store.html">Store</a></li>
             <li><a href="retailer_orders.html">Orders</a></li>
             <li><a href="login.html">Logout</a></li>
         </ul>
     </nav>
+
+    <!-- Overview Section -->
+    <section class="overview-container">
+        <section class="overview">
+            <h2>Retail Overview</h2> <!-- Retail Overview Title -->
+            <div class="charts-container">
+                <div class="chart small-chart">
+                    <canvas id="pieChart"></canvas>
+                </div>
+                <div class="chart">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <script src="retailer.js"></script>
 </body>
 </html>
