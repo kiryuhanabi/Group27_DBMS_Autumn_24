@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Inspection Dashboard</title>
+    <link rel="stylesheet" href="inspection_style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+   
+
+</head>
+<body>
+    <header>
+        <h1>
+            <img src="logo.png" alt="Agro Logo" class="logo-img"> Agro
+        </h1>
+    </header>
+
+    <nav class="nav">
+        <ul>
+            <li><a href="inspector.html">Home</a></li>
+            <li><a href="#">Reports</a>
+                <ul class="dropdown">
+                    <li><a href="#">Compliance Reports</a></li>
+                    <li><a href="#">X Reports</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Notifications</a></li>
+            <li><a href="Inspector_about.html">About</a></li>
+            <li><a href="login.html">Log out</a></li>
+        </ul>
+    </nav>
+
+    <div class="dashboard">
+        <h2>Lot Inspection Dashboard</h2>
+        <script src="lot_inspection.js"></script>
+
+        <div class="inspection-filters">
+            <h3>Add New inspection</h3>
+            <div class="form-group">
+                <div class="left-column">
+                    <div class="input-row">
+                        <label for="inspectionDate">Date:</label>
+                        <input type="date" id="inspectionDate" name="inspectionDate">
+                    </div>
+                    <div class="input-row">
+                        <label for="inspectionID">Inspection ID:</label>
+                        <input type="text" id="inspectionID" name="inspectionID">
+                    </div>
+                    <div class="input-row">
+                        <label for="lotNumber">Lot Number:</label>
+                        <input type="text" id="lotNumber" name="lotNumber">
+                    </div>
+
+                </div>
+        
+                <div class="right-column">
+                    <div class="input-row">
+                        <label for="inspectorID">Inspector ID:</label>
+                        <input type="text" id="inspectorID" name="inspectorID">
+                    </div>
+
+
+                    <div class="input-row">
+                        <label for="packageQuality">Package Quality:</label>
+                        <input type="text" id="packageQuality" name="packageQuality">
+                    </div>
+
+                    <div class="input-row">
+                        <label for="certifications">Certifications:</label>
+                        <input type="checkbox" id="certifications" name="certifications">
+                    </div>
+                </div>
+            </div>
+        
+            <button class="btn" onclick="addInspection()">Add Inspection</button>
+        </div>
+
+        <div class="table-container">
+            <h2>Overview of Inspections</h2>
+            <table id="inspectionTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Inspection ID</th>
+                        <th>Lot Number</th>
+                        <th>Inspector ID</th>
+                        <th>Package Quality</th>
+                        <th>Certifications</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="inspectionTableBody">
+                </tbody>
+            </table>
+        </div>
+    
+        
+    </body>
+    </html>
