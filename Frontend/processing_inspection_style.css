@@ -1,0 +1,88 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+.title-header {
+    text-align: center;
+    padding: 20px;
+    background-color: #34495e;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.logo-img {
+    height: 50px;
+}
+
+.nav {
+    background-color: #34495e;
+    padding: 10px 0;
+}
+
+.ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    padding: 0;
+    margin: 0;
+}
+
+.ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.ul li a:hover {
+    text-decoration: underline;
+}
+
+.center-info {
+    margin: 20px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.center-info h2 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.inspection-container {
+    margin: 20px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.inspection-container h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+
+.inspection-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.inspection-table th,
+.inspection-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.inspection-table th {
+    background-color: #f0f0f0;
+    text-align: center;
+}

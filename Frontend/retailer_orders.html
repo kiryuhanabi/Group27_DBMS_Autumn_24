@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retail Orders</title>
+    <link rel="stylesheet" href="retailer_orders.css">
+    <link href="logo.png" rel="icon" type="image/png">
+</head>
+<body>
+    <header>
+        <h1>
+            <img src="logo.png" alt="Retail Logo" class="logo-img">
+            Retail Orders
+        </h1>
+        <nav class="nav">
+            <ul class="ul">
+                <li><a href="retailer.html">Home</a></li>
+                <li><a href="retailer_store.html">Store</a></li>
+                <li><a href="retailer_orders.html">Orders</a></li>
+                <li><a href="login.html">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="order-form">
+            <h2>Create New Order</h2>
+            <form id="orderForm">
+                <label for="productId">Product ID:</label>
+                <input type="text" id="productId" required>
+
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" min="1" required>
+
+                <button type="submit">Add Order</button>
+            </form>
+        </section>
+
+        <section class="orders-table">
+            <h2>Orders</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Quantity</th>
+                        <th>Shipment Status</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersBody">
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="retailer_orders.js"></script>
+</body>
+</html>

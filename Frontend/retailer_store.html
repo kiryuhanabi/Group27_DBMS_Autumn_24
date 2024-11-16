@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retailer Store</title>
+    <link rel="stylesheet" href="retailer_store.css">
+    <link href="logo.png" rel="icon" type="image/png">
+</head>
+<body>
+    <header>
+        <h1>
+            <img src="logo.png" alt="Retail Logo" class="logo-img">
+            Retailer Store
+        </h1>
+        <nav class="nav">
+            <ul class="ul">
+                <li><a href="retailer.html">Home</a></li>
+                <li><a href="retailer_store.html">Store</a></li>
+                <li><a href="retailer_orders.html">Orders</a></li>
+                <li><a href="login.html">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="store-info">
+            <h2>Store Information</h2>
+            <p><strong>Store ID:</strong> R12345</p>
+            <p><strong>Address:</strong> 123 Green Street, Agro City</p>
+        </section>
+
+        <section class="store-table">
+            <h2>Shipment Details</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Shipment ID</th>
+                        <th>Product</th>
+                        <th>Amount (Current / Capacity)</th>
+                    </tr>
+                </thead>
+                <tbody id="shipmentsBody">
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="retailer_store.js"></script>
+</body>
+</html>
