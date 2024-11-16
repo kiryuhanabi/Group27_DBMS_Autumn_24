@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transport </title>
-    <link rel="stylesheet" href="transport_style.css">
+    <title>Center Transport</title>
+    <link rel="stylesheet" href="transport_center.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="logo.png" rel="icon" type="image/png">
 </head>
 <body>
     <h1>
         <img src="logo.png" alt="Transport Logo" class="logo-img">
-        Agro 
+        Agro Center Transport
     </h1>
     <nav class="nav">
         <ul class="ul">
@@ -28,5 +28,25 @@
             <li><a href="login.html">Logout</a></li>
         </ul>
     </nav>
+
+    <section class="table-container">
+        <h2>Center Transport Details</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Transport ID</th>
+                    <th>Center ID</th>
+                    <th>Batch ID</th>
+                    <th>Temperature (°C)</th>
+                    <th>Transportation Status</th>
+                </tr>
+            </thead>
+            <tbody id="transport-table">
+                <!-- Rows will be dynamically added here -->
+            </tbody>
+        </table>
+    </section>
+
+    <script src="transport_center.js"></script>
 </body>
 </html>
