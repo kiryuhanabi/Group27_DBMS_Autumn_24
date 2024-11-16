@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const productData = {
         labels: ['product1', 'product2', 'product3'],
         datasets: [{
-            label: 'Products',
+            label: 'amount%',
             data: [50, 30, 20], // Current stock percentages
             backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
             hoverOffset: 4
