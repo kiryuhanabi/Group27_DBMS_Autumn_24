@@ -136,7 +136,6 @@ td {
     color: #404340;
 }
 
-
 tbody tr {
     transition: background-color 0.3s ease; 
 }
@@ -157,4 +156,5 @@ tbody tr:hover {
         font-size: 0.9em; 
     }
 }
+
 

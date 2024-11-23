@@ -6,8 +6,7 @@
     <title>Farm Inspection Dashboard</title>
     <link rel="stylesheet" href="inspection_style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-   
-
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css" integrity="sha512-3PN6gfRNZEX4YFyz+sIyTF6pGlQiryJu9NlGhu9LrLMQ7eDjNgudQoFDK3WSNAayeIKc6B8WXXpo4a7HqxjKwg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <header>
@@ -19,16 +18,20 @@
     <nav class="nav">
         <ul>
             <li><a href="inspector.html">Home</a></li>
-            <li><a href="#">Reports</a>
+            <li>
+                <a href="#">Inspection Type</a>
                 <ul class="dropdown">
-                    <li><a href="#">Compliance Reports</a></li>
-                    <li><a href="#">X Reports</a></li>
+                    <li><a href="farm_inspection.html">Farm</a></li>
+                    <li><a href="batch_inspection.html">Batch</a></li>
+                    <li><a href="p_inspect.html">Processing</a></li>
+                    <li><a href="storage_inspection.html">Storage</a></li>
                 </ul>
             </li>
-            <li><a href="#">Notifications</a></li>
-            <li><a href="Inspector_about.html">About</a></li>
+            <li><a href="#">Reports</a></li>
             <li><a href="login.html">Log out</a></li>
+            <li><a href="notifications.html"><i class="fa fa-bell" aria-hidden="true"></i></a></li>
         </ul>
+
     </nav>
 
     <div class="dashboard">
@@ -41,7 +44,7 @@
                 <div class="left-column">
                     <div class="input-row">
                         <label for="inspectionDate">Date:</label>
-                        <input type="date" id="inspectionDate" name="inspectionDate">
+                        <input type="text" id="inspectionDate" name="inspectionDate">
                     </div>
                     <div class="input-row">
                         <label for="inspectionID">Inspection ID:</label>
@@ -51,9 +54,9 @@
                         <label for="inspectionType">Inspection Type:</label>
                         <select id="inspectionType" name="inspectionType">
                             <option value=" "> </option>
-                            <option value="soil">Soil</option>
-                            <option value="fertilizer">Fertilizer</option>
-                            <option value="maintenance">Maintenance</option>
+                            <option value="Soil">Soil</option>
+                            <option value="Fertilizer">Fertilizer</option>
+                            <option value="Maintenance">Maintenance</option>
                         </select>
                     </div>
                 </div>
@@ -71,12 +74,18 @@
 
                     <div class="input-row">
                         <label for="qualityGrade">Quality Grade:</label>
-                        <input type="text" id="qualityGrade" name="qualityGrade">
+                        <select id="qualityGrade" name="qualityGrade">
+                            <option value=" "> </option>
+                            <option value="Poor">Poor</option>
+                            <option value="Acceptable">Acceptable</option>
+                            <option value="Good">Good</option>
+                            <option value="Excellent">Excellent</option>
+                        </select>
                     </div>
                 </div>
             </div>
         
-            <button class="btn" onclick="addInspection()">Add Inspection</button>
+            <button class="btn" onclick="addInspection()"><i class="fa fa-plus" aria-hidden="true"></i>  Add Inspection</button>
         </div>
 
         <div class="table-container">
@@ -96,8 +105,6 @@
                 <tbody id="inspectionTableBody">
                 </tbody>
             </table>
-        </div>
-    
-        
+        </div>     
     </body>
-    </html>
+</html>

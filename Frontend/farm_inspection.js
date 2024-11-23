@@ -7,8 +7,6 @@ window.onload = function() {
 };
 
 function addInspection() {
-    
-
     const date = document.getElementById('inspectionDate').value;
     const inspectionID = document.getElementById('inspectionID').value;
     const inspectionType = document.getElementById('inspectionType').value;
@@ -28,16 +26,55 @@ function addInspection() {
     localStorage.setItem('farm_inspectionData', JSON.stringify(farm_inspectionData));
 
     addRowToTable(farm_inspection);
-
-    document.getElementById('inspectionDate').value = "";
+    /*document.getElementById('inspectionDate').value = "";
     document.getElementById('inspectionID').value = "";
-    document.getElementById('inspectionType').value = "";
-    document.getElementById('farmID').value = "";
     document.getElementById('inspectorID').value = "";
-    document.getElementById('qualityGrade').value = "";
+    document.getElementById('farmID').value = "";
+    document.getElementById('inspectionType').value = "";
+    document.getElementById('qualityGrade').value = "";*/
+    document.getElementById('inspectionDate').value = setLocalDate(); 
+    document.getElementById('inspectionID').value = generateRandomID();
+    document.getElementById('inspectorID').value = "2222181";
+    document.getElementById('farmID').value = "F-";
+    document.getElementById('inspectionType').value = " ";
+    document.getElementById('qualityGrade').value = " ";   
+}
+
+function generateRandomID(prefix="INS-", length = 6) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = prefix;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+}
+
+function setLocalDate () {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const dd = String(today.getDate()).padStart(2, '0');
+
+    const formattedDate = `${yyyy}-${mm}-${dd}`;
+    return formattedDate;
+}
+
+function setDefaultValues() {
+    document.getElementById('inspectionDate').value = setLocalDate(); 
+    document.getElementById('inspectionID').value = generateRandomID();
+    document.getElementById('inspectorID').value = "2222181";
+    document.getElementById('farmID').value = "F-";
+    document.getElementById('inspectionType').value = " ";
+    document.getElementById('qualityGrade').value = " ";
 }
 
 function loadInspectionData() {
+    document.getElementById('inspectionDate').value = setLocalDate(); 
+    document.getElementById('inspectionID').value = generateRandomID();
+    document.getElementById('inspectorID').value = "2222181";
+    document.getElementById('farmID').value = "F-";
+    document.getElementById('inspectionType').value = " ";
+    document.getElementById('qualityGrade').value = " ";
     const farm_inspectionData = JSON.parse(localStorage.getItem('farm_inspectionData')) || [];
     farm_inspectionData.forEach(farm_inspection => addRowToTable(farm_inspection));
 }
@@ -53,7 +90,11 @@ function addRowToTable(farm_inspection) {
         <td>${farm_inspection.farmID}</td>
         <td>${farm_inspection.inspectorID}</td>
         <td>${farm_inspection.qualityGrade}</td>
-        <td><button class="btn" onclick="printRow(this)">Print</button></td>
+        <td>
+        <button class="btn btn-success" onclick="editRow(this)"><i class="fas fa-edit"></i></button>
+        <button class="btn" onclick="deleteRow(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+        <button class="btn" onclick="printRow(this)"><i class="fa fa-print" aria-hidden="true"></i></button>
+        </td>
     `;
 
     row.addEventListener('click', () => {
@@ -66,20 +107,33 @@ function addRowToTable(farm_inspection) {
     tableBody.appendChild(row);
 }
 
-function deleteSelectedRow() {
-    if (!selectedRow) {
-        alert("To delete the inspection history, please select the correct inspection row.");
-        return;
-    }
-    const inspectionID = selectedRow.cells[1].innerText;
-    selectedRow.remove();
-    selectedRow = null;
-    document.querySelector('.delete-btn').disabled = true;
+function deleteRow(button) {
+    // Get the table row to delete
+    const row = button.parentNode.parentNode;
 
+    // Retrieve the table body
+    const tableBody = document.getElementById('inspectionTableBody');
+
+    // Get inspection ID from the row
+    const inspectionID = row.cells[1].textContent;
+
+    // Remove the row from the table
+    tableBody.removeChild(row);
+
+    // Remove the corresponding item from local storage
     let farm_inspectionData = JSON.parse(localStorage.getItem('farm_inspectionData')) || [];
-    farm_inspectionData = farm_inspectionData.filter(farm_inspection => farm_inspection.inspectionID !== inspectionID);
-    localStorage.setItem('inspectionData', JSON.stringify(farm_inspectionData));
+    farm_inspectionData = farm_inspectionData.filter(item => item.inspectionID !== inspectionID);
+
+    // Update local storage
+    localStorage.setItem('farm_inspectionData', JSON.stringify(farm_inspectionData));
+
+    // Reset the selected row and disable the delete button if necessary
+    if (row === selectedRow) {
+        selectedRow = null;
+        document.querySelector('.delete-btn').disabled = true;
+    }
 }
+
 
 function printRow(button) {
     const row = button.closest('tr');
