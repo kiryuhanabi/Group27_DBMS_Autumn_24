@@ -6,121 +6,27 @@ window.onload = function() {
     loadInspectionData();
 };
 
-function saveTableData() {
-    const tableBody = document.getElementById("inspectionTableBody");
-    const rows = tableBody.querySelectorAll("tr");
-    const data = [];
-
-    rows.forEach(row => {
-        const cells = row.querySelectorAll("td");
-        data.push({
-            date: cells[0].textContent,
-            inspectionID: cells[1].textContent,
-            type: cells[2].textContent,
-            farmID: cells[3].textContent,
-            inspectorID: cells[4].textContent,
-            qualityGrade: cells[5].textContent
-        });
-    });
-
-    localStorage.setItem("inspectionData", JSON.stringify(data));
-}
-
-// Function to load data from localStorage
-function loadTableData() {
-    const tableBody = document.getElementById("inspectionTableBody");
-    const data = JSON.parse(localStorage.getItem("inspectionData")) || [];
-
-    tableBody.innerHTML = ""; // Clear existing rows
-    data.forEach(rowData => {
-        const row = document.createElement("tr");
-
-        row.innerHTML = `
-            <td>${rowData.date}</td>
-            <td>${rowData.inspectionID}</td>
-            <td>${rowData.type}</td>
-            <td>${rowData.farmID}</td>
-            <td>${rowData.inspectorID}</td>
-            <td>${rowData.qualityGrade}</td>
-            <td><button onclick="editRow(this)">Edit</button></td>
-        `;
-
-        tableBody.appendChild(row);
-    });
-}
-
-// Function to enable editing a row
-function editRow(button) {
-    const row = button.parentNode.parentNode;
-    const cells = row.querySelectorAll("td");
-
-    cells[0].innerHTML = `<input type="date" value="${cells[0].textContent}" />`;
-    cells[1].innerHTML = `<input type="text" value="${cells[1].textContent}" />`;
-    cells[2].innerHTML = `
-        <select>
-            <option value="Soil" ${cells[2].textContent === "Soil" ? "selected" : ""}>Soil</option>
-            <option value="Fertilizer" ${cells[2].textContent === "Fertilizer" ? "selected" : ""}>Fertilizer</option>
-            <option value="Maintenance" ${cells[2].textContent === "Maintenance" ? "selected" : ""}>Maintenance</option>
-        </select>`;
-    cells[3].innerHTML = `<input type="text" value="${cells[3].textContent}" />`;
-    cells[4].innerHTML = `<input type="text" value="${cells[4].textContent}" />`;
-    cells[5].innerHTML = `
-        <select>
-            <option value="Poor" ${cells[5].textContent === "Poor" ? "selected" : ""}>Poor</option>
-            <option value="Acceptable" ${cells[5].textContent === "Acceptable" ? "selected" : ""}>Acceptable</option>
-            <option value="Good" ${cells[5].textContent === "Good" ? "selected" : ""}>Good</option>
-            <option value="Excellent" ${cells[5].textContent === "Excellent" ? "selected" : ""}>Excellent</option>
-        </select>`;
-
-    button.textContent = "Save";
-    button.onclick = function () {
-        saveRow(this);
-    };
-}
-
-// Function to save the edited row
-function saveRow(button) {
-    const row = button.parentNode.parentNode;
-    const inputs = row.querySelectorAll("td input, td select");
-
-    const cells = row.querySelectorAll("td");
-    cells[0].textContent = inputs[0].value;
-    cells[1].textContent = inputs[1].value;
-    cells[2].textContent = inputs[2].value;
-    cells[3].textContent = inputs[3].value;
-    cells[4].textContent = inputs[4].value;
-    cells[5].textContent = inputs[5].value;
-
-    button.innerHTML = `<i class="fas fa-edit"></i>`
-    button.onclick = function () {
-        editRow(this);
-    };
-
-    // Save data to localStorage
-    saveTableData();
-}
-
 function addInspection() {
     const date = document.getElementById('inspectionDate').value;
     const inspectionID = document.getElementById('inspectionID').value;
     const inspectionType = document.getElementById('inspectionType').value;
-    const farmID = document.getElementById('farmID').value;
+    const batchID = document.getElementById('batchID').value;
     const inspectorID = document.getElementById('inspectorID').value;
-    const qualityGrade = document.getElementById('qualityGrade').value;
+    const certifications = document.getElementById('certifications').value;
 
-    if (!date || !inspectionID || !farmID || !inspectorID || !qualityGrade) {
+    if (!date || !inspectionID || !batchID || !inspectorID || !certifications) {
         alert("Please fill in all fields.");
         return;
     }
 
-    const farm_inspection = { date, inspectionID, inspectionType, farmID, inspectorID, qualityGrade};
+    const batch_inspection = { date, inspectionID, inspectionType, batchID, inspectorID, certifications};
 
-    let farm_inspectionData = JSON.parse(localStorage.getItem('farm_inspectionData')) || [];
-    farm_inspectionData.push(farm_inspection);
-    localStorage.setItem('farm_inspectionData', JSON.stringify(farm_inspectionData));
+    let batch_inspectionData = JSON.parse(localStorage.getItem('batch_inspectionData')) || [];
+    batch_inspectionData.push(batch_inspection);
+    localStorage.setItem('batch_inspectionData', JSON.stringify(batch_inspectionData));
 
-    addRowToTable(farm_inspection);
-    setDefaultValues();
+    addRowToTable(batch_inspection);
+    setDefaultValues();   
 }
 
 function generateRandomID(prefix="INS-", length = 6) {
@@ -142,37 +48,36 @@ function setLocalDate () {
     return formattedDate;
 }
 
+function setLotInspection() {
+    document.getElementById('batchID').value = generateRandomID("L-");
+}
+
 function setDefaultValues() {
     document.getElementById('inspectionDate').value = setLocalDate(); 
     document.getElementById('inspectionID').value = generateRandomID();
     document.getElementById('inspectorID').value = "2222181";
-    document.getElementById('farmID').value = "F-";
-    document.getElementById('inspectionType').value = " ";
-    document.getElementById('qualityGrade').value = " ";
+    document.getElementById('batchID').value = generateRandomID("B-");
+    document.getElementById('inspectionType').value = "Batch";
+    document.getElementById('certifications').value = " ";
 }
 
 function loadInspectionData() {
-    document.getElementById('inspectionDate').value = setLocalDate(); 
-    document.getElementById('inspectionID').value = generateRandomID();
-    document.getElementById('inspectorID').value = "2222181";
-    document.getElementById('farmID').value = "F-";
-    document.getElementById('inspectionType').value = " ";
-    document.getElementById('qualityGrade').value = " ";
-    const farm_inspectionData = JSON.parse(localStorage.getItem('farm_inspectionData')) || [];
-    farm_inspectionData.forEach(farm_inspection => addRowToTable(farm_inspection));
+    setDefaultValues();
+    const batch_inspectionData = JSON.parse(localStorage.getItem('batch_inspectionData')) || [];
+    batch_inspectionData.forEach(batch_inspection => addRowToTable(batch_inspection));
 }
 
-function addRowToTable(farm_inspection) {
+function addRowToTable(batch_inspection) {
     const tableBody = document.getElementById('inspectionTableBody');
     const row = document.createElement('tr');
 
     row.innerHTML = `
-        <td>${farm_inspection.date}</td>
-        <td>${farm_inspection.inspectionID}</td>
-        <td>${farm_inspection.inspectionType}</td>
-        <td>${farm_inspection.farmID}</td>
-        <td>${farm_inspection.inspectorID}</td>
-        <td>${farm_inspection.qualityGrade}</td>
+        <td>${batch_inspection.date}</td>
+        <td>${batch_inspection.inspectionID}</td>
+        <td>${batch_inspection.inspectionType}</td>
+        <td>${batch_inspection.batchID}</td>
+        <td>${batch_inspection.inspectorID}</td>
+        <td>${batch_inspection.certifications}</td>
         <td>
         <button class="btn btn-success" onclick="editRow(this)"><i class="fas fa-edit"></i></button>
         <button class="btn" onclick="deleteRow(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
@@ -204,11 +109,11 @@ function deleteRow(button) {
     tableBody.removeChild(row);
 
     // Remove the corresponding item from local storage
-    let farm_inspectionData = JSON.parse(localStorage.getItem('farm_inspectionData')) || [];
-    farm_inspectionData = farm_inspectionData.filter(item => item.inspectionID !== inspectionID);
+    let batch_inspectionData = JSON.parse(localStorage.getItem('batch_inspectionData')) || [];
+    batch_inspectionData = batch_inspectionData.filter(item => item.inspectionID !== inspectionID);
 
     // Update local storage
-    localStorage.setItem('farm_inspectionData', JSON.stringify(farm_inspectionData));
+    localStorage.setItem('batch_inspectionData', JSON.stringify(batch_inspectionData));
 
     // Reset the selected row and disable the delete button if necessary
     if (row === selectedRow) {
@@ -230,16 +135,16 @@ function printRow(button) {
 
     doc.addImage(logoBase64, 'PNG', 85, 10, 40, 40); 
 
-    doc.text("Agro Farm Inspection", 105, 60, { align: "center" });
+    doc.text("Agro Batch Inspection", 105, 60, { align: "center" });
 
     doc.setFontSize(12);
     doc.setFont("helvetica", "normal");
     doc.text(`Date: ${rowData[0]}`, 20, 80);
     doc.text(`Inspection ID: ${rowData[1]}`, 20, 90);
     doc.text(`Type: ${rowData[2]}`, 20, 100);
-    doc.text(`Farm ID: ${rowData[3]}`, 20, 110);
+    doc.text(`Batch ID: ${rowData[3]}`, 20, 110);
     doc.text(`Inspector ID: ${rowData[4]}`, 20, 120);
-    doc.text(`Quality Grade: ${rowData[5]}`, 20, 130);
+    doc.text(`Certifications: ${rowData[5]}`, 20, 130);
 
 
     doc.text("Signature:", 20, 150);

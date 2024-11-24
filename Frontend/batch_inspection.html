@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farm Inspection</title>
+    <title>Batch Inspection Dashboard</title>
     <link rel="stylesheet" href="inspection_style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css" integrity="sha512-3PN6gfRNZEX4YFyz+sIyTF6pGlQiryJu9NlGhu9LrLMQ7eDjNgudQoFDK3WSNAayeIKc6B8WXXpo4a7HqxjKwg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -31,12 +31,12 @@
             <li><a href="login.html">Log out</a></li>
             <li><a href="notifications.html"><i class="fa fa-bell" aria-hidden="true"></i></a></li>
         </ul>
+
     </nav>
 
     <div class="dashboard">
-        <h2>Storage Inspection Dashboard</h2>
-        
-        <script src="storage_inspection.js"></script>
+        <h2>Batch Inspection Dashboard</h2>
+        <script src="batch_inspection.js"></script>
 
         <div class="inspection-filters">
             <h3>Add New inspection</h3>
@@ -46,15 +46,9 @@
                         <label for="inspectionDate">Date:</label>
                         <input type="date" id="inspectionDate" name="inspectionDate">
                     </div>
-
                     <div class="input-row">
                         <label for="inspectionID">Inspection ID:</label>
                         <input type="text" id="inspectionID" name="inspectionID">
-                    </div>
-
-                    <div class="input-row">
-                        <label for="storageID">Storage ID:</label>
-                        <input type="text" id="storageID" name="storageID">
                     </div>
                     <div class="input-row">
                         <label for="inspectionType">Inspect-Type:</label>
@@ -64,40 +58,21 @@
         
                 <div class="right-column">
                     <div class="input-row">
+                        <label for="batchID">Batch ID:</label>
+                        <input type="text" id="batchID" name="batchID">
+                    </div>
+
+                    <div class="input-row">
                         <label for="inspectorID">Inspector ID:</label>
                         <input type="text" id="inspectorID" name="inspectorID">
                     </div>
 
                     <div class="input-row">
-                        <label for="maintenanceGrade">Maintenance Grade:</label>
-                        <select id="maintenanceGrade" name="maintenanceGrade">
-                            <option value=" "> </option>
-                            <option value="Poor">Poor</option>
-                            <option value="Acceptable">Acceptable</option>
-                            <option value="Good">Good</option>
-                            <option value="Excellent">Excellent</option>
-                        </select>
-                    </div>
-
-                    <div class="input-row">
-                        <label for="pestControlGrade">Pest Control Grade:</label>
-                        <select id="pestControlGrade" name="pestControlGrade">
-                            <option value=" "> </option>
-                            <option value="Poor">Poor</option>
-                            <option value="Acceptable">Acceptable</option>
-                            <option value="Good">Good</option>
-                            <option value="Excellent">Excellent</option>
-                        </select>
-                    </div>
-
-                    <div class="input-row">
-                        <label for="hygieneGrade">Hygiene Grade:</label>
-                        <select id="hygieneGrade" name="hygieneGrade">
-                            <option value=" "> </option>
-                            <option value="Poor">Poor</option>
-                            <option value="Acceptable">Acceptable</option>
-                            <option value="Good">Good</option>
-                            <option value="Excellent">Excellent</option>
+                        <label for="certifications">Certifications:</label>
+                        <select id="certifications" name="certifications">
+                            <option value=" "></option>
+                            <option value="Organic">Organic</option>
+                            <option value="Halal">Halal</option>
                         </select>
                     </div>
                 </div>
@@ -114,17 +89,15 @@
                         <th>Date</th>
                         <th>Inspection ID</th>
                         <th>Type</th>
-                        <th>Storage ID</th>
+                        <th>Batch ID</th>
                         <th>Inspector ID</th>
-                        <th>Maintenance</th>
-                        <th>Pest Control</th>
-                        <th>Hygiene</th>
+                        <th>Certification</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody id="inspectionTableBody">
                 </tbody>
             </table>
-        </div>    
+        </div>     
     </body>
 </html>
