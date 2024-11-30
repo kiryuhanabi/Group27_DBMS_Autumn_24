@@ -1,86 +1,141 @@
 const { jsPDF } = window.jspdf;
 
-let selectedRow = null;
+let editRowIndex = null;
+let transportIDCounter = localStorage.getItem('transportIDCounter') 
+    ? parseInt(localStorage.getItem('transportIDCounter')) 
+    : 1;
 
-window.onload = function() {
-    loadTransportData();
-};
 
-function addTransport() {
-    const date = document.getElementById('transportDate').value;
-    const transportID = document.getElementById('transportID').value;
-    const transportType = document.getElementById('transportType').value;
-    const cargoType = document.getElementById('cargoType').value;
-    const temperatureRange = document.getElementById('temperatureRange').value;
-    const loadWeight = document.getElementById('loadWeight').value;
+document.addEventListener('DOMContentLoaded', loadTableData);
 
-    if (!date || !transportID || !cargoType || !temperatureRange || !loadWeight) {
+function addOrUpdateTransport() {
+    const transportType = document.getElementById('transportType').value.trim();
+    const cargoType = document.getElementById('cargoType').value.trim();
+    const temperatureRange = document.getElementById('temperatureRange').value.trim();
+    const loadWeight = document.getElementById('loadWeight').value.trim();
+
+    if (!transportType || !cargoType || !temperatureRange || !loadWeight) {
         alert("Please fill in all fields.");
         return;
     }
 
-    const transport = { date, transportID, transportType, cargoType, temperatureRange, loadWeight };
+    const transportDate = new Date().toISOString().split('T')[0];
+    const transportID = `st${String(transportIDCounter).padStart(6, '0')}`;
 
-    let transportData = JSON.parse(localStorage.getItem('storageTransportData')) || [];
-    transportData.push(transport);
-    localStorage.setItem('storageTransportData', JSON.stringify(transportData));
+    const newTransport = {
+        transportDate,
+        transportID,
+        transportType,
+        cargoType,
+        temperatureRange,
+        loadWeight,
+    };
 
-    addRowToTable(transport);
+    let transports = JSON.parse(localStorage.getItem('transports')) || [];
 
-    document.getElementById('transportDate').value = "";
-    document.getElementById('transportID').value = "";
-    document.getElementById('transportType').value = "";
-    document.getElementById('cargoType').value = "";
-    document.getElementById('temperatureRange').value = "";
-    document.getElementById('loadWeight').value = "";
-}
+    if (editRowIndex === null) {
+  
+        transports.push(newTransport);
+        transportIDCounter++;
+        localStorage.setItem('transportIDCounter', transportIDCounter);
+    } else {
 
-function loadTransportData() {
-    const transportData = JSON.parse(localStorage.getItem('storageTransportData')) || [];
-    transportData.forEach(transport => addRowToTable(transport));
-}
-
-function addRowToTable(transport) {
-    const tableBody = document.getElementById('transportTableBody');
-    const row = document.createElement('tr');
-
-    row.innerHTML = `
-        <td>${transport.date}</td>
-        <td>${transport.transportID}</td>
-        <td>${transport.transportType}</td>
-        <td>${transport.cargoType}</td>
-        <td>${transport.temperatureRange}</td>
-        <td>${transport.loadWeight}</td>
-        <td><button class="btn" onclick="printRow(this)">Print</button></td>
-    `;
-
-    row.addEventListener('click', () => {
-        if (selectedRow) selectedRow.classList.remove('selected');
-        row.classList.add('selected');
-        selectedRow = row;
-        document.querySelector('.delete-btn').disabled = false;
-    });
-
-    tableBody.appendChild(row);
-}
-
-function deleteSelectedRow() {
-    if (!selectedRow) {
-        alert("To delete the transport history, please select the correct transport row.");
-        return;
+        transports[editRowIndex] = newTransport;
+        editRowIndex = null;
     }
-    const transportID = selectedRow.cells[1].innerText;
-    selectedRow.remove();
-    selectedRow = null;
-    document.querySelector('.delete-btn').disabled = true;
 
-    let transportData = JSON.parse(localStorage.getItem('storageTransportData')) || [];
-    transportData = transportData.filter(transport => transport.transportID !== transportID);
-    localStorage.setItem('storageTransportData', JSON.stringify(transportData));
+    localStorage.setItem('transports', JSON.stringify(transports));
+
+    updateTable();
+    clearInputs();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadTableData();
+
+    document.getElementById('searchInput').addEventListener('input', filterTable);
+});
+
+function filterTable() {
+    const query = document.getElementById('searchInput').value.trim().toLowerCase();
+    const tableBody = document.getElementById('transportTableBody');
+    const rows = Array.from(tableBody.getElementsByTagName('tr'));
+
+    rows.forEach(row => {
+        const transportID = row.cells[1].innerText.toLowerCase();
+        const transportType = row.cells[2].innerText.toLowerCase();
+
+        if (transportID.includes(query) || transportType.includes(query)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}
+
+function editTransport(button) {
+    const row = button.parentNode.parentNode;
+    editRowIndex = row.rowIndex - 1;
+
+    const transports = JSON.parse(localStorage.getItem('transports')) || [];
+    const transport = transports[editRowIndex];
+
+    document.getElementById('transportType').value = transport.transportType;
+    document.getElementById('cargoType').value = transport.cargoType;
+    document.getElementById('temperatureRange').value = transport.temperatureRange;
+    document.getElementById('loadWeight').value = transport.loadWeight;
+}
+
+function deleteTransport(button) {
+    const row = button.parentNode.parentNode;
+    const rowIndex = row.rowIndex - 1;
+
+    let transports = JSON.parse(localStorage.getItem('transports')) || [];
+    transports.splice(rowIndex, 1);
+    localStorage.setItem('transports', JSON.stringify(transports));
+
+    updateTable();
+}
+
+function loadTableData() {
+    updateTable();
+}
+
+function updateTable() {
+    const tableBody = document.getElementById('transportTableBody');
+    tableBody.innerHTML = '';
+    const transports = JSON.parse(localStorage.getItem('transports')) || [];
+
+    transports.forEach((transport) => {
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+            <td>${transport.transportDate}</td>
+            <td>${transport.transportID}</td>
+            <td>${transport.transportType}</td>
+            <td>${transport.cargoType}</td>
+            <td>${transport.temperatureRange}</td>
+            <td>${transport.loadWeight}</td>
+            <td class="actions">
+                <button onclick="viewDetails(this)">View</button>
+                <button onclick="editTransport(this)">Edit</button>
+                <button onclick="deleteTransport(this)">Delete</button>
+            </td>
+        `;
+
+        tableBody.appendChild(row);
+    });
+}
+
+function clearInputs() {
+    document.getElementById('transportType').value = '';
+    document.getElementById('cargoType').value = '';
+    document.getElementById('temperatureRange').value = '';
+    document.getElementById('loadWeight').value = '';
 }
 
 
-function printRow(button) {
+function viewDetails(button) {
     const row = button.closest('tr');
     const rowData = Array.from(row.cells).slice(0, -1).map(cell => cell.innerText);
 
@@ -113,3 +168,4 @@ function printRow(button) {
 
     doc.save("StorageTransportDetails.pdf");
 }
+

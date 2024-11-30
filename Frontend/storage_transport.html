@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Storage Transport Dashboard</title>
+    <title>Transport Dashboard</title>
     <link rel="stylesheet" href="storage_transport.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-   
 
 </head>
 <body>
@@ -32,25 +31,15 @@
             <li><a href="login.html">Log out</a></li>
         </ul>
     </nav>
-
+    
     <div class="dashboard">
         <h2>Storage Transport Dashboard</h2>
         <p>Overview of all storage transport activities and conditions.</p>
-        
-        <script src="storage_transport.js"></script>
-
         <div class="transport-filters">
             <h3>Add New Transport</h3>
             <div class="form-group">
                 <div class="left-column">
-                    <div class="input-row">
-                        <label for="transportDate">Date:</label>
-                        <input type="date" id="transportDate" name="transportDate">
-                    </div>
-                    <div class="input-row">
-                        <label for="transportID">Transport ID:</label>
-                        <input type="text" id="transportID" name="transportID">
-                    </div>
+        
                     <div class="input-row">
                         <label for="transportType">Transport Type:</label>
                         <select id="transportType" name="transportType">
@@ -60,13 +49,15 @@
                             <option value="Common">Common</option>
                         </select>
                     </div>
-                </div>
-        
-                <div class="right-column">
                     <div class="input-row">
                         <label for="cargoType">Cargo Type:</label>
                         <input type="text" id="cargoType" name="cargoType">
                     </div>
+                    
+                </div>
+
+                <div class="right-column">
+                    
                     <div class="input-row">
                         <label for="temperatureRange">Temperature Range:</label>
                         <input type="text" id="temperatureRange" name="temperatureRange" >
@@ -77,29 +68,34 @@
                     </div>
                 </div>
             </div>
-        
-            <button class="btn" onclick="addTransport()">Add Transport</button>
-            <button class="btn delete-btn" onclick="deleteSelectedRow()" disabled>Delete Transport</button>
+
+            
+            <button id="addTransportButton" onclick="addOrUpdateTransport()">Add Transport</button>
+            <div class="input-row">
+                <label for="searchInput">Search Transport:</label>
+                <input type="text" id="searchInput" placeholder="Search by ID or Transport Type">
+            </div>
         </div>
 
-        <div class="table-container">
-            <table id="transportTable">
+        <section class="table-section">
+            <h2>Transport List</h2>
+            <table>
                 <thead>
                     <tr>
                         <th>Date</th>
                         <th>Transport ID</th>
-                        <th>Type</th>
+                        <th>Transport Type</th>
                         <th>Cargo Type</th>
                         <th>Temperature Range</th>
                         <th>Load Weight</th>
-                        <th>Action</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody id="transportTableBody">
-                </tbody>
+                <tbody id="transportTableBody"></tbody>
             </table>
-        </div>
-    
-        
-    </body>
-    </html>
+        </section>
+    </main>
+
+    <script src="storage_transport.js"></script>
+</body>
+</html>

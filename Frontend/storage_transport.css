@@ -65,9 +65,11 @@ header h1 {
     transition: background-color 0.3s ease;
 }
 
+.nav ul li a.active, 
 .nav ul li a:hover {
     background: #4CAF50;
     border-radius: 4px;
+    color: #FFF !important;
 }
 
 ul li ul.dropdown {
@@ -174,7 +176,7 @@ ul li:hover ul.dropdown {
     background-color: #fff;
 }
 
-.btn {
+button {
     display: block;
     width: 100%;
     margin-top: 20px;
@@ -189,7 +191,8 @@ ul li:hover ul.dropdown {
     transition: background-color 0.3s ease;
 }
 
-.btn:hover {
+
+button:hover {
     background-color: #0056b3;
 }
 
@@ -249,3 +252,97 @@ table tbody tr:hover {
 .details-btn:hover {
     background-color: #0056b3;
 }
+
+
+
+h1, h2 {
+    margin: 0;
+    color: #333;
+}
+
+
+.form-section, .table-section {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px; 
+}
+
+.actions button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.actions button:nth-child(1) {
+    background-color: #007bff;
+}
+
+.actions button:nth-child(1):hover {
+    background-color: #0056b3;
+}
+
+.actions button:nth-child(2) {
+    background-color: #028d34; 
+}
+
+.actions button:nth-child(2):hover {
+    background-color: #026d27;
+}
+
+.actions button:nth-child(3) {
+    background-color: #c0392b;
+}
+
+.actions button:nth-child(3):hover {
+    background-color: #a93226;
+}
+
+.transport-filters .input-row {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+label[for="searchInput"] {
+    color: rgb(154, 10, 10);
+    font-weight: bold;
+}
+
+
+#searchInput {
+    width: calc(100% - 20px);
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+
