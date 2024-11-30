@@ -8,7 +8,7 @@
 }
 
 body {
-    background-image: url('processing_inspection.jpg');
+    background-image: url('ins_background.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -177,9 +177,9 @@ ul li:hover ul.dropdown {
 .btn {
     display: block;
     width: 100%;
-    margin-top: 20px;
+    margin-top: 10px;
     padding: 10px;
-    font-size: 16px;
+    font-size: 14px;
     color: #fff;
     background-color: #34495e;
     border: none;
@@ -194,13 +194,15 @@ ul li:hover ul.dropdown {
 }
 
 .table-container {
-    margin: 2rem auto;
+    /*margin: 2rem auto;
     width: 90%;
     max-width: 1200px;
     margin-top: auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    border-radius: 8px; 
-    overflow: hidden; 
+    border-radius: 8px;*/ 
+    overflow-x: auto;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -269,4 +271,6 @@ tbody tr:hover {
 
 .details-btn:hover {
     background-color: #4CAF50;
-}
+} 
+
+

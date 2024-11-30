@@ -6,39 +6,173 @@ window.onload = function() {
     loadInspectionData();
 };
 
-function addInspection() {
-    
+function saveTableData() {
+    const tableBody = document.getElementById("inspectionTableBody");
+    const rows = tableBody.querySelectorAll("tr");
+    const data = [];
 
+    rows.forEach(row => {
+        const cells = row.querySelectorAll("td");
+        data.push({
+            date: cells[0].textContent,
+            inspectionID: cells[1].textContent,
+            storageID: cells[2].textContent,
+            type: cells[3].textContent,
+            inspectorID: cells[4].textContent,
+            maintenanceGrade: cells[5].textContent,
+            pestControlGrade: cells[6].textContent,
+            hygieneGrade: cells[7].textContent,
+        });
+    });
+
+    localStorage.setItem("inspectionData", JSON.stringify(data));
+}
+
+// Function to load data from localStorage
+function loadTableData() {
+    const tableBody = document.getElementById("inspectionTableBody");
+    const data = JSON.parse(localStorage.getItem("inspectionData")) || [];
+
+    tableBody.innerHTML = ""; // Clear existing rows
+    data.forEach(rowData => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${rowData.date}</td>
+            <td>${rowData.inspectionID}</td>
+            <td>${rowData.storageID}</td>
+            <td>${rowData.type}</td>
+            <td>${rowData.inspectorID}</td>
+            <td>${rowData.maintenanceGrade}</td>
+            <td>${rowData.pestControlGrade}</td>
+            <td>${rowData.hygieneGrade}</td>
+            <td><button onclick="editRow(this)">Edit</button></td>
+        `;
+
+        tableBody.appendChild(row);
+    });
+}
+
+// Function to enable editing a row
+function editRow(button) {
+    const row = button.parentNode.parentNode;
+    const cells = row.querySelectorAll("td");
+
+    cells[0].innerHTML = `<input type="date" value="${cells[0].textContent}" />`;
+    cells[1].innerHTML = `<input type="text" value="${cells[1].textContent}" />`;
+    cells[2].innerHTML = `<input type="text" value="${cells[2].textContent}" />`;
+    cells[3].innerHTML = `<input type="text" value="${cells[3].textContent}" />`;
+    cells[4].innerHTML = `<input type="text" value="${cells[4].textContent}" />`;
+    cells[5].innerHTML = `
+    <select>
+        <option value="Poor" ${cells[5].textContent === "Poor" ? "selected" : ""}>Poor</option>
+        <option value="Acceptable" ${cells[5].textContent === "Acceptable" ? "selected" : ""}>Acceptable</option>
+        <option value="Good" ${cells[5].textContent === "Good" ? "selected" : ""}>Good</option>
+        <option value="Excellent" ${cells[5].textContent === "Excellent" ? "selected" : ""}>Excellent</option>
+    </select>`;
+    cells[6].innerHTML = `
+    <select>
+        <option value="Poor" ${cells[6].textContent === "Poor" ? "selected" : ""}>Poor</option>
+        <option value="Acceptable" ${cells[6].textContent === "Acceptable" ? "selected" : ""}>Acceptable</option>
+        <option value="Good" ${cells[6].textContent === "Good" ? "selected" : ""}>Good</option>
+        <option value="Excellent" ${cells[6].textContent === "Excellent" ? "selected" : ""}>Excellent</option>
+    </select>`;
+    cells[7].innerHTML = `
+        <select>
+            <option value="Poor" ${cells[7].textContent === "Poor" ? "selected" : ""}>Poor</option>
+            <option value="Acceptable" ${cells[7].textContent === "Acceptable" ? "selected" : ""}>Acceptable</option>
+            <option value="Good" ${cells[7].textContent === "Good" ? "selected" : ""}>Good</option>
+            <option value="Excellent" ${cells[7].textContent === "Excellent" ? "selected" : ""}>Excellent</option>
+        </select>`;
+
+    button.textContent = "Save";
+    button.onclick = function () {
+        saveRow(this);
+    };
+}
+
+// Function to save the edited row
+function saveRow(button) {
+    const row = button.parentNode.parentNode;
+    const inputs = row.querySelectorAll("td input, td select");
+
+    const cells = row.querySelectorAll("td");
+    cells[0].textContent = inputs[0].value;
+    cells[1].textContent = inputs[1].value;
+    cells[2].textContent = inputs[2].value;
+    cells[3].textContent = inputs[3].value;
+    cells[4].textContent = inputs[4].value;
+    cells[5].textContent = inputs[5].value;
+    cells[6].textContent = inputs[6].value;
+    cells[7].textContent = inputs[7].value;
+
+    button.innerHTML = `<i class="fas fa-edit"></i>`
+    button.onclick = function () {
+        editRow(this);
+    };
+
+    // Save data to localStorage
+    saveTableData();
+}
+
+function addInspection() {
     const date = document.getElementById('inspectionDate').value;
     const inspectionID = document.getElementById('inspectionID').value;
+    const inspectionType = document.getElementById('inspectionType').value;
     const storageID = document.getElementById('storageID').value;
     const inspectorID = document.getElementById('inspectorID').value;
     const maintenanceGrade = document.getElementById('maintenanceGrade').value;
     const pestControlGrade = document.getElementById('pestControlGrade').value;
     const hygieneGrade = document.getElementById('hygieneGrade').value;
 
-    if (!date || !inspectionID || !storageID || !inspectorID || !maintenanceGrade || !pestControlGrade || !hygieneGrade) {
+    if (!date || !inspectionID || !storageID || !inspectorID || !maintenanceGrade ||!pestControlGrade ||!hygieneGrade) {
         alert("Please fill in all fields.");
         return;
     }
 
-    const storage_inspection = { date, inspectionID, lotNumber, inspectorID, packageQuality, certifications};
+    const storage_inspection = { date, inspectionID, inspectionType, storageID, inspectorID, maintenanceGrade, pestControlGrade, hygieneGrade};
 
     let storage_inspectionData = JSON.parse(localStorage.getItem('storage_inspectionData')) || [];
     storage_inspectionData.push(storage_inspection);
     localStorage.setItem('storage_inspectionData', JSON.stringify(storage_inspectionData));
 
     addRowToTable(storage_inspection);
+    setDefaultValues();   
+}
 
-    document.getElementById('inspectionDate').value = "";
-    document.getElementById('inspectionID').value = "";
-    document.getElementById('lotNumber').value = "";
-    document.getElementById('inspectorID').value = "";
-    document.getElementById('packageQuality').value = "";
-    document.getElementById('certifications').value = "";
+function generateRandomID(prefix="INS-", length = 6) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = prefix;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+}
+
+function setLocalDate () {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const dd = String(today.getDate()).padStart(2, '0');
+
+    const formattedDate = `${yyyy}-${mm}-${dd}`;
+    return formattedDate;
+}
+
+function setDefaultValues() {
+    document.getElementById('inspectionDate').value = setLocalDate(); 
+    document.getElementById('inspectionID').value = generateRandomID();
+    document.getElementById('inspectorID').value = "2222181";
+    document.getElementById('storageID').value = generateRandomID("S-");
+    document.getElementById('inspectionType').value = "Storage";
+    document.getElementById('maintenanceGrade').value = " ";
+    document.getElementById('pestControlGrade').value = " ";
+    document.getElementById('hygieneGrade').value = " ";
+
 }
 
 function loadInspectionData() {
+    setDefaultValues();
     const storage_inspectionData = JSON.parse(localStorage.getItem('storage_inspectionData')) || [];
     storage_inspectionData.forEach(storage_inspection => addRowToTable(storage_inspection));
 }
@@ -50,11 +184,17 @@ function addRowToTable(storage_inspection) {
     row.innerHTML = `
         <td>${storage_inspection.date}</td>
         <td>${storage_inspection.inspectionID}</td>
-        <td>${storage_inspection.lotNumber}</td>
+        <td>${storage_inspection.inspectionType}</td>
+        <td>${storage_inspection.storageID}</td>
         <td>${storage_inspection.inspectorID}</td>
-        <td>${storage_inspection.packageQuality}</td>
-        <td>${storage_inspection.certifications}</td>
-        <td><button class="btn" onclick="printRow(this)">Print</button></td>
+        <td>${storage_inspection.maintenanceGrade}</td>
+        <td>${storage_inspection.pestControlGrade}</td>
+        <td>${storage_inspection.hygieneGrade}</td>
+        <td>
+        <button class="btn btn-success" onclick="editRow(this)"><i class="fas fa-edit"></i></button>
+        <button class="btn" onclick="deleteRow(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+        <button class="btn" onclick="printRow(this)"><i class="fa fa-print" aria-hidden="true"></i></button>
+        </td>
     `;
 
     row.addEventListener('click', () => {
@@ -67,20 +207,33 @@ function addRowToTable(storage_inspection) {
     tableBody.appendChild(row);
 }
 
-function deleteSelectedRow() {
-    if (!selectedRow) {
-        alert("To delete the inspection history, please select the correct inspection row.");
-        return;
-    }
-    const inspectionID = selectedRow.cells[1].innerText;
-    selectedRow.remove();
-    selectedRow = null;
-    document.querySelector('.delete-btn').disabled = true;
+function deleteRow(button) {
+    // Get the table row to delete
+    const row = button.parentNode.parentNode;
 
+    // Retrieve the table body
+    const tableBody = document.getElementById('inspectionTableBody');
+
+    // Get inspection ID from the row
+    const inspectionID = row.cells[1].textContent;
+
+    // Remove the row from the table
+    tableBody.removeChild(row);
+
+    // Remove the corresponding item from local storage
     let storage_inspectionData = JSON.parse(localStorage.getItem('storage_inspectionData')) || [];
-    storage_inspectionData = storage_inspectionData.filter(storage_inspection => storage_inspection.inspectionID !== inspectionID);
+    storage_inspectionData = storage_inspectionData.filter(item => item.inspectionID !== inspectionID);
+
+    // Update local storage
     localStorage.setItem('storage_inspectionData', JSON.stringify(storage_inspectionData));
+
+    // Reset the selected row and disable the delete button if necessary
+    if (row === selectedRow) {
+        selectedRow = null;
+        document.querySelector('.delete-btn').disabled = true;
+    }
 }
+
 
 function printRow(button) {
     const row = button.closest('tr');
@@ -100,14 +253,16 @@ function printRow(button) {
     doc.setFont("helvetica", "normal");
     doc.text(`Date: ${rowData[0]}`, 20, 80);
     doc.text(`Inspection ID: ${rowData[1]}`, 20, 90);
-    doc.text(`Storage ID: ${rowData[2]}`, 20, 100);
-    doc.text(`Maintenance Grade: ${rowData[3]}`, 20, 110);
-    doc.text(`Pest Control Grade: ${rowData[4]}`, 20, 120);
-    doc.text(`Hygiene Grade: ${rowData[5]}`, 20, 130);
+    doc.text(`Type: ${rowData[2]}`, 20, 100);
+    doc.text(`Storage ID: ${rowData[3]}`, 20, 110);
+    doc.text(`Inspector ID: ${rowData[4]}`, 20, 120);
+    doc.text(`Maintenance Grade: ${rowData[5]}`, 20, 130);
+    doc.text(`Pest Control Grade: ${rowData[6]}`, 20, 140);
+    doc.text(`Hygiene Grade: ${rowData[7]}`, 20, 150);
 
 
-    doc.text("Signature:", 20, 150);
-    doc.line(40, 150, 100, 150); 
+    doc.text("Signature:", 20, 160);
+    doc.line(40, 160, 100, 160); 
 
     doc.save("InspectionDetails.pdf");
 }

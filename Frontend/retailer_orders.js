@@ -3,8 +3,11 @@ document.getElementById('orderForm').addEventListener('submit', function (e) {
 
     const productId = document.getElementById('productId').value;
     const quantity = document.getElementById('quantity').value;
-    const status = document.getElementById('status').value;
 
+    // Default shipment status
+    const status = "Incomplete";
+
+    // Create a new row for the table
     const orderRow = document.createElement('tr');
     orderRow.innerHTML = `
         <td>${productId}</td>
@@ -12,8 +15,9 @@ document.getElementById('orderForm').addEventListener('submit', function (e) {
         <td>${status}</td>
     `;
 
+    // Append the new row to the orders table body
     document.getElementById('ordersBody').appendChild(orderRow);
 
-    
+    // Reset the form fields after submission
     this.reset();
 });
