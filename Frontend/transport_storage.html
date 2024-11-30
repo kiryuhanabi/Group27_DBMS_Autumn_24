@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storage Transport</title>
+    <link rel="stylesheet" href="transport_storage.css">
+</head>
+<body>
+    <h2>Storage Transport</h2>
+
+    <div class="form-container">
+        <form id="storageForm">
+            <h3>Enter Storage Transport Details</h3>
+            <!--<label for="stTransportID">Transport ID:</label>
+            <input type="text" id="stTransportID" required>
+
+            <label for="stTransportDate">Transport Date:</label>
+            <input type="date" id="stTransportDate" required> -->
+
+            <label for="transportType">Transport Type:</label>
+            <input type="text" id="transportType" required>
+
+            <label for="cargoType">Cargo Type:</label>
+            <input type="text" id="stCargoType" required>
+
+            <label for="temperatureRange">Temperature Range:</label>
+            <input type="text" id="stTemperatureRange" required>
+
+            <label for="loadWeight">Load Weight (kg):</label>
+            <input type="number" id="stLoadWeight" required>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div class="table-container">
+        <h3>Data Entries</h3>
+        <table id="storageTable" class="boxed-table">
+            <thead>
+                <tr>
+                    <th>Transport ID</th>
+                    <th>Transport Date</th>
+                    <th>Transport Type</th>
+                    <th>Cargo Type</th>
+                    <th>Temperature Range</th>
+                    <th>Load Weight</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="transport.js"></script>
+</body>
+</html>
