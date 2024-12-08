@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retail Orders</title>
-    <link rel="stylesheet" href="retailer_orders.css">
-    <link href="logo.png" rel="icon" type="image/png">
+    <title>Storage Transport Dashboard</title>
+    <link rel="stylesheet" href="shipment_transport.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+   
+
 </head>
 <body>
     <header>
@@ -13,6 +15,7 @@
             <img src="logo.png" alt="Retail Logo" class="logo-img">
             Retail Orders
         </h1>
+    </header>
         <nav class="nav">
             <ul class="ul">
                 <li><a href="retailer.html">Home</a></li>
@@ -21,38 +24,60 @@
                 <li><a href="login.html">Logout</a></li>
             </ul>
         </nav>
-    </header>
 
-    <main>
-        <section class="order-form">
-            <h2>Create New Order</h2>
-            <form id="orderForm">
-                <label for="productId">Product ID:</label>
-                <input type="text" id="productId" required>
+    <div class="dashboard">
+        <h2>Order</h2>
+        <p>Order with necessary Informations</p>
+        
+        <script src="retailer_orders.js"></script>
 
-                <label for="quantity">Quantity:</label>
-                <input type="number" id="quantity" min="1" required>
+        <div class="transport-filters">
+            <h3>Add new order</h3>
+            <div class="form-group">
+                <div class="left-column">
+                    <div class="input-row">
+                        <label for="Date">Date:</label>
+                        <input type="date" id="Date" name="Date">
+                    </div>
+                    <div class="input-row">
+                        <label for="orderID">Order ID:</label>
+                        <input type="text" id="orderID" name="orderID">
+                    </div>
+                    
+                </div>
+        
+                <div class="right-column">
+                    <div class="input-row">
+                        <label for="name">Product Name:</label>
+                        <input type="text" id="name" name="name">
+                    </div>
+                    
+                    <div class="input-row">
+                        <label for="Quantity"> Quantity </label>
+                        <input type="number" id="Quantity" name="Quantity" placeholder="amount">
+                    </div>
+                </div>
+            </div>
+        
+            <button class="btn" onclick="addTransport()">Add order</button>
+        </div>
 
-                <button type="submit">Add Order</button>
-            </form>
-        </section>
-
-        <section class="orders-table">
-            <h2>Orders</h2>
-            <table>
+        <div class="table-container">
+            <table id="transportTable">
                 <thead>
                     <tr>
+                        <th>Date</th>
                         <th>Order ID</th>
+                        <th>Product Name</th>
                         <th>Quantity</th>
-                        <th>Shipment Status</th>
+                        
                     </tr>
                 </thead>
-                <tbody id="ordersBody">
+                <tbody id="transportTableBody">
                 </tbody>
             </table>
-        </section>
-    </main>
-
-    <script src="retailer_orders.js"></script>
-</body>
-</html>
+        </div>
+    
+        
+    </body>
+    </html>
