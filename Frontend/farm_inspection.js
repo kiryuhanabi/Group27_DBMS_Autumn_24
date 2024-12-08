@@ -108,7 +108,7 @@ function addInspection() {
     const inspectorID = document.getElementById('inspectorID').value;
     const qualityGrade = document.getElementById('qualityGrade').value;
 
-    if (!date || !inspectionID || !farmID || !inspectorID || !qualityGrade) {
+    if (!date || !inspectionID || !farmID || !inspectorID || !inspectionType || !qualityGrade) {
         alert("Please fill in all fields.");
         return;
     }

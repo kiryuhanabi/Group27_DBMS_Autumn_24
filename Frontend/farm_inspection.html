@@ -37,56 +37,56 @@
     <div class="dashboard">
         <h2>Farm Inspection Dashboard</h2>
         <script src="farm_inspection.js"></script>
-
         <div class="inspection-filters">
-            <h3>Add New inspection</h3>
-            <div class="form-group">
-                <div class="left-column">
-                    <div class="input-row">
-                        <label for="inspectionDate">Date:</label>
-                        <input type="date" id="inspectionDate" name="inspectionDate">
+            <h3>Add New Inspection</h3>
+            <form id="addInspectionForm">
+                <div class="form-group">
+                    <div class="left-column">
+                        <div class="input-row">
+                            <label for="inspectionDate">Date:</label>
+                            <input type="date" id="inspectionDate" name="inspectionDate" required>
+                        </div>
+                        <div class="input-row">
+                            <label for="inspectionID">Inspection ID:</label>
+                            <input type="text" id="inspectionID" name="inspectionID" required>
+                        </div>
+                        <div class="input-row">
+                            <label for="inspectionType">Inspect-Type:</label>
+                            <select id="inspectionType" name="inspectionType" required>
+                                <option value="">Select Type</option>
+                                <option value="Soil">Soil</option>
+                                <option value="Fertilizer">Fertilizer</option>
+                                <option value="Maintenance">Maintenance</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="input-row">
-                        <label for="inspectionID">Inspection ID:</label>
-                        <input type="text" id="inspectionID" name="inspectionID">
-                    </div>
-                    <div class="input-row">
-                        <label for="inspectionType">Inspect-Type:</label>
-                        <select id="inspectionType" name="inspectionType">
-                            <option value=" "> </option>
-                            <option value="Soil">Soil</option>
-                            <option value="Fertilizer">Fertilizer</option>
-                            <option value="Maintenance">Maintenance</option>
-                        </select>
-                    </div>
-                </div>
+            
+                    <div class="right-column">
+                        <div class="input-row">
+                            <label for="farmID">Farm ID:</label>
+                            <input type="text" id="farmID" name="farmID" required>
+                        </div>
         
-                <div class="right-column">
-                    <div class="input-row">
-                        <label for="farmID">Farm ID:</label>
-                        <input type="text" id="farmID" name="farmID">
-                    </div>
-
-                    <div class="input-row">
-                        <label for="inspectorID">Inspector ID:</label>
-                        <input type="text" id="inspectorID" name="inspectorID">
-                    </div>
-
-                    <div class="input-row">
-                        <label for="qualityGrade">Quality Grade:</label>
-                        <select id="qualityGrade" name="qualityGrade">
-                            <option value=" "> </option>
-                            <option value="Poor">Poor</option>
-                            <option value="Acceptable">Acceptable</option>
-                            <option value="Good">Good</option>
-                            <option value="Excellent">Excellent</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+                        <div class="input-row">
+                            <label for="inspectorID">Inspector ID:</label>
+                            <input type="text" id="inspectorID" name="inspectorID" required>
+                        </div>
         
-            <button class="btn" onclick="addInspection()"><i class="fa fa-plus" aria-hidden="true"></i>  Add Inspection</button>
-        </div>
+                        <div class="input-row">
+                            <label for="qualityGrade">Quality Grade:</label>
+                            <select id="qualityGrade" name="qualityGrade" required>
+                                <option value="">Select Grade</option>
+                                <option value="Poor">Poor</option>
+                                <option value="Acceptable">Acceptable</option>
+                                <option value="Good">Good</option>
+                                <option value="Excellent">Excellent</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>         
+                <button class="btn" onclick="addInspection()"><i class="fa fa-plus" aria-hidden="true"></i> Add Inspection</button>
+            </form>
+        </div>        
 
         <div class="table-container">
             <h2>Overview of Inspections</h2>
