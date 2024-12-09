@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Retailer</title>
     <link rel="stylesheet" href="retailer_style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="logo.png" rel="icon" type="image/png">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <h1>
@@ -26,19 +24,28 @@
         </ul>
     </nav>
 
-    <!-- Overview Section -->
-    <section class="overview-container">
-        <section class="overview">
-            <h2>Retail Overview</h2> <!-- Retail Overview Title -->
-            <div class="charts-container">
-                <div class="chart small-chart">
-                    <canvas id="pieChart"></canvas>
-                </div>
-                <div class="chart">
-                    <canvas id="barChart"></canvas>
-                </div>
+   
+    <section class="retailer-info-container">
+        <h2>Retailer Information</h2>
+        <form id="retailerForm">
+            <div class="input-row">
+                <label for="retailerID">Retailer ID:</label>
+                <input type="text" id="retailerID" name="retailerID" readonly>
             </div>
-        </section>
+            <div class="input-row">
+                <label for="retailerName">Retailer Name:</label>
+                <input type="text" id="retailerName" name="retailerName" required>
+            </div>
+            <div class="input-row">
+                <label for="retailerPhone">Phone:</label>
+                <input type="tel" id="retailerPhone" name="retailerPhone" required>
+            </div>
+            <div class="input-row">
+                <label for="retailerEmail">Email:</label>
+                <input type="email" id="retailerEmail" name="retailerEmail" required>
+            </div>
+            <button type="button" class="btn" onclick="editRetailerInfo()">Save Changes</button>
+        </form>
     </section>
 
     <script src="retailer.js"></script>

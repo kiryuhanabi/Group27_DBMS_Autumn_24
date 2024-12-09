@@ -24,20 +24,32 @@
     </header>
 
     <main>
+        
         <section class="store-info">
             <h2>Store Information</h2>
-            <p><strong>Store ID:</strong> R12345</p>
-            <p><strong>Address:</strong> 123 Green Street, Agro City</p>
+            <form id="storeForm">
+                <div class="input-row">
+                    <label for="storeName">Store Name:</label>
+                    <input type="text" id="storeName" name="storeName" value="Store" required>
+                </div>
+                <div class="input-row">
+                    <label for="storeAddress">Address:</label>
+                    <textarea id="storeAddress" name="storeAddress" required>123 Green Street, Agro City</textarea>
+                </div>
+                <button type="button" class="btn" onclick="saveStoreInfo()">Save Changes</button>
+            </form>
         </section>
 
+        <br>
         <section class="store-table">
             <h2>Shipment Details</h2>
             <table>
                 <thead>
                     <tr>
+                        <th>Date</th>
                         <th>Shipment ID</th>
                         <th>Product</th>
-                        <th>Amount (Current / Capacity)</th>
+                        <th>Shipment Status</th>
                     </tr>
                 </thead>
                 <tbody id="shipmentsBody">

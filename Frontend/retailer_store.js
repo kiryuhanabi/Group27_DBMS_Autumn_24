@@ -1,28 +1,36 @@
+document.addEventListener("DOMContentLoaded", () => {
+    loadStoreInfo();
+});
 
+function loadStoreInfo() {
+ 
+    const storeData = {
+        storeName: "Store",
+        storeAddress: "123 Green Street, Agro City"
+    };
 
-
-function loadShipments() {
-    const shipmentsBody = document.getElementById('shipmentsBody');
-    shipments.forEach((shipment) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${shipment.shipmentId}</td>
-            <td>${shipment.product}</td>
-            <td>${shipment.current} / ${shipment.capacity}</td>
-        `;
-        shipmentsBody.appendChild(row);
-
-        if (shipment.current / shipment.capacity < 0.2) {
-            sendNotification(shipment);
-        }
-    });
+    // Populate fields
+    document.getElementById("storeName").value = storeData.storeName;
+    document.getElementById("storeAddress").value = storeData.storeAddress;
 }
 
+function saveStoreInfo() {
+    const storeName = document.getElementById("storeName").value;
+    const storeAddress = document.getElementById("storeAddress").value;
 
-function sendNotification(shipment) {
-    const notificationMessage = `⚠️ Low stock alert: ${shipment.product} (Shipment ID: ${shipment.shipmentId}) is below 20% capacity.`;
-    alert(notificationMessage); 
+    
+    if (!storeName || !storeAddress) {
+        alert("Please fill out all fields.");
+        return;
+    }
+
+  
+    const updatedStoreData = {
+        storeName,
+        storeAddress
+    };
+
+    console.log("Store information updated:", updatedStoreData);
+    alert("Store information saved successfully!");
 }
 
-
-document.addEventListener('DOMContentLoaded', loadShipments);
