@@ -4,26 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard</title>
-  <link rel="stylesheet" href="storage.css">
+  <link rel="stylesheet" href="setting.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <script defer src="storage.js"></script>
+  <script defer src="setting.js"></script>
 
 <body>
   <div class="sidebar">
     <h2><img src="logo.png" alt="Agro Logo" class="logo-img"> Agro Storage</h2>
     <ul>
-      <li><a href="#" class="active"><i class="fa fa-home"></i> Home</a></li>
+      <li><a href="storage.html" class="active"><i class="fa fa-home"></i> Home</a></li>
       <li><a href="storage_transport.html"><i class="fas fa-warehouse"></i> Storage Transport</a></li>
       <li><a href="shipment_transport.html"><i class="fas fa-truck"></i> Shipment Transport</a></li>
-      <li><a href="setting.html"><i class="fa fa-cog"></i> Settings</a></li>
+      <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
       <li><a href="login.html"><i class="fa fa-sign-out-alt"></i> Logout</a></li>
     </ul>
   </div>
   <div class="content">
     <header>
-      <h1>Home</h1>
+      <h1>Settings</h1>
       <div class="top-icons">
 
         <i class="fas fa-envelope" id="message-icon">
@@ -76,9 +76,6 @@
           <button id="sign-out-btn">Sign Out</button>
         </div>
       </div>
-
-
-      
     </header>
     <div class="modal" id="customize-modal">
         <div class="modal-content">
@@ -93,93 +90,59 @@
           </div>
         </div>
       </div>
-    
-
-
-
-        <section class="dashboard">
-            
-            <div class="summary-cards">
-                <div class="card total-products">
-                    <h2 id="t_products">Loading...</h2>
-                    <p>Total Products</p>
-                </div>
-                <div class="card storage-capacity">
-                    <h2 id="s_Capacity">Loading...</h2>
-                    <p>Storage Capacity</p>
-                </div>
-                <div class="card temperature">
-                    <h2 id="temperature">Loading...</h2>
-                    <p>Temperature</p>
-                </div>
-                <div class="card humidity">
-                    <h2 id="humidity">Loading...</h2>
-                    <p>Humidity</p>
-                </div>
-            </div>
-        </section>
-
-      <section class="container">
-        <div class="table-container">
-            <h2>Storage Overview</h2>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th>Storage ID</th>
-                        <th>Type</th>
-                        <th>Duration</th>
-                        <th>Location</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>ST002331</td>
-                        <td>Freezing</td>
-                        <td>30 days</td>
-                        <td>Mirpur 2, Dhaka</td>
-                    </tr>
-                    <tr>
-                        <td>ST003362</td>
-                        <td>Common</td>
-                        <td>60 days</td>
-                        <td>Purbachal, Dhaka</td>
-                    </tr>
-                    <tr>
-                        <td>ST005673</td>
-                        <td>Dry</td>
-                        <td>90 days</td>
-                        <td>Lalmonirhat, Dhaka</td>
-                    </tr>
-                </tbody>
-            </table>
+      <!-- Settings Content -->
+    <div class="settings-content">
+      
+      <div class="settings-options">
+        <div class="setting-item" onclick="toggleContent('profile')">
+          <i class="fas fa-user-circle"></i> Profile
+          <div id="profile" class="content">
+            <label>Name</label>
+            <input type="text" id="name" placeholder="Enter your name" />
+            <label>Email</label>
+            <input type="email" id="email" placeholder="Enter your email" />
+            <button onclick="saveProfile()">Save Changes</button>
+          </div>
         </div>
-    </section>
 
-    <section class="charts-container">
-      <h2>Analytics</h2>
-      <div class="charts-wrapper">
-<div class="chart" data-scroll="animate">
-  <h3>Storage Transport Overview</h3>
-  <canvas id="storageTransportChart"></canvas>
-</div>
+        <div class="setting-item" onclick="toggleContent('account')">
+          <i class="fas fa-cog"></i> Account
+          <div id="account" class="content">
+            <label>Change Password:</label>
+            <input type="password" placeholder="Current Password" />
+            <input type="password" placeholder="New Password" />
+            <input type="password" placeholder="Confirm Password" />
+            <button>Update Password</button>
+          </div>
+        </div>
 
-<div class="chart" data-scroll="animate">
-  <h3>Shipment Transport Overview</h3>
-  <canvas id="shipmentTransportChart"></canvas>
-</div>
+        <div class="setting-item" onclick="toggleContent('notifications')">
+          <i class="fas fa-bell"></i> Notifications
+          <div id="notifications" class="content">
+            <label><input type="checkbox" /> Email Notifications</label>
+            <label><input type="checkbox" /> Push Notifications</label>
+            <label><input type="checkbox" /> Storage Alerts</label>
+            <button>Save Preferences</button>
+          </div>
+        </div>
 
-<div class="chart pie-animate" data-scroll="animate">
-  <h3>Revenue from Storage</h3>
-  <canvas id="revenueChart"></canvas>
-</div>
+        <div class="setting-item" onclick="toggleContent('privacy')">
+          <i class="fas fa-lock"></i> Privacy & Security
+          <div id="privacy" class="content">
+            <button>Log Out All Devices</button>
+            <button class="danger">Delete Account</button>
+          </div>
+        </div>
 
-<div class="chart pie-animate" data-scroll="animate">
-  <h3>Cost Analysis</h3>
-  <canvas id="costChart"></canvas>
-</div>
-</div>
-  </section>
-  </div>
+        <div class="setting-item" onclick="toggleContent('support')">
+          <i class="fas fa-question-circle"></i> Help & Support
+          <div id="support" class="content">
+            <p>Need help? Contact us at <a href="mailto:support@example.com">support@example.com</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
 </body>
 </html>
