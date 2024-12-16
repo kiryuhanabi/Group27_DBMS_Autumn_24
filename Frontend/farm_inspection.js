@@ -72,7 +72,7 @@ function editRow(button) {
             <option value="Excellent" ${cells[5].textContent === "Excellent" ? "selected" : ""}>Excellent</option>
         </select>`;
 
-    button.textContent = "Save";
+    button.innerHTML = `<i class="fas fa-save"></i>`;
     button.onclick = function () {
         saveRow(this);
     };
@@ -146,18 +146,18 @@ function setDefaultValues() {
     document.getElementById('inspectionDate').value = setLocalDate(); 
     document.getElementById('inspectionID').value = generateRandomID();
     document.getElementById('inspectorID').value = "2222181";
-    document.getElementById('farmID').value = "F-";
-    document.getElementById('inspectionType').value = " ";
-    document.getElementById('qualityGrade').value = " ";
+    document.getElementById('farmID').value = "F";
+    document.getElementById('inspectionType').value = "Select Type";
+    document.getElementById('qualityGrade').value = "Select Grade";
 }
 
 function loadInspectionData() {
     document.getElementById('inspectionDate').value = setLocalDate(); 
     document.getElementById('inspectionID').value = generateRandomID();
     document.getElementById('inspectorID').value = "2222181";
-    document.getElementById('farmID').value = "F-";
-    document.getElementById('inspectionType').value = " ";
-    document.getElementById('qualityGrade').value = " ";
+    document.getElementById('farmID').value = "F";
+    document.getElementById('inspectionType').value = "Select Type";
+    document.getElementById('qualityGrade').value = "Select Grade";
     const farm_inspectionData = JSON.parse(localStorage.getItem('farm_inspectionData')) || [];
     farm_inspectionData.forEach(farm_inspection => addRowToTable(farm_inspection));
 }
@@ -173,12 +173,18 @@ function addRowToTable(farm_inspection) {
         <td>${farm_inspection.farmID}</td>
         <td>${farm_inspection.inspectorID}</td>
         <td>${farm_inspection.qualityGrade}</td>
-        <td>
-        <button class="btn btn-success" onclick="editRow(this)"><i class="fas fa-edit"></i></button>
-        <button class="btn" onclick="deleteRow(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
-        <button class="btn" onclick="printRow(this)"><i class="fa fa-print" aria-hidden="true"></i></button>
+        <td style="display: flex; gap: 10px;">
+            <button class="btn btn-success" onclick="editRow(this)">
+                <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn" onclick="deleteRow(this)">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+            <button class="btn" onclick="printRow(this)">
+                <i class="fa fa-print" aria-hidden="true"></i>
+            </button>
         </td>
-    `;
+`;
 
     row.addEventListener('click', () => {
         if (selectedRow) selectedRow.classList.remove('selected');
