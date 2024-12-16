@@ -25,15 +25,9 @@
 
     <section class="overview-container">
         <h2>Processing Overview</h2>
-        <div class="charts-container">
-            <div class="chart">
-                <h3>Processing Lots vs Batches</h3>
-                <canvas id="batchChart"></canvas>
-            </div>
-            <div class="chart">
-                <h3>Inspection Results</h3>
-                <canvas id="inspectionChart"></canvas>
-            </div>
+        <div class="chart">
+            <h3>Processing Lots vs Batches</h3>
+            <canvas id="batchChart"></canvas>
         </div>
     </section>
 
@@ -46,18 +40,6 @@
                 datasets: [{
                     data: [5, 3, 8],
                     backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
-                }]
-            }
-        });
-
-        const ctx2 = document.getElementById('inspectionChart').getContext('2d');
-        new Chart(ctx2, {
-            type: 'pie',
-            data: {
-                labels: ['Acceptable', 'Decent', 'Perfect', 'Poor'],
-                datasets: [{
-                    data: [20, 15, 10, 5],
-                    backgroundColor: ['#4CAF50', '#FFC107', '#2196F3', '#F44336']
                 }]
             }
         });

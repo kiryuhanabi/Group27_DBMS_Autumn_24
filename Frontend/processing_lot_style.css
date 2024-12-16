@@ -1,0 +1,102 @@
+/* General Reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/* Background Image */
+.background-image {
+    background-image: url('processing_lot.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100%;
+    width: 100%;
+}
+
+/* Title Header */
+.title-header {
+    text-align: center;
+    color: white;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background for better readability */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Add slight shadow for depth */
+}
+
+/* Navigation Menu */
+.nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 10px 0;
+}
+
+.nav ul li {
+    display: inline;
+}
+
+.nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px;
+    transition: background 0.3s, color 0.3s; /* Smooth hover effects */
+}
+
+.nav ul li a:hover {
+    background: white;
+    color: black;
+    border-radius: 5px; /* Rounded edges for hover effect */
+}
+
+/* Lot Container */
+.lot-container {
+    text-align: center;
+    color: white;
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    max-width: 80%;
+    margin: 0 auto;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Add slight shadow for depth */
+}
+
+/* Form and Table Styling */
+form, table {
+    width: 100%;
+    margin: 20px auto;
+    max-width: 700px; /* Constrain the width of forms and tables */
+    background: rgba(255, 255, 255, 0.9); /* Light background for readability */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+}
+
+/* Input and Button Styling */
+form input, form button {
+    width: calc(100% - 20px);
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+form button:hover {
+    background: #45a049;
+}

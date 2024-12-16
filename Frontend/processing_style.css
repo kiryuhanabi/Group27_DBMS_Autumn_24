@@ -42,10 +42,13 @@ body {
     font-weight: bold;
     padding: 8px 12px;
     border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s; /* Smooth hover effect */
 }
 
 .ul li a:hover {
-    background-color: #34495e;
+    background-color: white;
+    color: #34495e; /* Text color contrast for hover */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
 }
 
 /* Overview Section */
@@ -93,4 +96,15 @@ canvas {
     max-width: 250px;
     max-height: 250px;
     margin: auto;
+}
+
+/* Responsive Hover Effects */
+.chart:hover {
+    transform: scale(1.03); /* Slight zoom effect */
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.overview-container:hover {
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly brighter on hover */
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
 }
