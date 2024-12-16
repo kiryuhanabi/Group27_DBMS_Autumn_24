@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
+/* General Styling */
 * {
     padding: 0;
     margin: 0;
@@ -14,6 +15,7 @@ body {
     color: white;
 }
 
+/* Header Styling */
 h1 {
     text-align: center;
     color: rgb(224, 244, 217);
@@ -24,7 +26,7 @@ h1 {
 h2 {
     text-align: center;
     color: #000000;
-    margin-top: 240px;
+    margin-top: 20px;
     font-family: 'Poppins';
 }
 
@@ -34,6 +36,7 @@ h2 {
     margin-right: 4px;        
 }
 
+/* Navigation Bar */
 nav {
     background-color: #404340;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
@@ -58,6 +61,8 @@ ul li a {
     text-decoration: none;
     text-align: center;
     font-size: 15px;
+    transition: background-color 0.3s ease;
+    border-radius: 4px;
 }
 
 ul li ul.dropdown li {
@@ -82,20 +87,47 @@ ul li:hover ul.dropdown {
     display: block;
 }
 
-.navbar .ul li a {
-    text-decoration: none;
-    color: white;
-    padding: 10px 15px;
-    font-weight: bold;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-}
-
 @media (max-width: 768px) {
-.navbar .ul {
-    flex-direction: column;}
+    ul {
+        flex-direction: column;
+    }
 }
 
+/* Chart Section */
+.chart-container {
+    margin: 20px auto;
+    text-align: center;
+    width: 90%;
+    max-width: 1000px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.chart-container h2 {
+    color: #FFF;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.chart {
+    position: relative;
+    height: 400px; /* Adjusted height */
+    width: 100%;   /* Responsive width */
+    max-width: 500px;
+    margin: auto;
+}
+
+/* Responsive Chart */
+@media (max-width: 768px) {
+    .chart {
+        height: 300px;
+        max-width: 90%;
+    }
+}
+
+/* Table Section */
 .table-container {
     margin: 2rem auto;
     width: 80%;
@@ -106,14 +138,12 @@ ul li:hover ul.dropdown {
     overflow: hidden; 
 }
 
-
 table {
     width: 100%;
     border-collapse: collapse;
     font-family: Arial, sans-serif;
     background-color: #ffffff;
 }
-
 
 thead {
     background-color: #4CAF50;
@@ -149,12 +179,9 @@ tbody tr:hover {
     cursor: pointer;
 }
 
-
 @media (max-width: 768px) {
     th, td {
         padding: 0.75rem;
         font-size: 0.9em; 
     }
 }
-
-

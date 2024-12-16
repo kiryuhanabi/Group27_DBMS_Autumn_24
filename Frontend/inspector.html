@@ -7,6 +7,7 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="inspector_style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <h1>
@@ -15,20 +16,27 @@
     </h1>
     <nav class="nav">
         <ul class="ul">
-        <li><a href="inspector.html">Home</a></li>
-        <li>
-            <a href="#">Inspection Type</a>
-            <ul class="dropdown">
-                <li><a href="farm_inspection.html">Farm</a></li>
-                <li><a href="batch_inspection.html">Batch</a></li>
-                <li><a href="p_inspect.html">Processing</a></li>
-                <li><a href="storage_inspection.html">Storage</a></li>
-            </ul>
-        </li>
-        <li><a href="#">Reports</a></li>
-        <li><a href="login.html">Log out</a></li>
+            <li><a href="inspector.html">Home</a></li>
+            <li>
+                <a href="#">Inspection Type</a>
+                <ul class="dropdown">
+                    <li><a href="farm_inspection.html">Farm</a></li>
+                    <li><a href="batch_inspection.html">Batch</a></li>
+                    <li><a href="p_inspect.html">Processing</a></li>
+                    <li><a href="storage_inspection.html">Storage</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Reports</a></li>
+            <li><a href="login.html">Log out</a></li>
         </ul>
     </nav>
+
+    <section class="chart-container">
+        <h2>Inspection Results</h2>
+        <div class="chart">
+            <canvas id="inspectionChart"></canvas>
+        </div>
+    </section>
 
     <h2>Inspections Overview</h2>
 
@@ -64,5 +72,30 @@
             </tbody>
         </table>
     </div>
+
+    <script>
+        const ctx = document.getElementById('inspectionChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Acceptable', 'Decent', 'Perfect', 'Poor'],
+                datasets: [{
+                    data: [20, 15, 10, 5],
+                    backgroundColor: ['#4CAF50', '#FFC107', '#2196F3', '#F44336']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'white' /* Ensure visibility of labels */
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
