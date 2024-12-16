@@ -3,34 +3,47 @@
 <head>
     <link rel="stylesheet" href="login_style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="logo.png" rel="icon" type="image/png" >
+    <link href="logo.png" rel="icon" type="image/png">
     <title>Login</title>
+    <script>
+        function redirectToUserPage(event) {
+            event.preventDefault(); // Prevent form submission
+            const userType = document.getElementById('userType').value;
+
+            // Map user types to their respective pages
+            const userPages = {
+                inspector: 'inspector.html',
+                processing_center: 'processing_center.html',
+                transport: 'transport.html',
+                storage: 'storage.html',
+                retailer: 'retailer.html'
+            };
+
+            if (userType in userPages) {
+                window.location.href = userPages[userType]; // Redirect to the corresponding page
+            } else {
+                alert('Please select a valid user type.');
+            }
+        }
+    </script>
 </head>
 <body class="login-page">
     <div class="login-container">
         <img src="logo.png" alt="Logo" class="img-fluid mb-2" style="max-width: 100%; height: auto;">
         <h1>Login</h1>
-        <form method="get" id="loginForm">
-            <input type="text" class="form-control mb-3" placeholder="Email or Phone" required>
-            <input type="password" class="form-control mb-3" placeholder="Password" required>
-            
-            <select id="userType" class="form-control mb-4" required onchange="setFormAction()">
+        <form id="loginForm" onsubmit="redirectToUserPage(event)">
+            <input type="text" name="email_or_phone" class="form-control mb-3" placeholder="Email or Phone" required>
+            <input type="password" name="password" class="form-control mb-3" placeholder="Password" required>
+            <select id="userType" name="user_type" class="form-control mb-4" required>
                 <option value="" disabled selected>Select User Type</option>
-                <option value="inspector.html">Inspector</option>
-                <option value="processing_center.html">Processing Center</option>
-                <option value="transport.html">Transport</option>
-                <option value="storage.html">Storage</option>
-                <option value="retailer.html">Retailer</option>
+                <option value="inspector">Inspector</option>
+                <option value="processing_center">Processing Center</option>
+                <option value="transport">Transport</option>
+                <option value="storage">Storage</option>
+                <option value="retailer">Retailer</option>
             </select>
             <button type="submit" class="btn btn-primary button">Sign in</button>
         </form>
     </div>
-    
-    <script>
-        function setFormAction() {
-            const userType = document.getElementById("userType").value;
-            document.getElementById("loginForm").action = userType;
-        }
-    </script>
 </body>
 </html>
