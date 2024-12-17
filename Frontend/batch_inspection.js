@@ -9,24 +9,14 @@ window.onload = function() {
 function addInspection() {
     const date = document.getElementById('inspectionDate').value;
     const inspectionID = document.getElementById('inspectionID').value;
-    const affectedBatch = document.getElementById('inspectionType').value;
-    const batchID = document.getElementById('batchID').value;
     const inspectorID = document.getElementById('inspectorID').value;
-    const certifications = document.getElementById('certifications').value;
+    const batchID = document.getElementById('batchID').value;
+    const affectedBatch = document.getElementById('affectedBatch').value;
 
-<<<<<<< Updated upstream
-    if (!date || !inspectionID || !batchID || !inspectorID || !certifications) {
-        alert("Please fill in all fields.");
-        return;
-    }
-
-    const batch_inspection = { date, inspectionID, inspectionType, batchID, inspectorID, certifications};
-=======
-    // Fetch checkbox values
     const certifications = getSelectedCertifications();
 
     // Check for empty fields
-    if (!date || !inspectionID || !batchID || !inspectorID || affectedBatch || certifications.length === 0) {
+    if (!date || !inspectionID || !batchID || !inspectorID || !affectedBatch || certifications.length === 0) {
         alert("Please fill in all fields, including at least one certification.");
         return;
     }
@@ -40,16 +30,14 @@ function addInspection() {
         affectedBatch,
         certifications: certifications.join(", ") // Convert array to string
     };
->>>>>>> Stashed changes
 
+    // Save to localStorage
     let batch_inspectionData = JSON.parse(localStorage.getItem('batch_inspectionData')) || [];
     batch_inspectionData.push(batch_inspection);
     localStorage.setItem('batch_inspectionData', JSON.stringify(batch_inspectionData));
 
+    // Add to table
     addRowToTable(batch_inspection);
-<<<<<<< Updated upstream
-    setDefaultValues();   
-=======
     setDefaultValues();
 }
 
@@ -69,16 +57,15 @@ function setDefaultValues() {
     document.getElementById('inspectionDate').value = setLocalDate();
     document.getElementById('inspectionID').value = generateRandomID();
     document.getElementById('inspectorID').value = "2222181";
-    document.getElementById('batchID').value = generateRandomID();
+    document.getElementById('batchID').value = generateRandomID("B-");
     document.getElementById('affectedBatch').value = "";
 
     // Reset checkboxes
     const checkboxes = document.querySelectorAll('#certifications-container input[type="checkbox"]');
     checkboxes.forEach(checkbox => checkbox.checked = false);
->>>>>>> Stashed changes
 }
 
-function generateRandomID(length = 6) {
+function generateRandomID(prefix="", length = 7) {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let result = prefix;
     for (let i = 0; i < length; i++) {
@@ -95,19 +82,6 @@ function setLocalDate () {
 
     const formattedDate = `${yyyy}-${mm}-${dd}`;
     return formattedDate;
-}
-
-function setLotInspection() {
-    document.getElementById('batchID').value = generateRandomID("L-");
-}
-
-function setDefaultValues() {
-    document.getElementById('inspectionDate').value = setLocalDate(); 
-    document.getElementById('inspectionID').value = generateRandomID();
-    document.getElementById('inspectorID').value = "2222181";
-    document.getElementById('batchID').value = generateRandomID("B-");
-    document.getElementById('inspectionType').value = "Batch";
-    document.getElementById('certifications').value = " ";
 }
 
 function loadInspectionData() {
@@ -127,12 +101,18 @@ function addRowToTable(batch_inspection) {
         <td>${batch_inspection.batchID}</td>
         <td>${batch_inspection.affectedBatch}</td>
         <td>${batch_inspection.certifications}</td>
-        <td>
-        <button class="btn btn-success" onclick="editRow(this)"><i class="fas fa-edit"></i></button>
-        <button class="btn" onclick="deleteRow(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
-        <button class="btn" onclick="printRow(this)"><i class="fa fa-print" aria-hidden="true"></i></button>
+        <td style="display: flex; gap: 10px;">
+            <button class="btn btn-success" onclick="editRow(this)">
+                <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn" onclick="deleteRow(this)">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+            <button class="btn" onclick="printRow(this)">
+                <i class="fa fa-print" aria-hidden="true"></i>
+            </button>
         </td>
-    `;
+`;
 
     row.addEventListener('click', () => {
         if (selectedRow) selectedRow.classList.remove('selected');
@@ -144,8 +124,6 @@ function addRowToTable(batch_inspection) {
     tableBody.appendChild(row);
 }
 
-<<<<<<< Updated upstream
-=======
 function editRow(button) {
     const row = button.parentNode.parentNode; // Get the parent row
     const cells = row.querySelectorAll('td'); // Get all cells in the row
@@ -188,9 +166,9 @@ function editRow(button) {
             batch_inspectionData[updatedIndex] = {
                 date: cells[0].textContent,
                 inspectionID: cells[1].textContent,
-                inspectorID: cells[2].textContent,
+                inspectionType: cells[2].textContent,
                 batchID: cells[3].textContent,
-                affectedBatch: cells[4].textContent,
+                inspectorID: cells[4].textContent,
                 certifications: cells[5].textContent
             };
             localStorage.setItem('batch_inspectionData', JSON.stringify(batch_inspectionData));
@@ -201,7 +179,6 @@ function editRow(button) {
     }
 }
 
->>>>>>> Stashed changes
 function deleteRow(button) {
     // Get the table row to delete
     const row = button.parentNode.parentNode;
@@ -248,9 +225,9 @@ function printRow(button) {
     doc.setFont("helvetica", "normal");
     doc.text(`Date: ${rowData[0]}`, 20, 80);
     doc.text(`Inspection ID: ${rowData[1]}`, 20, 90);
-    doc.text(`Inspector ID:: ${rowData[2]}`, 20, 100);
+    doc.text(`Type: ${rowData[2]}`, 20, 100);
     doc.text(`Batch ID: ${rowData[3]}`, 20, 110);
-    doc.text(`Affected Batch Quantity: ${rowData[4]}`, 20, 120);
+    doc.text(`Inspector ID: ${rowData[4]}`, 20, 120);
     doc.text(`Certifications: ${rowData[5]}`, 20, 130);
 
 
