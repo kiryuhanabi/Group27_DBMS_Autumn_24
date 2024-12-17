@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transport Dashboard</title>
-    <link rel="stylesheet" href="shipment_transport.css">
+    <link rel="stylesheet" href="shipment_Creat.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
@@ -15,7 +15,7 @@
         <ul>
           <li><a href="storage.html" class="active"><i class="fa fa-home"></i> Home</a></li>
           <li><a href="storage_transport.html"><i class="fas fa-warehouse"></i> Storage Transport</a></li>
-          <li><a href="#"><i class="fas fa-truck"></i> Shipment Transport</a></li>
+          <li><a href="#"><i class="fas fa-truck"></i> Create Shipment</a></li>
           <li><a href="setting.html"><i class="fa fa-cog"></i> Settings</a></li>
           <li><a href="login.html"><i class="fa fa-sign-out-alt"></i> Logout</a></li>
         </ul>
@@ -24,7 +24,7 @@
       <div class="content">
     <div class="dashboard">
         <header>
-            <h1>Shipment Transport Dashboard</h1>
+            <h1>Create Shipment Dashboard</h1>
             <div class="top-icons">
               <i class="fas fa-envelope" id="message-icon">
                 <span class="badge" id="message-badge">4</span>
@@ -100,7 +100,7 @@
 
 
         <div class="transport-filters">
-            <h3>Add New Transport</h3>
+            <h3>Create New Shipment</h3>
             <div class="form-group">
                 <div class="left-column">
         
@@ -127,16 +127,16 @@
                         <input type="text" id="temperatureRange" name="temperatureRange" >
                     </div>
                     <div class="input-row">
-                        <label for="loadWeight">Load Weight:</label>
-                        <input type="number" id="loadWeight" name="loadWeight" placeholder="Weight in kg">
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" id="quantity" name="quantity">
                     </div>
                 </div>
             </div>
 
             
-            <button id="addTransportButton" onclick="addUpdateTransport()">Add Transport</button>
+            <button id="addTransportButton" onclick="addUpdateTransport()">Create Shipment</button>
             <div class="input-row">
-                <label for="searchInput">Search Transport:</label>
+                <label for="searchInput">Search Shipment:</label>
                 <input type="text" id="searchInput" placeholder="Search by ID or Transport Type">
             </div>
         </div>
@@ -147,11 +147,13 @@
                 <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Transport ID</th>
+                        <th>Shipment ID</th>
+                        <th>Shipment Transport ID</th>
                         <th>Transport Type</th>
+                        <th>Retailer ID</th>
                         <th>Cargo Type</th>
-                        <th>Temperature Range</th>
-                        <th>Load Weight</th>
+                        <th>Operating Temperature</th>
+                        <th>Quantity</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -160,7 +162,7 @@
         </section>
     </main>
 
-    <script src="shipment_transport.js"></script>
+    <script src="shipment_Creat.js"></script>
   </div>
 </div>
 </body>

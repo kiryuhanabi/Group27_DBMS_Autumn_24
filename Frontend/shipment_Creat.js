@@ -118,11 +118,46 @@ document.addEventListener("DOMContentLoaded", loadFromLocalStorage);
 
 
 
+document.addEventListener('DOMContentLoaded', () => {
+  loadTableData();
+
+  document.getElementById('searchInput').addEventListener('input', filterTable);
+});
+
+function filterTable() {
+  const query = document.getElementById('searchInput').value.trim().toLowerCase();
+  const tableBody = document.getElementById('transportTableBody');
+  const rows = Array.from(tableBody.getElementsByTagName('tr'));
+
+  rows.forEach(row => {
+      const shtransportID = row.cells[1].innerText.toLowerCase();
+      const transportType = row.cells[2].innerText.toLowerCase();
+
+      if (shtransportID.includes(query) || transportType.includes(query)) {
+          row.style.display = '';
+      } else {
+          row.style.display = 'none';
+      }
+  });
+}
+
+
+
+
+
 let editRowIndex = null;
+
 let shtransportIDCounter = localStorage.getItem('shtransportIDCounter') 
     ? parseInt(localStorage.getItem('shtransportIDCounter')) 
     : 1;
 
+let shipmentIDCounter = localStorage.getItem('shipmentIDCounter') 
+    ? parseInt(localStorage.getItem('shipmentIDCounter')) 
+    : 1;
+
+let retailerIDCounter = localStorage.getItem('retailerIDCounter') 
+    ? parseInt(localStorage.getItem('retailerIDCounter')) 
+    : 1;
 
 document.addEventListener('DOMContentLoaded', loadTableData);
 
@@ -130,78 +165,130 @@ function addUpdateTransport() {
     const transportType = document.getElementById('transportType').value.trim();
     const cargoType = document.getElementById('cargoType').value.trim();
     const temperatureRange = document.getElementById('temperatureRange').value.trim();
-    const loadWeight = document.getElementById('loadWeight').value.trim();
+    const quantity = document.getElementById('quantity').value.trim();
 
-    if (!transportType || !cargoType || !temperatureRange || !loadWeight) {
+    if (!transportType || !cargoType || !temperatureRange || !quantity) {
         alert("Please fill in all fields.");
         return;
     }
 
     const stransports = JSON.parse(localStorage.getItem('stransports')) || [];
-    let transportDate, transportID;
+    let transportDate, shtransportID, shipmentID, retailerID;
 
     if (editRowIndex === null) {
-
-        const transportDate = new Date().toISOString().split('T')[0];
-        const shtransportID = `sht${String(shtransportIDCounter).padStart(6, '0')}`;
+        // New Entry
+        transportDate = new Date().toISOString().split('T')[0];
+        shtransportID = `sht${String(shtransportIDCounter).padStart(6, '0')}`;
+        shipmentID = `s${String(shipmentIDCounter).padStart(6, '0')}`;
+        retailerID = `r${String(retailerIDCounter).padStart(6, '0')}`;
 
         stransports.push({
             transportDate,
             shtransportID,
+            shipmentID,
+            retailerID,
             transportType,
             cargoType,
             temperatureRange,
-            loadWeight,
+            quantity
         });
-        shtransportIDCounter++;
-        localStorage.setItem('shtransportIDCounter', shtransportIDCounter);
-    } else {
 
+        // Increment counters
+        shtransportIDCounter++;
+        shipmentIDCounter++;
+        retailerIDCounter++;
+
+        // Update localStorage counters
+        localStorage.setItem('shtransportIDCounter', shtransportIDCounter);
+        localStorage.setItem('shipmentIDCounter', shipmentIDCounter);
+        localStorage.setItem('retailerIDCounter', retailerIDCounter);
+    } else {
+        // Editing existing row
         const existingTransport = stransports[editRowIndex];
         transportDate = existingTransport.transportDate;
         shtransportID = existingTransport.shtransportID;
+        shipmentID = existingTransport.shipmentID;
+        retailerID = existingTransport.retailerID;
 
         stransports[editRowIndex] = {
             transportDate,
             shtransportID,
+            shipmentID,
+            retailerID,
             transportType,
             cargoType,
             temperatureRange,
-            loadWeight,
+            quantity
         };
-        editRowIndex = null;
 
-        
+        editRowIndex = null;
     }
 
     localStorage.setItem('stransports', JSON.stringify(stransports));
-
     updateTable();
     clearInputs();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    loadTableData();
+function loadTableData() {
+    updateTable();
+}
 
-    document.getElementById('searchInput').addEventListener('input', filterTable);
-});
-
-function filterTable() {
-    const query = document.getElementById('searchInput').value.trim().toLowerCase();
+function updateTable() {
     const tableBody = document.getElementById('transportTableBody');
-    const rows = Array.from(tableBody.getElementsByTagName('tr'));
+    tableBody.innerHTML = '';
+    const stransports = JSON.parse(localStorage.getItem('stransports')) || [];
 
-    rows.forEach(row => {
-        const shtransportID = row.cells[1].innerText.toLowerCase();
-        const transportType = row.cells[2].innerText.toLowerCase();
+    stransports.forEach((transport, index) => {
+        const row = document.createElement('tr');
 
-        if (shtransportID.includes(query) || transportType.includes(query)) {
-            row.style.display = '';
-        } else {
-            row.style.display = 'none';
-        }
+        row.innerHTML = `
+            <td>${transport.transportDate}</td>
+            <td>${transport.shipmentID}</td>
+            <td>${transport.shtransportID}</td>
+            <td>${transport.transportType}</td>
+            <td>${transport.retailerID}</td>
+            <td>${transport.cargoType}</td>
+            <td>${transport.temperatureRange}</td>
+            <td>${transport.quantity}</td>
+            <td class="actions">
+                <button onclick="viewDetails(this)">View</button>
+                <button onclick="editTransport(this)">Edit</button>
+                <button onclick="deleteTransport(this)">Delete</button>
+                <button onclick="sendToTransport(${index})">Send to Transport</button>
+                
+            </td>
+        `;
+
+        tableBody.appendChild(row);
     });
 }
+
+
+
+
+function sendToTransport(index) {
+  const stransports = JSON.parse(localStorage.getItem('stransports')) || [];
+  const transportToSend = stransports[index];
+
+  if (!transportToSend) {
+      alert("Unable to send transport data. Item not found.");
+      return;
+  }
+
+  // Retrieve or initialize transport shipments in localStorage
+  const transportShipments = JSON.parse(localStorage.getItem('transportShipments')) || [];
+
+  // Add the selected transport data to the new storage
+  transportShipments.push(transportToSend);
+
+  // Save back to localStorage
+  localStorage.setItem('transportShipments', JSON.stringify(transportShipments));
+
+  alert("Transport data sent successfully!");
+}
+
+
+
 
 function editTransport(button) {
     const row = button.parentNode.parentNode;
@@ -213,7 +300,7 @@ function editTransport(button) {
     document.getElementById('transportType').value = transport.transportType;
     document.getElementById('cargoType').value = transport.cargoType;
     document.getElementById('temperatureRange').value = transport.temperatureRange;
-    document.getElementById('loadWeight').value = transport.loadWeight;
+    document.getElementById('quantity').value = transport.quantity;
 }
 
 function deleteTransport(button) {
@@ -227,42 +314,13 @@ function deleteTransport(button) {
     updateTable();
 }
 
-function loadTableData() {
-    updateTable();
-}
-
-function updateTable() {
-    const tableBody = document.getElementById('transportTableBody');
-    tableBody.innerHTML = '';
-    const stransports = JSON.parse(localStorage.getItem('stransports')) || [];
-
-    stransports.forEach((transport) => {
-        const row = document.createElement('tr');
-
-        row.innerHTML = `
-            <td>${transport.transportDate}</td>
-            <td>${transport.shtransportID}</td>
-            <td>${transport.transportType}</td>
-            <td>${transport.cargoType}</td>
-            <td>${transport.temperatureRange}</td>
-            <td>${transport.loadWeight}</td>
-            <td class="actions">
-                <button onclick="viewDetails(this)">View</button>
-                <button onclick="editTransport(this)">Edit</button>
-                <button onclick="deleteTransport(this)">Delete</button>
-            </td>
-        `;
-
-        tableBody.appendChild(row);
-    });
-}
-
 function clearInputs() {
     document.getElementById('transportType').value = '';
     document.getElementById('cargoType').value = '';
     document.getElementById('temperatureRange').value = '';
-    document.getElementById('loadWeight').value = '';
+    document.getElementById('quantity').value = '';
 }
+
 
 
 function viewDetails(button) {
@@ -282,19 +340,21 @@ function viewDetails(button) {
     
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(18);
-    doc.text("Shipment Transport Document", 105, 63, { align: "center" });
+    doc.text("Shipment Document", 105, 63, { align: "center" });
 
     doc.setFontSize(12);
     doc.setFont("helvetica", "normal");
     doc.text(`Date: ${rowData[0]}`, 20, 80);
-    doc.text(`Transport ID: ${rowData[1]}`, 20, 90);
-    doc.text(`Type: ${rowData[2]}`, 20, 100);
-    doc.text(`Cargo Type: ${rowData[3]}`, 20, 110);
-    doc.text(`Temperature Range: ${rowData[4]}`, 20, 120);
-    doc.text(`Load Weight: ${rowData[5]} kg`, 20, 130);
+    doc.text(`Shipment ID: ${rowData[1]}`, 20, 90);
+    doc.text(`Shipment Transport ID: ${rowData[2]}`, 20, 100);
+    doc.text(`Transport Type: ${rowData[3]}`, 20, 110);
+    doc.text(`Retailer ID: ${rowData[4]}`, 20, 120);
+    doc.text(`Cargo Type: ${rowData[5]}`, 20, 130);
+    doc.text(`Operating Temperature: ${rowData[6]}`, 20, 140);
+    doc.text(`Quantity: ${rowData[7]} kg`, 20, 150);
 
-    doc.text("Signature:", 20, 150);
-    doc.line(40, 150, 100, 150); 
+    doc.text("Signature:", 20, 160);
+    doc.line(40, 160, 100, 160); 
 
-    doc.save("ShipmentTransportDetails.pdf");
+    doc.save("Shipment Details.pdf");
 }

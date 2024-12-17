@@ -1,90 +1,233 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+* {
     padding: 0;
-    background-color: #f4f4f9;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-image: url('transport_image.webp');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+}
+
+h1 {
+    text-align: center;
+    color: #4CAF50;
+    margin-top: 20px;
+    font-family: 'Poppins';
+}
+
+.logo-img {
+    width: 80px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+.nav {
+    display: flex;
+    justify-content: center;
+    background: #34495e;
+    padding: 10px 0;
+}
+
+.ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ul li {
+    position: relative;
+    margin: 0 10px;
+}
+
+.ul li a {
+    display: block;
+    padding: 15px 20px;
+    color: #FFF;
+    text-decoration: none;
+    font-size: 16px;
+    text-align: center;
+}
+
+.ul li a:hover {
+    background: #4CAF50;
+    border-radius: 4px;
+}
+
+/* Dropdown menu styling */
+.ul li ul.dropdown {
+    display: none;
+    position: absolute;
+    background-color: #34495e;
+    list-style: none;
+    padding: 0;
+    top: 100%;
+    left: 0;
+    min-width: 150px;
+    z-index: 1000;
+}
+
+.ul li ul.dropdown li a {
+    padding: 10px 15px;
+    display: block;
+    font-size: 15px;
+    color: #FFF;
+    text-align: left;
+}
+
+.ul li ul.dropdown li a:hover {
+    background: #4CAF50;
+}
+
+/* Show dropdown on hover */
+.ul li:hover ul.dropdown {
+    display: block;
+}
+
+/* Notification bell styles */
+.notification-icon {
+    position: relative;
+}
+
+.bell-img {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.notifications {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 40px;
+    background-color: #34495e;
+    list-style: none;
+    padding: 10px;
+    min-width: 200px;
+    border-radius: 4px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.notifications li {
+    padding: 8px 10px;
+    color: #FFF;
+}
+
+.notifications li a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.notifications li:hover {
+    background: #4CAF50;
+    color: white;
+}
+
+.notification:hover .notifications {
+    display: block;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .ul li a {
+        padding: 10px;
+    }
+}
+
+
+
+
+
+.table-section{
+    padding: 30px;
+    border-radius: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    min-width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: slideIn 1s ease-out;
+    background-color: #fff;
+    padding: 30px;
 }
 
 h2 {
     text-align: center;
+    color: #ffffff;
     margin-top: 20px;
-    color: #333;
+    font-family: 'Poppins';
 }
 
-.form-container {
-    width: 50%;
-    margin: 20px auto;
-    padding: 20px;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-form h3 {
-    text-align: center;
-    margin-bottom: 15px;
-    color: #555;
-}
-
-form label {
-    display: block;
-    margin-top: 10px;
-    font-weight: bold;
-}
-
-form input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-form button {
-    display: block;
-    width: 100%;
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #28a745;
+table thead tr {
+    background-color: #4CAF50;
     color: #fff;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    
+    text-align: center;
+    color: #000;
+}
+
+table tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+table tbody tr:hover {
+    background-color: rgba(76, 175, 80, 0.2);
+}
+
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px; 
+}
+
+.actions button {
+    padding: 5px 10px;
     border: none;
     border-radius: 4px;
+    color: white;
     cursor: pointer;
+    font-size: 14px;
 }
 
-form button:hover {
-    background-color: #218838;
+.actions button:nth-child(1) {
+    background-color: #007bff;
 }
 
-.table-container {
-    width: 70%;
-    margin: 20px auto;
+.actions button:nth-child(1):hover {
+    background-color: #0056b3;
 }
 
-.boxed-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.actions button:nth-child(2) {
+    background-color: #c0392b;
 }
 
-.boxed-table th, .boxed-table td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: left;
-}
-
-.boxed-table th {
-    background-color: #f9f9f9;
-    color: #333;
-}
-
-.boxed-table tbody tr:nth-child(even) {
-    background-color: #f4f4f4;
-}
-
-.boxed-table tbody tr:hover {
-    background-color: #f1f1f1;
+.actions button:nth-child(2):hover {
+    background-color: #76231b;
 }
