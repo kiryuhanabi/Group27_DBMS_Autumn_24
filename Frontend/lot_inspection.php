@@ -1,3 +1,39 @@
+<?php
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db = "crud"; 
+
+$conn = new mysqli($host, $user, $pass, $db);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$message = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $inspectionDate = $_POST['inspectionDate'];
+    $inspectorID = $_POST['inspectorID'];
+    $lotNumber = $_POST['lotNumber'];
+    $packageQualityGrade = $_POST['packageQualityGrade'];
+
+    $sql = "INSERT INTO tbllotinspection (`Date`, `Inspector ID`, `Lot Number`, `Package Quality Grade`)
+        VALUES ('$inspectionDate', '$inspectorID', '$lotNumber', '$packageQualityGrade')";
+
+    if ($conn->query($sql) === TRUE) {
+        $message = "Inspection added successfully!";
+    } else {
+        $message = "Error: " . $conn->error;
+    }
+}
+
+$sql = "SELECT * FROM tbllotinspection";
+$result = $conn->query($sql);
+
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,13 +58,13 @@
             <li>
                 <a href="#">Inspection Type</a>
                 <ul class="dropdown">
-                    <li><a href="farm_inspection.html">Farm</a></li>
+                    <li><a href="farm_inspection.php">Farm</a></li>
                     <li><a href="batch_inspection.html">Batch</a></li>
+                    <li><a href="lot_inspection.php">Lot</a></li>
                     <li><a href="p_inspect.html">Processing</a></li>
                     <li><a href="storage_inspection.html">Storage</a></li>
                 </ul>
             </li>
-            <li><a href="#">Reports</a></li>
             <li><a href="login.html">Log out</a></li>
         </ul>
     </nav>
@@ -39,16 +75,12 @@
 
         <div class="inspection-filters">
             <h3>Add New inspection</h3>
+            <form action="" method="POST">
             <div class="form-group">
                 <div class="left-column">
                     <div class="input-row">
                         <label for="inspectionDate">Date:</label>
                         <input type="date" id="inspectionDate" name="inspectionDate">
-                    </div>
-
-                    <div class="input-row">
-                        <label for="inspectionID">Inspection ID:</label>
-                        <input type="text" id="inspectionID" name="inspectionID">
                     </div>
 
                     <div class="input-row">
@@ -64,13 +96,19 @@
                     </div>
 
                     <div class="input-row">
-                        <label for="lotQuality">Lot Quality:</label>
-                        <input type="text" id="lotQuality" name="lotQuality">
+                        <label for="packageQualityGrade">Package Quality:</label>
+                            <select id="packageQualityGrade" name="packageQualityGrade" required>
+                                <option disabled selected>Select Type</option>
+                                <option value="Poor">Poor</option>
+                                <option value="Acceptable">Acceptable</option>
+                                <option value="Decent">Decent</option>
+                                <option value="Perfect">Perfect</option>
+                            </select>
                     </div>
                 </div>
             </div>
-        
-            <button class="btn" onclick="addInspection()">Add Inspection</button>
+            <button class="btn" type="submit">Add Inspection</button>
+            </form>
         </div>
 
         <div class="table-container">
@@ -79,13 +117,26 @@
                 <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Inspection ID</th>
                         <th>Inspector ID</th>
                         <th>Lot Number</th>
-                        <th>Lot Quality</th>
+                        <th>Package Quality</th>
                     </tr>
                 </thead>
                 <tbody id="inspectionTableBody">
+                    <?php if ($result->num_rows > 0): ?>
+                        <?php while ($row = $result->fetch_assoc()): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($row['Date']); ?></td>
+                                <td><?php echo htmlspecialchars($row['Inspector ID']); ?></td>
+                                <td><?php echo htmlspecialchars($row['Lot Number']); ?></td>
+                                <td><?php echo htmlspecialchars($row['Package Quality Grade']); ?></td>
+                            </tr>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="7">No records found</td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>     
