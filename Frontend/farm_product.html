@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Product</title>
+    <link rel="stylesheet" href="farm_product.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css" integrity="sha512-3PN6gfRNZEX4YFyz+sIyTF6pGlQiryJu9NlGhu9LrLMQ7eDjNgudQoFDK3WSNAayeIKc6B8WXXpo4a7HqxjKwg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header>
+        <h1>
+            <img src="logo.png" alt="Agro Logo" class="logo-img"> Agro
+        </h1>
+    </header>
+
+    <nav class="nav">
+        <ul class="ul">
+            <li><a href="farm.html">Home</a></li>
+            <li><a href="farm_product.html">Product</a></li>
+            <li><a href="farm_batch.html">Batch</a></li>
+            <li><a href="login.html">Logout</a></li>
+        </ul>
+    </nav>
+
+    </nav>
+
+    <div class="dashboard">
+        <h2>Product</h2>
+        <script src="farm_product.js"></script>
+        <div class="inspection-filters">
+            <h3>Add New Product</h3>
+            <form id="addInspectionForm">
+                <div class="form-group">
+                    <div class="left-column">
+                        <div class="input-row">
+                            <label for="productname">Procuct Name</label>
+                            <input type="text" id="productname" name="productname" required>
+                        </div>
+                        <div class="input-row">
+                            <label for="type">Type</label>
+                            <input type="text" id="type" name="type" required>
+                        </div>
+                        <div class="input-row">
+                            <label for="season">Best Season:</label>
+                            <select id="season" name="season" required>
+                                <option value="summer">summer</option>
+                                <option value="rainy">rainy</option>
+                                <option value="winter">winter</option>
+                                <option value="spring">spring</option>
+                            </select>
+                        </div>
+                    </div>
+            
+                    <div class="right-column">
+                        <div class="input-row">
+                            <label for="humidity">Optimum humidity:</label>
+                            <input type="text" id="humidity" name="humidity" required>
+                        </div>
+        
+                        <div class="input-row">
+                            <label for="inspectorID">Optimum temperature:</label>
+                            <input type="text" id="inspectorID" name="inspectorID" required>
+                        </div>
+        
+                       
+                    </div>
+                </div>         
+                <button class="btn" onclick="addInspection()"><i class="fa fa-plus" aria-hidden="true"></i> Add product</button>
+            </form>
+        </div>        
+
+        <div class="table-container">
+            <h2>Overview of Product</h2>
+            <table id="inspectionTable">
+                <thead>
+                    <tr>
+                        <th>Product ID</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Best season</th>
+                        <th>Optimum temperature</th>
+                        <th>Optimum humidity</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="inspectionTableBody">
+                </tbody>
+            </table>
+        </div>     
+    </body>
+</html>

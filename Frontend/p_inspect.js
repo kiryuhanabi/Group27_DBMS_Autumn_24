@@ -6,9 +6,122 @@ window.onload = function() {
     loadInspectionData();
 };
 
-function addInspection() {
-    
+function saveTableData() {
+    const tableBody = document.getElementById("inspectionTableBody");
+    const rows = tableBody.querySelectorAll("tr");
+    const data = [];
 
+    rows.forEach(row => {
+        const cells = row.querySelectorAll("td");
+        data.push({
+            date: cells[0].textContent,
+            inspectionID: cells[1].textContent,
+            centerID: cells[2].textContent,
+            inspectorID: cells[3].textContent,
+            machineryGrade: cells[4].textContent,
+            maintenanceGrade: cells[5].textContent,
+            staffSafetyGrade: cells[6].textContent,
+            hygieneGrade: cells[7].textContent
+        });
+    });
+
+    localStorage.setItem("inspectionData", JSON.stringify(data));
+}
+
+// Function to load data from localStorage
+function loadTableData() {
+    const tableBody = document.getElementById("inspectionTableBody");
+    const data = JSON.parse(localStorage.getItem("inspectionData")) || [];
+
+    tableBody.innerHTML = ""; // Clear existing rows
+    data.forEach(rowData => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${rowData.date}</td>
+            <td>${rowData.inspectionID}</td>
+            <td>${rowData.centerID}</td>
+            <td>${rowData.inspectorID}</td>
+            <td>${rowData.machineryGrade}</td>
+            <td>${rowData.maintenanceGrade}</td>
+            <td>${rowData.staffSafetyGrade}</td>
+            <td>${rowData.hygieneGrade}</td>
+            <td><button onclick="editRow(this)">Edit</button></td>
+        `;
+
+        tableBody.appendChild(row);
+    });
+}
+
+// Function to enable editing a row
+function editRow(button) {
+    const row = button.parentNode.parentNode;
+    const cells = row.querySelectorAll("td");
+
+    cells[0].innerHTML = `<input type="date" value="${cells[0].textContent}" />`;
+    cells[1].innerHTML = `<input type="text" value="${cells[1].textContent}" />`;
+    cells[2].innerHTML = `<input type="text" value="${cells[2].textContent}" />`;
+    cells[3].innerHTML = `<input type="text" value="${cells[3].textContent}" />`;
+    cells[4].innerHTML = `
+        <select>
+            <option value="Poor" ${cells[4].textContent === "Poor" ? "selected" : ""}>Poor</option>
+            <option value="Acceptable" ${cells[4].textContent === "Acceptable" ? "selected" : ""}>Acceptable</option>
+            <option value="Good" ${cells[4].textContent === "Good" ? "selected" : ""}>Good</option>
+            <option value="Excellent" ${cells[4].textContent === "Excellent" ? "selected" : ""}>Excellent</option>
+        </select>`;
+    cells[5].innerHTML = `
+        <select>
+            <option value="Poor" ${cells[5].textContent === "Poor" ? "selected" : ""}>Poor</option>
+            <option value="Acceptable" ${cells[5].textContent === "Acceptable" ? "selected" : ""}>Acceptable</option>
+            <option value="Good" ${cells[5].textContent === "Good" ? "selected" : ""}>Good</option>
+            <option value="Excellent" ${cells[5].textContent === "Excellent" ? "selected" : ""}>Excellent</option>
+        </select>`;
+    cells[6].innerHTML = `
+        <select>
+            <option value="Poor" ${cells[6].textContent === "Poor" ? "selected" : ""}>Poor</option>
+            <option value="Acceptable" ${cells[6].textContent === "Acceptable" ? "selected" : ""}>Acceptable</option>
+            <option value="Good" ${cells[6].textContent === "Good" ? "selected" : ""}>Good</option>
+            <option value="Excellent" ${cells[6].textContent === "Excellent" ? "selected" : ""}>Excellent</option>
+        </select>`;
+    cells[7].innerHTML = `
+        <select>
+            <option value="Poor" ${cells[7].textContent === "Poor" ? "selected" : ""}>Poor</option>
+            <option value="Acceptable" ${cells[7].textContent === "Acceptable" ? "selected" : ""}>Acceptable</option>
+            <option value="Good" ${cells[7].textContent === "Good" ? "selected" : ""}>Good</option>
+            <option value="Excellent" ${cells[7].textContent === "Excellent" ? "selected" : ""}>Excellent</option>
+        </select>`;
+
+    button.innerHTML = `<i class="fas fa-save"></i>`;
+    button.onclick = function () {
+        saveRow(this);
+    };
+}
+
+// Function to save the edited row
+function saveRow(button) {
+    const row = button.parentNode.parentNode;
+    const inputs = row.querySelectorAll("td input, td select");
+
+    const cells = row.querySelectorAll("td");
+    cells[0].textContent = inputs[0].value;
+    cells[1].textContent = inputs[1].value;
+    cells[2].textContent = inputs[2].value;
+    cells[3].textContent = inputs[3].value;
+    cells[4].textContent = inputs[4].value;
+    cells[5].textContent = inputs[5].value;
+    cells[6].textContent = inputs[6].value;
+    cells[7].textContent = inputs[7].value;
+
+    button.innerHTML = `<i class="fas fa-edit"></i>`
+    button.onclick = function () {
+        editRow(this);
+    };
+
+    // Save data to localStorage
+    saveTableData();
+}
+
+function addInspection() {
     const date = document.getElementById('inspectionDate').value;
     const inspectionID = document.getElementById('inspectionID').value;
     const centerID = document.getElementById('centerID').value;
@@ -18,7 +131,7 @@ function addInspection() {
     const staffSafetyGrade = document.getElementById('staffSafetyGrade').value;
     const hygieneGrade = document.getElementById('hygieneGrade').value;
 
-    if (!date || !inspectionID || !centerID || !inspectorID || !maintenanceGrade || !machineryGrade ||!staffSafetyGrade || !hygieneGrade) {
+    if (!date || !inspectionID || !centerID || !inspectorID || !machineryGrade || !maintenanceGrade || !staffSafetyGrade || !hygieneGrade) {
         alert("Please fill in all fields.");
         return;
     }
@@ -27,23 +140,51 @@ function addInspection() {
 
     let processing_inspectionData = JSON.parse(localStorage.getItem('processing_inspectionData')) || [];
     processing_inspectionData.push(processing_inspection);
-    localStorage.setItem('processing_inspectionData', JSON.stringify(processing_inspectionData));
+    localStorage.setItem('farm_inspectionData', JSON.stringify(processing_inspectionData));
 
     addRowToTable(processing_inspection);
+    setDefaultValues();
+}
 
-    document.getElementById('inspectionDate').value = "";
-    document.getElementById('inspectionID').value = "";
-    document.getElementById('centerID').value = "";
-    document.getElementById('inspectorID').value = "";
-    document.getElementById('machineryGrade').value = "";
-    document.getElementById('maintenanceGrade').value = "";
-    document.getElementById('staffSafetyGrade').value = "";
-    document.getElementById('hygieneGrade').value = "";
+function generateRandomID(prefix="INS-", length = 6) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = prefix;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+}
+
+function setLocalDate () {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const dd = String(today.getDate()).padStart(2, '0');
+
+    const formattedDate = `${yyyy}-${mm}-${dd}`;
+    return formattedDate;
+}
+
+function setDefaultValues() {
+    document.getElementById('inspectionDate').value = setLocalDate(); 
+    document.getElementById('inspectionID').value = generateRandomID();
+    document.getElementById('centerID').value = generateRandomID("C-");
+    document.getElementById('inspectorID').value = "2222181";
+    document.getElementById('machineryGrade').value = "Select Type";
+    document.getElementById('maintenanceGrade').value = "Select Grade";
+    document.getElementById('staffSafetyGrade').value = "Select Grade";
+    document.getElementById('hygieneGrade').value = "Select Grade";
 }
 
 function loadInspectionData() {
-    const processing_inspectionData = JSON.parse(localStorage.getItem('processing_inspectionData')) || [];
-    processing_inspectionData.forEach(processing_inspection => addRowToTable(processing_inspection));
+    document.getElementById('inspectionDate').value = setLocalDate(); 
+    document.getElementById('inspectionID').value = generateRandomID();
+    document.getElementById('inspectorID').value = "2222181";
+    document.getElementById('farmID').value = "F";
+    document.getElementById('inspectionType').value = "Select Type";
+    document.getElementById('qualityGrade').value = "Select Grade";
+    const processsing_inspectionData = JSON.parse(localStorage.getItem('processsing_inspectionData')) || [];
+    processsing_inspectionData.forEach(processing_inspection => addRowToTable(processing_inspection));
 }
 
 function addRowToTable(processing_inspection) {
@@ -59,8 +200,18 @@ function addRowToTable(processing_inspection) {
         <td>${processing_inspection.maintenanceGrade}</td>
         <td>${processing_inspection.staffSafetyGrade}</td>
         <td>${processing_inspection.hygieneGrade}</td>
-        <td><button class="btn" onclick="printRow(this)">Print</button></td>
-    `;
+        <td style="display: flex; gap: 10px;">
+            <button class="btn btn-success" onclick="editRow(this)">
+                <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn" onclick="deleteRow(this)">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+            <button class="btn" onclick="printRow(this)">
+                <i class="fa fa-print" aria-hidden="true"></i>
+            </button>
+        </td>
+`;
 
     row.addEventListener('click', () => {
         if (selectedRow) selectedRow.classList.remove('selected');
@@ -72,19 +223,31 @@ function addRowToTable(processing_inspection) {
     tableBody.appendChild(row);
 }
 
-function deleteSelectedRow() {
-    if (!selectedRow) {
-        alert("To delete the inspection history, please select the correct inspection row.");
-        return;
-    }
-    const inspectionID = selectedRow.cells[1].innerText;
-    selectedRow.remove();
-    selectedRow = null;
-    document.querySelector('.delete-btn').disabled = true;
+function deleteRow(button) {
+    // Get the table row to delete
+    const row = button.parentNode.parentNode;
 
+    // Retrieve the table body
+    const tableBody = document.getElementById('inspectionTableBody');
+
+    // Get inspection ID from the row
+    const inspectionID = row.cells[1].textContent;
+
+    // Remove the row from the table
+    tableBody.removeChild(row);
+
+    // Remove the corresponding item from local storage
     let processing_inspectionData = JSON.parse(localStorage.getItem('processing_inspectionData')) || [];
-    processing_inspectionData = processing_inspectionData.filter(processing_inspection => processing_inspection.inspectionID !== inspectionID);
+    processing_inspectionData = processing_inspectionData.filter(item => item.inspectionID !== inspectionID);
+
+    // Update local storage
     localStorage.setItem('processing_inspectionData', JSON.stringify(processing_inspectionData));
+
+    // Reset the selected row and disable the delete button if necessary
+    if (row === selectedRow) {
+        selectedRow = null;
+        document.querySelector('.delete-btn').disabled = true;
+    }
 }
 
 function printRow(button) {
@@ -106,7 +269,7 @@ function printRow(button) {
     doc.text(`Date: ${rowData[0]}`, 20, 80);
     doc.text(`Inspection ID: ${rowData[1]}`, 20, 90);
     doc.text(`Center ID: ${rowData[2]}`, 20, 100);
-    doc.text(`Inspection ID: ${rowData[3]}`, 20, 110);
+    doc.text(`Inspector ID: ${rowData[3]}`, 20, 110);
     doc.text(`Machinery Grade: ${rowData[4]}`, 20, 120);
     doc.text(`Maintenance Grade: ${rowData[5]}`, 20, 130);
     doc.text(`Staff Safety Grade: ${rowData[6]}`, 20, 140);

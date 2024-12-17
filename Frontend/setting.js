@@ -1,3 +1,49 @@
+
+function toggleContent(sectionId) {
+
+  document.querySelectorAll(".content").forEach((section) => {
+    section.style.display = "none";
+  });
+
+  const content = document.getElementById(sectionId);
+  if (content.style.display === "block") {
+    content.style.display = "none";
+  } else {
+    content.style.display = "block";
+  }
+}
+
+
+function saveProfile() {
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+
+  if (name && email) {
+    localStorage.setItem("profileName", name);
+    localStorage.setItem("profileEmail", email);
+    alert("Profile updated successfully!");
+  } else {
+    alert("Please fill out all fields!");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const savedName = localStorage.getItem("profileName");
+  const savedEmail = localStorage.getItem("profileEmail");
+
+  if (savedName) document.getElementById("name").value = savedName;
+  if (savedEmail) document.getElementById("email").value = savedEmail;
+});
+
+
+function logout() {
+  window.location.href = "login.html";
+}
+
+
+
+
+
 const messageIcon = document.getElementById('message-icon');
 const messageDropdown = document.getElementById('message-dropdown');
 
@@ -109,142 +155,3 @@ signOutBtn.addEventListener("click", () => {
 
 
 document.addEventListener("DOMContentLoaded", loadFromLocalStorage);
-
-
-
-
-
-
-
-
-
-function updateT_products() {
-  setTimeout(() => {
-    const simulatedT_products = Math.floor(Math.random() * 5 + 169);
-    document.getElementById('t_products').textContent = `${simulatedT_products}`;
-  }, 3000); 
-
-  setTimeout(updateT_products, 7000);
-}
-
-updateT_products();
-
-
-function updateS_Capacity() {
-  setTimeout(() => {
-    const simulatedTemp = Math.floor(Math.random() * 5 + 86);
-    document.getElementById('s_Capacity').textContent = `${simulatedTemp}%`;
-  }, 2000); 
-
-  setTimeout(updateS_Capacity, 10000);
-}
-
-updateS_Capacity();
-
-
-function updateTemperature() {
-  setTimeout(() => {
-    const simulatedTemp = (Math.random() * 5 + 18).toFixed(1);
-    document.getElementById('temperature').textContent = `${simulatedTemp}°C`;
-  }, 3000); 
-
-  setTimeout(updateTemperature, 9000);
-}
-
-updateTemperature();
-
-
-function updateHumidity() {
-  setTimeout(() => {
-    const simulatedHumidity = Math.floor(Math.random() * 5 + 81);
-    document.getElementById('humidity').textContent = `${simulatedHumidity}`;
-  }, 1000.3); 
-
-  setTimeout(updateHumidity, 10000);
-}
-
-updateHumidity();
-
-
-
-
-
-window.addEventListener('scroll', function() {
-  const infoSection = document.querySelector('.realtime-info');
-  const sectionPosition = infoSection.getBoundingClientRect().top;
-  const screenPosition = window.innerHeight / 1.5;
-
-  if (sectionPosition < screenPosition) {
-      infoSection.classList.add('appear');
-  }
-});
-
-
-const chartOptions = {
-  responsive: true,
-  maintainAspectRatio: true, 
-  plugins: {
-      legend: {
-          display: true,
-          position: 'top'
-      }
-  },
-  layout: {
-      padding: 10 
-  }
-};
-
-// Storage Transport Chart
-new Chart(document.getElementById('storageTransportChart'), {
-  type: 'bar',
-  data: {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr'],
-      datasets: [{
-          label: 'Storage Transport',
-          data: [10, 20, 15, 25],
-          backgroundColor: '#4CAF50',
-      }]
-  },
-  options: chartOptions
-});
-
-// Shipment Transport Chart
-new Chart(document.getElementById('shipmentTransportChart'), {
-  type: 'line',
-  data: {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr'],
-      datasets: [{
-          label: 'Shipment Transport',
-          data: [5, 15, 10, 20],
-          borderColor: '#ff6b6b',
-          fill: false
-      }]
-  },
-  options: chartOptions
-});
-
-// Revenue Chart
-new Chart(document.getElementById('revenueChart'), {
-  type: 'pie',
-  data: {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr'],
-      datasets: [{
-          data: [500, 800, 600, 1200],
-          backgroundColor: ['#4CAF50', '#34495e', '#ff6b6b', '#3498db']
-      }]
-  },
-  options: chartOptions
-});
-
-// Cost Chart
-new Chart(document.getElementById('costChart'), {
-  type: 'doughnut',
-  data: {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr'],
-      datasets: [{
-          data: [300, 400, 350, 500],
-          backgroundColor: ['#4CAF50', '#34495e', '#ff6b6b', '#3498db']
-      }]
-  },
-  options: chartOptions
-});

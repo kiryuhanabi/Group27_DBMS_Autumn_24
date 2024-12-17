@@ -28,13 +28,7 @@ function addInspection() {
     localStorage.setItem('lot_inspectionData', JSON.stringify(lot_inspectionData));
 
     addRowToTable(lot_inspection);
-
-    document.getElementById('inspectionDate').value = "";
-    document.getElementById('inspectionID').value = "";
-    document.getElementById('lotNumber').value = "";
-    document.getElementById('inspectorID').value = "";
-    document.getElementById('packageQuality').value = "";
-    document.getElementById('certifications').value = "";
+    setDefaultValues();
 }
 
 function loadInspectionData() {
@@ -53,8 +47,18 @@ function addRowToTable(lot_inspection) {
         <td>${lot_inspection.inspectorID}</td>
         <td>${lot_inspection.packageQuality}</td>
         <td>${lot_inspection.certifications}</td>
-        <td><button class="btn" onclick="printRow(this)">Print</button></td>
-    `;
+        <td style="display: flex; gap: 10px;">
+            <button class="btn btn-success" onclick="editRow(this)">
+                <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn" onclick="deleteRow(this)">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+            <button class="btn" onclick="printRow(this)">
+                <i class="fa fa-print" aria-hidden="true"></i>
+            </button>
+        </td>
+`;
 
     row.addEventListener('click', () => {
         if (selectedRow) selectedRow.classList.remove('selected');
@@ -66,19 +70,32 @@ function addRowToTable(lot_inspection) {
     tableBody.appendChild(row);
 }
 
-function deleteSelectedRow() {
-    if (!selectedRow) {
-        alert("To delete the inspection history, please select the correct inspection row.");
-        return;
+function generateRandomID(prefix="INS-", length = 6) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = prefix;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
     }
-    const inspectionID = selectedRow.cells[1].innerText;
-    selectedRow.remove();
-    selectedRow = null;
-    document.querySelector('.delete-btn').disabled = true;
+    return result;
+}
 
-    let lot_inspectionData = JSON.parse(localStorage.getItem('lot_inspectionData')) || [];
-    lot_inspectionData = lot_inspectionData.filter(lot_inspection => lot_inspection.inspectionID !== inspectionID);
-    localStorage.setItem('lot_inspectionData', JSON.stringify(lot_inspectionData));
+function setLocalDate () {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const dd = String(today.getDate()).padStart(2, '0');
+
+    const formattedDate = `${yyyy}-${mm}-${dd}`;
+    return formattedDate;
+}
+
+function setDefaultValues() {
+    document.getElementById('inspectionDate').value = setLocalDate(); 
+    document.getElementById('inspectionID').value = generateRandomID();
+    document.getElementById('inspectorID').value = "2222181";
+    document.getElementById('farmID').value = "F";
+    document.getElementById('inspectionType').value = " ";
+    document.getElementById('qualityGrade').value = " ";
 }
 
 function printRow(button) {

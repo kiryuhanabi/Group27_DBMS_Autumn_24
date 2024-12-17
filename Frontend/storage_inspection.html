@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farm Inspection</title>
+    <title>Storage Inspection Dashboard</title>
     <link rel="stylesheet" href="inspection_style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css" integrity="sha512-3PN6gfRNZEX4YFyz+sIyTF6pGlQiryJu9NlGhu9LrLMQ7eDjNgudQoFDK3WSNAayeIKc6B8WXXpo4a7HqxjKwg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -23,19 +23,18 @@
                 <ul class="dropdown">
                     <li><a href="farm_inspection.html">Farm</a></li>
                     <li><a href="batch_inspection.html">Batch</a></li>
-                    <li><a href="p_inspect.html">Processing</a></li>
+                    <li><a href="lot_inspection.html">Lot</a></li>
+                    <li><a href="p_inspect.html">Processing Center</a></li>
                     <li><a href="storage_inspection.html">Storage</a></li>
                 </ul>
             </li>
-            <li><a href="#">Reports</a></li>
             <li><a href="login.html">Log out</a></li>
             <li><a href="notifications.html"><i class="fa fa-bell" aria-hidden="true"></i></a></li>
         </ul>
     </nav>
 
     <div class="dashboard">
-        <h2>Storage Inspection Dashboard</h2>
-        
+        <h2>Storage Inspection</h2>
         <script src="storage_inspection.js"></script>
 
         <div class="inspection-filters">
@@ -71,7 +70,7 @@
                     <div class="input-row">
                         <label for="maintenanceGrade">Maintenance Grade:</label>
                         <select id="maintenanceGrade" name="maintenanceGrade">
-                            <option value=" "> </option>
+                            <option disabled selected>Select Grade</option>
                             <option value="Poor">Poor</option>
                             <option value="Acceptable">Acceptable</option>
                             <option value="Good">Good</option>
@@ -82,7 +81,7 @@
                     <div class="input-row">
                         <label for="pestControlGrade">Pest Control Grade:</label>
                         <select id="pestControlGrade" name="pestControlGrade">
-                            <option value=" "> </option>
+                            <option disabled selected>Select Grade</option>
                             <option value="Poor">Poor</option>
                             <option value="Acceptable">Acceptable</option>
                             <option value="Good">Good</option>
@@ -93,7 +92,7 @@
                     <div class="input-row">
                         <label for="hygieneGrade">Hygiene Grade:</label>
                         <select id="hygieneGrade" name="hygieneGrade">
-                            <option value=" "> </option>
+                            <option disabled selected>Select Grade</option>
                             <option value="Poor">Poor</option>
                             <option value="Acceptable">Acceptable</option>
                             <option value="Good">Good</option>

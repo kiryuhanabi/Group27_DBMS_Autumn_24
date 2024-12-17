@@ -22,12 +22,13 @@
                 <ul class="dropdown">
                     <li><a href="farm_inspection.html">Farm</a></li>
                     <li><a href="batch_inspection.html">Batch</a></li>
-                    <li><a href="p_inspect.html">Processing</a></li>
+                    <li><a href="lot_inspection.html">Lot</a></li>
+                    <li><a href="p_inspect.html">Processing Center</a></li>
                     <li><a href="storage_inspection.html">Storage</a></li>
                 </ul>
             </li>
-            <li><a href="#">Reports</a></li>
             <li><a href="login.html">Log out</a></li>
+            <li><a href="notifications.html"><i class="fa fa-bell" aria-hidden="true"></i></a></li>
         </ul>
     </nav>
 
@@ -37,41 +38,6 @@
             <canvas id="inspectionChart"></canvas>
         </div>
     </section>
-
-    <h2>Inspections Overview</h2>
-
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Inspection ID</th>
-                    <th>Type</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>2XXXXX</td>
-                    <td>Farm</td>
-                    <td>2024-10-28</td>
-                    <td>Completed</td>
-                </tr>
-                <tr>
-                    <td>3XXXXX</td>
-                    <td>Storage</td>
-                    <td>----</td>
-                    <td>Pending</td>
-                </tr>
-                <tr>
-                    <td>4XXXXX</td>
-                    <td>Processing-Center</td>
-                    <td>2024-10-30</td>
-                    <td>Completed</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
 
     <script>
         const ctx = document.getElementById('inspectionChart').getContext('2d');
@@ -97,5 +63,72 @@
             }
         });
     </script>
+
+    <h2>New Registered</h2>
+    <div class="container">
+        <div class="table-container">
+            <table id="farmsTable">
+                <thead>
+                    <tr>
+                        <th>Farm ID</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="farmsTableBody">
+                </tbody>
+            </table>
+        </div>
+    
+        <div class="table-container">
+            <table id="batchTable">
+                <thead>
+                    <tr>
+                        <th>Batch ID</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="batchTableBody">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-container">
+            <table id="lotTable">
+                <thead>
+                    <tr>
+                        <th>Lot ID</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="lotTableBody">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-container">
+            <table id="processingCenterTable">
+                <thead>
+                    <tr>
+                        <th>Processing Center ID</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="processingCenterTableBody">
+                </tbody>
+            </table>
+        </div>
+        <div class="table-container">
+            <table id="storageTable">
+                <thead>
+                    <tr>
+                        <th>Storage ID</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="storageTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>       
 </body>
 </html>
