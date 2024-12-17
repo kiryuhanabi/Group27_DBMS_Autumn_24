@@ -51,8 +51,13 @@
                         <input type="text" id="inspectionID" name="inspectionID">
                     </div>
                     <div class="input-row">
+<<<<<<< Updated upstream
                         <label for="inspectionType">Inspect-Type:</label>
                         <input type="text" id="inspectionType" name="inspectionType">
+=======
+                        <label for="inspectorID">Inspector ID</label>
+                        <input type="text" id="inspectorID" name="inspectorID">
+>>>>>>> Stashed changes
                     </div>
                 </div>
         
@@ -63,8 +68,8 @@
                     </div>
 
                     <div class="input-row">
-                        <label for="inspectorID">Inspector ID:</label>
-                        <input type="text" id="inspectorID" name="inspectorID">
+                        <label for="affectedBatch">Affected Batch Quantity:</label>
+                        <input type="number" id="affectedBatch" name="affectedBatch">
                     </div>
 
                     <div class="input-row">
@@ -76,9 +81,14 @@
                         </select>
                     </div>
                 </div>
+<<<<<<< Updated upstream
             </div>
         
             <button class="btn" onclick="addInspection()"><i class="fa fa-plus" aria-hidden="true"></i>  Add Inspection</button>
+=======
+            </div>       
+            <button class="btn" id="addInspectionButton" onclick="addInspection()"><i class="fa fa-plus" aria-hidden="true"></i>  Add Inspection</button>
+>>>>>>> Stashed changes
         </div>
 
         <div class="table-container">
@@ -88,9 +98,9 @@
                     <tr>
                         <th>Date</th>
                         <th>Inspection ID</th>
-                        <th>Type</th>
-                        <th>Batch ID</th>
                         <th>Inspector ID</th>
+                        <th>Batch ID</th>
+                        <th>Affected Batch Quantity</th>
                         <th>Certification</th>
                         <th>Action</th>
                     </tr>

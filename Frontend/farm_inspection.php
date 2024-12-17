@@ -96,10 +96,28 @@
                         <th>Farm ID</th>
                         <th>Inspector ID</th>
                         <th>Quality Grade</th>
-                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody id="inspectionTableBody">
+<<<<<<< Updated upstream
+=======
+                    <?php if ($result->num_rows > 0): ?>
+                        <?php while ($row = $result->fetch_assoc()): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($row['date']); ?></td>
+                                <td><?php echo htmlspecialchars($row['iID']); ?></td>
+                                <td><?php echo htmlspecialchars($row['iType']); ?></td>
+                                <td><?php echo htmlspecialchars($row['fID']); ?></td>
+                                <td><?php echo htmlspecialchars($row['insID']); ?></td>
+                                <td><?php echo htmlspecialchars($row['quality']); ?></td>
+                            </tr>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="7">No records found</td>
+                        </tr>
+                    <?php endif; ?>
+>>>>>>> Stashed changes
                 </tbody>
             </table>
         </div>     
