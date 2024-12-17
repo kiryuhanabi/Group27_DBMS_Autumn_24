@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 17, 2024 at 05:36 PM
+-- Generation Time: Dec 17, 2024 at 08:39 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -100,6 +100,13 @@ CREATE TABLE `tblfarminspection` (
   `Date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tblfarminspection`
+--
+
+INSERT INTO `tblfarminspection` (`Inspector ID`, `Farm ID`, `Maintenance Grade`, `Fertilizer Grade`, `Soil Quality Grade`, `Date`) VALUES
+(2222181, 215, 'Poor', 'Acceptable', 'Decent', '2024-12-18');
+
 -- --------------------------------------------------------
 
 --
@@ -135,6 +142,13 @@ CREATE TABLE `tbllotinspection` (
   `Date` date NOT NULL,
   `Package Quality Grade` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbllotinspection`
+--
+
+INSERT INTO `tbllotinspection` (`Inspector ID`, `Lot Number`, `Date`, `Package Quality Grade`) VALUES
+(2222181, 168631, '2024-12-18', 'Perfect');
 
 -- --------------------------------------------------------
 
@@ -373,6 +387,13 @@ CREATE TABLE `tblstorageinspection` (
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tblstorageinspection`
+--
+
+INSERT INTO `tblstorageinspection` (`Storage ID`, `Inspector ID`, `Storage Maintenance Grade`, `Pest Control Grade`, `Storage Hygene Grade`, `date`) VALUES
+(5343200, 2222181, 'Acceptable', 'Decent', 'Excellent', '2024-12-18');
+
 -- --------------------------------------------------------
 
 --
@@ -539,147 +560,16 @@ ALTER TABLE `tblpiotdevicehumidity`
   ADD KEY `pIoT ID` (`pIoT ID`);
 
 --
--- Indexes for table `tblplotdevicetemperature`
---
-ALTER TABLE `tblplotdevicetemperature`
-  ADD PRIMARY KEY (`Date`,`Time`),
-  ADD KEY `pIoT ID` (`pIoT ID`);
-
---
--- Indexes for table `tblprocessingcenter`
---
-ALTER TABLE `tblprocessingcenter`
-  ADD PRIMARY KEY (`Center ID`);
-
---
--- Indexes for table `tblprocessinginspection`
---
-ALTER TABLE `tblprocessinginspection`
-  ADD KEY `Center ID` (`Center ID`),
-  ADD KEY `Inspector ID` (`Inspector ID`);
-
---
--- Indexes for table `tblprocessingiot`
---
-ALTER TABLE `tblprocessingiot`
-  ADD PRIMARY KEY (`pIoT ID`),
-  ADD KEY `Center ID` (`Center ID`);
-
---
--- Indexes for table `tblprocessinglot`
---
-ALTER TABLE `tblprocessinglot`
-  ADD PRIMARY KEY (`Lot Number`),
-  ADD KEY `stTransport ID` (`stTransport ID`),
-  ADD KEY `Center ID` (`Center ID`);
-
---
--- Indexes for table `tblprocessingshipmentquantity`
---
-ALTER TABLE `tblprocessingshipmentquantity`
-  ADD KEY `Shipment ID` (`Shipment ID`),
-  ADD KEY `Lot Number` (`Lot Number`);
-
---
--- Indexes for table `tblprocessingtransport`
---
-ALTER TABLE `tblprocessingtransport`
-  ADD PRIMARY KEY (`pTransport ID`);
-
---
 -- Indexes for table `tblproduct`
 --
 ALTER TABLE `tblproduct`
   ADD PRIMARY KEY (`Product ID`);
 
 --
--- Indexes for table `tblretailer`
---
-ALTER TABLE `tblretailer`
-  ADD PRIMARY KEY (`Retailer ID`);
-
---
--- Indexes for table `tblshipment`
---
-ALTER TABLE `tblshipment`
-  ADD PRIMARY KEY (`Shipment ID`),
-  ADD KEY `shTransport ID` (`shTransport ID`),
-  ADD KEY `Retailer ID` (`Retailer ID`);
-
---
--- Indexes for table `tblshipmenttransport`
---
-ALTER TABLE `tblshipmenttransport`
-  ADD PRIMARY KEY (`shTransport ID`),
-  ADD KEY `Storage ID` (`Storage ID`);
-
---
 -- Indexes for table `tblsignup`
 --
 ALTER TABLE `tblsignup`
   ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `tblsiottemperature`
---
-ALTER TABLE `tblsiottemperature`
-  ADD PRIMARY KEY (`Date`,`Time`),
-  ADD KEY `sIoT ID` (`sIoT ID`);
-
---
--- Indexes for table `tblstorage`
---
-ALTER TABLE `tblstorage`
-  ADD PRIMARY KEY (`Storage ID`);
-
---
--- Indexes for table `tblstorageinspection`
---
-ALTER TABLE `tblstorageinspection`
-  ADD KEY `Storage ID` (`Storage ID`),
-  ADD KEY `Inspector ID` (`Inspector ID`);
-
---
--- Indexes for table `tblstorageiot`
---
-ALTER TABLE `tblstorageiot`
-  ADD PRIMARY KEY (`sIoT ID`),
-  ADD KEY `Storage ID` (`Storage ID`);
-
---
--- Indexes for table `tblstorageiothumidity`
---
-ALTER TABLE `tblstorageiothumidity`
-  ADD PRIMARY KEY (`Date`,`Time`),
-  ADD KEY `sIoT ID` (`sIoT ID`);
-
---
--- Indexes for table `tblstoragetransport`
---
-ALTER TABLE `tblstoragetransport`
-  ADD PRIMARY KEY (`stTransport ID`),
-  ADD KEY `s_fk` (`Storage ID`);
-
---
--- Indexes for table `tbltiotdevicehumidity`
---
-ALTER TABLE `tbltiotdevicehumidity`
-  ADD PRIMARY KEY (`Date`,`Time`),
-  ADD KEY `tIoT ID` (`tIoT ID`);
-
---
--- Indexes for table `tbltiotdevicetemperature`
---
-ALTER TABLE `tbltiotdevicetemperature`
-  ADD PRIMARY KEY (`Date`,`Time`),
-  ADD KEY `tIoT ID` (`tIoT ID`);
-
---
--- Indexes for table `tbltransportoitdevice`
---
-ALTER TABLE `tbltransportoitdevice`
-  ADD PRIMARY KEY (`tIoT ID`),
-  ADD KEY `shTransport ID` (`shTransport ID`);
 
 --
 -- Indexes for table `tblunaffectedbatch`
@@ -704,88 +594,16 @@ ALTER TABLE `tblfarmtype`
   MODIFY `farm ID` int(7) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `tblinspector`
---
-ALTER TABLE `tblinspector`
-  MODIFY `Inspector ID` int(7) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tblorder`
---
-ALTER TABLE `tblorder`
-  MODIFY `Order ID` int(7) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tblprocessingcenter`
---
-ALTER TABLE `tblprocessingcenter`
-  MODIFY `Center ID` int(7) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tblprocessinglot`
---
-ALTER TABLE `tblprocessinglot`
-  MODIFY `Lot Number` int(7) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tblprocessingtransport`
---
-ALTER TABLE `tblprocessingtransport`
-  MODIFY `pTransport ID` int(7) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `tblproduct`
 --
 ALTER TABLE `tblproduct`
   MODIFY `Product ID` int(7) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `tblretailer`
---
-ALTER TABLE `tblretailer`
-  MODIFY `Retailer ID` int(7) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tblshipment`
---
-ALTER TABLE `tblshipment`
-  MODIFY `Shipment ID` int(7) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tblshipmenttransport`
---
-ALTER TABLE `tblshipmenttransport`
-  MODIFY `shTransport ID` int(7) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `tblsignup`
 --
 ALTER TABLE `tblsignup`
   MODIFY `ID` int(7) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tblstorage`
---
-ALTER TABLE `tblstorage`
-  MODIFY `Storage ID` int(7) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tblstorageiot`
---
-ALTER TABLE `tblstorageiot`
-  MODIFY `sIoT ID` int(7) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tblstoragetransport`
---
-ALTER TABLE `tblstoragetransport`
-  MODIFY `stTransport ID` int(7) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tbltransportoitdevice`
---
-ALTER TABLE `tbltransportoitdevice`
-  MODIFY `tIoT ID` int(7) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -799,145 +617,10 @@ ALTER TABLE `tblbatch`
   ADD CONSTRAINT `tblbatch_ibfk_2` FOREIGN KEY (`Product ID`) REFERENCES `tblproduct` (`Product ID`);
 
 --
--- Constraints for table `tblbatchcertification`
---
-ALTER TABLE `tblbatchcertification`
-  ADD CONSTRAINT `tblbatchcertification_ibfk_1` FOREIGN KEY (`Batch Barcode`) REFERENCES `tblbatch` (`Batch Barcode`);
-
---
--- Constraints for table `tblbatchinspection`
---
-ALTER TABLE `tblbatchinspection`
-  ADD CONSTRAINT `tblbatchinspection_ibfk_1` FOREIGN KEY (`Batch Barcode`) REFERENCES `tblbatch` (`Batch Barcode`),
-  ADD CONSTRAINT `tblbatchinspection_ibfk_2` FOREIGN KEY (`Inspector ID`) REFERENCES `tblinspector` (`Inspector ID`);
-
---
 -- Constraints for table `tblfarm`
 --
 ALTER TABLE `tblfarm`
   ADD CONSTRAINT `tblfarm_ibfk_1` FOREIGN KEY (`farm ID`) REFERENCES `tblsignup` (`ID`);
-
---
--- Constraints for table `tblfarminspection`
---
-ALTER TABLE `tblfarminspection`
-  ADD CONSTRAINT `tblfarminspection_ibfk_1` FOREIGN KEY (`Farm ID`) REFERENCES `tblfarm` (`farm ID`),
-  ADD CONSTRAINT `tblfarminspection_ibfk_2` FOREIGN KEY (`Inspector ID`) REFERENCES `tblinspector` (`Inspector ID`);
-
---
--- Constraints for table `tbllotinspection`
---
-ALTER TABLE `tbllotinspection`
-  ADD CONSTRAINT `tbllotinspection_ibfk_1` FOREIGN KEY (`Inspector ID`) REFERENCES `tblinspector` (`Inspector ID`),
-  ADD CONSTRAINT `tbllotinspection_ibfk_2` FOREIGN KEY (`Lot Number`) REFERENCES `tblprocessinglot` (`Lot Number`);
-
---
--- Constraints for table `tblorder`
---
-ALTER TABLE `tblorder`
-  ADD CONSTRAINT `tblorder_ibfk_1` FOREIGN KEY (`Shipment ID`) REFERENCES `tblshipment` (`Shipment ID`),
-  ADD CONSTRAINT `tblorder_ibfk_2` FOREIGN KEY (`Retailer ID`) REFERENCES `tblretailer` (`Retailer ID`);
-
---
--- Constraints for table `tblpiotdevicehumidity`
---
-ALTER TABLE `tblpiotdevicehumidity`
-  ADD CONSTRAINT `tblpiotdevicehumidity_ibfk_1` FOREIGN KEY (`pIoT ID`) REFERENCES `tblprocessingiot` (`pIoT ID`);
-
---
--- Constraints for table `tblplotdevicetemperature`
---
-ALTER TABLE `tblplotdevicetemperature`
-  ADD CONSTRAINT `tblplotdevicetemperature_ibfk_1` FOREIGN KEY (`pIoT ID`) REFERENCES `tblprocessingiot` (`pIoT ID`);
-
---
--- Constraints for table `tblprocessinginspection`
---
-ALTER TABLE `tblprocessinginspection`
-  ADD CONSTRAINT `tblprocessinginspection_ibfk_1` FOREIGN KEY (`Center ID`) REFERENCES `tblprocessingcenter` (`Center ID`),
-  ADD CONSTRAINT `tblprocessinginspection_ibfk_2` FOREIGN KEY (`Inspector ID`) REFERENCES `tblinspector` (`Inspector ID`);
-
---
--- Constraints for table `tblprocessingiot`
---
-ALTER TABLE `tblprocessingiot`
-  ADD CONSTRAINT `tblprocessingiot_ibfk_1` FOREIGN KEY (`Center ID`) REFERENCES `tblprocessingcenter` (`Center ID`);
-
---
--- Constraints for table `tblprocessinglot`
---
-ALTER TABLE `tblprocessinglot`
-  ADD CONSTRAINT `tblprocessinglot_ibfk_1` FOREIGN KEY (`stTransport ID`) REFERENCES `tblstoragetransport` (`stTransport ID`),
-  ADD CONSTRAINT `tblprocessinglot_ibfk_2` FOREIGN KEY (`Center ID`) REFERENCES `tblprocessingcenter` (`Center ID`);
-
---
--- Constraints for table `tblprocessingshipmentquantity`
---
-ALTER TABLE `tblprocessingshipmentquantity`
-  ADD CONSTRAINT `tblprocessingshipmentquantity_ibfk_1` FOREIGN KEY (`Lot Number`) REFERENCES `tblprocessinglot` (`Lot Number`),
-  ADD CONSTRAINT `tblprocessingshipmentquantity_ibfk_2` FOREIGN KEY (`Shipment ID`) REFERENCES `tblshipment` (`Shipment ID`);
-
---
--- Constraints for table `tblshipment`
---
-ALTER TABLE `tblshipment`
-  ADD CONSTRAINT `tblshipment_ibfk_1` FOREIGN KEY (`Retailer ID`) REFERENCES `tblretailer` (`Retailer ID`),
-  ADD CONSTRAINT `tblshipment_ibfk_2` FOREIGN KEY (`shTransport ID`) REFERENCES `tblshipmenttransport` (`shTransport ID`);
-
---
--- Constraints for table `tblshipmenttransport`
---
-ALTER TABLE `tblshipmenttransport`
-  ADD CONSTRAINT `tblshipmenttransport_ibfk_1` FOREIGN KEY (`Storage ID`) REFERENCES `tblstorage` (`Storage ID`);
-
---
--- Constraints for table `tblsiottemperature`
---
-ALTER TABLE `tblsiottemperature`
-  ADD CONSTRAINT `tblsiottemperature_ibfk_1` FOREIGN KEY (`sIoT ID`) REFERENCES `tblstorageiot` (`sIoT ID`);
-
---
--- Constraints for table `tblstorageinspection`
---
-ALTER TABLE `tblstorageinspection`
-  ADD CONSTRAINT `tblstorageinspection_ibfk_1` FOREIGN KEY (`Storage ID`) REFERENCES `tblstorage` (`Storage ID`),
-  ADD CONSTRAINT `tblstorageinspection_ibfk_2` FOREIGN KEY (`Inspector ID`) REFERENCES `tblinspector` (`Inspector ID`);
-
---
--- Constraints for table `tblstorageiot`
---
-ALTER TABLE `tblstorageiot`
-  ADD CONSTRAINT `tblstorageiot_ibfk_1` FOREIGN KEY (`Storage ID`) REFERENCES `tblstorage` (`Storage ID`);
-
---
--- Constraints for table `tblstorageiothumidity`
---
-ALTER TABLE `tblstorageiothumidity`
-  ADD CONSTRAINT `tblstorageiothumidity_ibfk_1` FOREIGN KEY (`sIoT ID`) REFERENCES `tblstorageiot` (`sIoT ID`);
-
---
--- Constraints for table `tblstoragetransport`
---
-ALTER TABLE `tblstoragetransport`
-  ADD CONSTRAINT `tblstoragetransport_ibfk_1` FOREIGN KEY (`Storage ID`) REFERENCES `tblstorage` (`Storage ID`);
-
---
--- Constraints for table `tbltiotdevicehumidity`
---
-ALTER TABLE `tbltiotdevicehumidity`
-  ADD CONSTRAINT `tbltiotdevicehumidity_ibfk_1` FOREIGN KEY (`tIoT ID`) REFERENCES `tbltransportoitdevice` (`tIoT ID`);
-
---
--- Constraints for table `tbltiotdevicetemperature`
---
-ALTER TABLE `tbltiotdevicetemperature`
-  ADD CONSTRAINT `tbltiotdevicetemperature_ibfk_1` FOREIGN KEY (`tIoT ID`) REFERENCES `tbltransportoitdevice` (`tIoT ID`);
-
---
--- Constraints for table `tbltransportoitdevice`
---
-ALTER TABLE `tbltransportoitdevice`
-  ADD CONSTRAINT `tbltransportoitdevice_ibfk_1` FOREIGN KEY (`shTransport ID`) REFERENCES `tblshipmenttransport` (`shTransport ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
