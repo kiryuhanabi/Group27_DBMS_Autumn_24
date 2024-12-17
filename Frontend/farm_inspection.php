@@ -99,8 +99,6 @@
                     </tr>
                 </thead>
                 <tbody id="inspectionTableBody">
-<<<<<<< Updated upstream
-=======
                     <?php if ($result->num_rows > 0): ?>
                         <?php while ($row = $result->fetch_assoc()): ?>
                             <tr>
@@ -117,7 +115,6 @@
                             <td colspan="7">No records found</td>
                         </tr>
                     <?php endif; ?>
->>>>>>> Stashed changes
                 </tbody>
             </table>
         </div>     

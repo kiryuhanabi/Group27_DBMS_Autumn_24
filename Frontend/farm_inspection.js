@@ -123,7 +123,7 @@ function addInspection() {
     setDefaultValues();
 }
 
-function generateRandomID(prefix="INS-", length = 6) {
+function generateRandomID(prefix="", length = 6) {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let result = prefix;
     for (let i = 0; i < length; i++) {

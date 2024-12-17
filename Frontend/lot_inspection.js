@@ -7,54 +7,108 @@ window.onload = function() {
 };
 
 function addInspection() {
-    
-
     const date = document.getElementById('inspectionDate').value;
     const inspectionID = document.getElementById('inspectionID').value;
-    const lotNumber = document.getElementById('lotNumber').value;
     const inspectorID = document.getElementById('inspectorID').value;
-    const packageQuality = document.getElementById('packageQuality').value;
-    const certifications = document.getElementById('certifications').value;
+    const lotNumber = document.getElementById('lotNumber').value;
+    const lotQuality = document.getElementById('lotQuality').value;
 
-    if (!date || !inspectionID || !lotNumber || !inspectorID || !packageQuality || !certifications) {
-        alert("Please fill in all fields.");
+    // Check for empty fields
+    if (!date || !inspectionID || !lotNumber || !inspectorID || !lotQuality) {
+        alert("Please fill in all fields, including at least one certification.");
         return;
     }
 
-    const lot_inspection = { date, inspectionID, lotNumber, inspectorID, packageQuality, certifications};
+    // Create batch inspection object
+    const batch_inspection = {
+        date,
+        inspectionID,
+        inspectorID,
+        lotNumber,
+        lotQuality,
+    };
 
-    let lot_inspectionData = JSON.parse(localStorage.getItem('lot_inspectionData')) || [];
-    lot_inspectionData.push(lot_inspection);
-    localStorage.setItem('lot_inspectionData', JSON.stringify(lot_inspectionData));
+    // Save to localStorage
+    let batch_inspectionData = JSON.parse(localStorage.getItem('batch_inspectionData')) || [];
+    batch_inspectionData.push(batch_inspection);
+    localStorage.setItem('batch_inspectionData', JSON.stringify(batch_inspectionData));
 
-    addRowToTable(lot_inspection);
+    // Add to table
+    addRowToTable(batch_inspection);
+    setDefaultValues();
+}
 
-    document.getElementById('inspectionDate').value = "";
-    document.getElementById('inspectionID').value = "";
-    document.getElementById('lotNumber').value = "";
-    document.getElementById('inspectorID').value = "";
-    document.getElementById('packageQuality').value = "";
-    document.getElementById('certifications').value = "";
+// Helper function to fetch selected certifications
+function getSelectedCertifications() {
+    const checkboxes = document.querySelectorAll('#certifications-container input[type="checkbox"]');
+    let selectedValues = [];
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            selectedValues.push(checkbox.value);
+        }
+    });
+    return selectedValues;
+}
+
+function setDefaultValues() {
+    document.getElementById('inspectionDate').value = setLocalDate();
+    document.getElementById('inspectionID').value = generateRandomID();
+    document.getElementById('inspectorID').value = "2222181";
+    document.getElementById('lotNumber').value = generateRandomID();
+    document.getElementById('lotQuality').value = "";
+
+    // Reset checkboxes
+    const checkboxes = document.querySelectorAll('#certifications-container input[type="checkbox"]');
+    checkboxes.forEach(checkbox => checkbox.checked = false);
+}
+
+function generateRandomID(prefix="", length = 7) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = prefix;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+}
+
+function setLocalDate () {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const dd = String(today.getDate()).padStart(2, '0');
+
+    const formattedDate = `${yyyy}-${mm}-${dd}`;
+    return formattedDate;
 }
 
 function loadInspectionData() {
+    setDefaultValues();
     const lot_inspectionData = JSON.parse(localStorage.getItem('lot_inspectionData')) || [];
     lot_inspectionData.forEach(lot_inspection => addRowToTable(lot_inspection));
 }
 
-function addRowToTable(lot_inspection) {
+function addRowToTable(batch_inspection) {
     const tableBody = document.getElementById('inspectionTableBody');
     const row = document.createElement('tr');
 
     row.innerHTML = `
-        <td>${lot_inspection.date}</td>
-        <td>${lot_inspection.inspectionID}</td>
-        <td>${lot_inspection.lotNumber}</td>
-        <td>${lot_inspection.inspectorID}</td>
-        <td>${lot_inspection.packageQuality}</td>
-        <td>${lot_inspection.certifications}</td>
-        <td><button class="btn" onclick="printRow(this)">Print</button></td>
-    `;
+        <td>${batch_inspection.date}</td>
+        <td>${batch_inspection.inspectionID}</td>
+        <td>${batch_inspection.inspectorID}</td>
+        <td>${batch_inspection.lotNumber}</td>
+        <td>${batch_inspection.lotQuality}</td>
+        <td style="display: flex; gap: 10px;">
+            <button class="btn btn-success" onclick="editRow(this)">
+                <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn" onclick="deleteRow(this)">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+            <button class="btn" onclick="printRow(this)">
+                <i class="fa fa-print" aria-hidden="true"></i>
+            </button>
+        </td>
+`;
 
     row.addEventListener('click', () => {
         if (selectedRow) selectedRow.classList.remove('selected');
@@ -66,20 +120,87 @@ function addRowToTable(lot_inspection) {
     tableBody.appendChild(row);
 }
 
-function deleteSelectedRow() {
-    if (!selectedRow) {
-        alert("To delete the inspection history, please select the correct inspection row.");
-        return;
-    }
-    const inspectionID = selectedRow.cells[1].innerText;
-    selectedRow.remove();
-    selectedRow = null;
-    document.querySelector('.delete-btn').disabled = true;
+function editRow(button) {
+    const row = button.parentNode.parentNode; // Get the parent row
+    const cells = row.querySelectorAll('td'); // Get all cells in the row
 
-    let lot_inspectionData = JSON.parse(localStorage.getItem('lot_inspectionData')) || [];
-    lot_inspectionData = lot_inspectionData.filter(lot_inspection => lot_inspection.inspectionID !== inspectionID);
-    localStorage.setItem('lot_inspectionData', JSON.stringify(lot_inspectionData));
+    if (button.querySelector('i').classList.contains('fa-edit')) {
+        // Switch to edit mode
+        cells.forEach((cell, index) => {
+            if (index < 6) { // Exclude the last column (Action buttons)
+                const currentValue = cell.textContent;
+                if (index === 5) { // Handle certifications (comma-separated values)
+                    const certificationsArray = currentValue.split(',').map(item => item.trim());
+                    cell.innerHTML = `
+                        <input type="text" value="${certificationsArray.join(', ')}" class="edit-input">
+                    `;
+                } else {
+                    cell.innerHTML = `<input type="text" value="${currentValue}" class="edit-input">`;
+                }
+            }
+        });
+
+        // Change the edit icon to a save icon
+        button.innerHTML = '<i class="fa fa-save"></i>';
+    } else {
+        // Save the changes
+        cells.forEach((cell, index) => {
+            if (index < 6) { // Exclude the last column (Action buttons)
+                const input = cell.querySelector('.edit-input');
+                if (input) {
+                    const newValue = input.value.trim();
+                    cell.textContent = newValue;
+                }
+            }
+        });
+
+        // Update the localStorage data
+        const inspectionID = cells[1].textContent; // Assuming Inspection ID is in the second cell
+        let lot_inspectionData = JSON.parse(localStorage.getItem('lot_inspectionData')) || [];
+        const updatedIndex = batch_inspectionData.findIndex(item => item.inspectionID === inspectionID);
+        if (updatedIndex > -1) {
+            lot_inspectionData[updatedIndex] = {
+                date: cells[0].textContent,
+                inspectionID: cells[1].textContent,
+                inspectorID: cells[2].textContent,
+                lotNumber: cells[3].textContent,
+                lotQuality: cells[4].textContent,
+            };
+            localStorage.setItem('lot_inspectionData', JSON.stringify(lot_inspectionData));
+        }
+
+        // Change the save icon back to an edit icon
+        button.innerHTML = '<i class="fa fa-edit"></i>';
+    }
 }
+
+function deleteRow(button) {
+    // Get the table row to delete
+    const row = button.parentNode.parentNode;
+
+    // Retrieve the table body
+    const tableBody = document.getElementById('inspectionTableBody');
+
+    // Get inspection ID from the row
+    const inspectionID = row.cells[1].textContent;
+
+    // Remove the row from the table
+    tableBody.removeChild(row);
+
+    // Remove the corresponding item from local storage
+    let lot_inspectionData = JSON.parse(localStorage.getItem('lot_inspectionData')) || [];
+    lot_inspectionData = lot_inspectionData.filter(item => item.inspectionID !== inspectionID);
+
+    // Update local storage
+    localStorage.setItem('lot_inspectionData', JSON.stringify(lot_inspectionData));
+
+    // Reset the selected row and disable the delete button if necessary
+    if (row === selectedRow) {
+        selectedRow = null;
+        document.querySelector('.delete-btn').disabled = true;
+    }
+}
+
 
 function printRow(button) {
     const row = button.closest('tr');
@@ -93,18 +214,15 @@ function printRow(button) {
 
     doc.addImage(logoBase64, 'PNG', 85, 10, 40, 40); 
 
-    doc.text("Agro Lot Inspection", 105, 60, { align: "center" });
+    doc.text("Agro Batch Inspection", 105, 60, { align: "center" });
 
     doc.setFontSize(12);
     doc.setFont("helvetica", "normal");
     doc.text(`Date: ${rowData[0]}`, 20, 80);
     doc.text(`Inspection ID: ${rowData[1]}`, 20, 90);
-    doc.text(`Lot Number: ${rowData[2]}`, 20, 100);
-    doc.text(`Inspector ID: ${rowData[3]}`, 20, 110);
-    doc.text(`Package Quality: ${rowData[4]}`, 20, 120);
-    doc.text(`Certifications: ${rowData[5]}`, 20, 130);
-
-
+    doc.text(`Inspector ID: ${rowData[2]}`, 20, 100);
+    doc.text(`Lot Number: ${rowData[3]}`, 20, 110);
+    doc.text(`Lot Quality: ${rowData[4]}`, 20, 120);
     doc.text("Signature:", 20, 150);
     doc.line(40, 150, 100, 150); 
 
