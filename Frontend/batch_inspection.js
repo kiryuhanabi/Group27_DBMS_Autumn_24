@@ -12,58 +12,21 @@ function addInspection() {
     const inspectionType = document.getElementById('inspectionType').value;
     const batchID = document.getElementById('batchID').value;
     const inspectorID = document.getElementById('inspectorID').value;
+    const certifications = document.getElementById('certifications').value;
 
-    // Fetch checkbox values
-    const certifications = getSelectedCertifications();
-
-    // Check for empty fields
-    if (!date || !inspectionID || !batchID || !inspectorID || certifications.length === 0) {
-        alert("Please fill in all fields, including at least one certification.");
+    if (!date || !inspectionID || !batchID || !inspectorID || !certifications) {
+        alert("Please fill in all fields.");
         return;
     }
 
-    // Create batch inspection object
-    const batch_inspection = {
-        date,
-        inspectionID,
-        inspectionType,
-        batchID,
-        inspectorID,
-        certifications: certifications.join(", ") // Convert array to string
-    };
+    const batch_inspection = { date, inspectionID, inspectionType, batchID, inspectorID, certifications};
 
-    // Save to localStorage
     let batch_inspectionData = JSON.parse(localStorage.getItem('batch_inspectionData')) || [];
     batch_inspectionData.push(batch_inspection);
     localStorage.setItem('batch_inspectionData', JSON.stringify(batch_inspectionData));
 
-    // Add to table
     addRowToTable(batch_inspection);
-    setDefaultValues();
-}
-
-// Helper function to fetch selected certifications
-function getSelectedCertifications() {
-    const checkboxes = document.querySelectorAll('#certifications-container input[type="checkbox"]');
-    let selectedValues = [];
-    checkboxes.forEach(checkbox => {
-        if (checkbox.checked) {
-            selectedValues.push(checkbox.value);
-        }
-    });
-    return selectedValues;
-}
-
-function setDefaultValues() {
-    document.getElementById('inspectionDate').value = setLocalDate();
-    document.getElementById('inspectionID').value = generateRandomID();
-    document.getElementById('inspectorID').value = "2222181";
-    document.getElementById('batchID').value = generateRandomID("B-");
-    document.getElementById('inspectionType').value = "Batch";
-
-    // Reset checkboxes
-    const checkboxes = document.querySelectorAll('#certifications-container input[type="checkbox"]');
-    checkboxes.forEach(checkbox => checkbox.checked = false);
+    setDefaultValues();   
 }
 
 function generateRandomID(prefix="INS-", length = 6) {
@@ -89,6 +52,15 @@ function setLotInspection() {
     document.getElementById('batchID').value = generateRandomID("L-");
 }
 
+function setDefaultValues() {
+    document.getElementById('inspectionDate').value = setLocalDate(); 
+    document.getElementById('inspectionID').value = generateRandomID();
+    document.getElementById('inspectorID').value = "2222181";
+    document.getElementById('batchID').value = generateRandomID("B-");
+    document.getElementById('inspectionType').value = "Batch";
+    document.getElementById('certifications').value = " ";
+}
+
 function loadInspectionData() {
     setDefaultValues();
     const batch_inspectionData = JSON.parse(localStorage.getItem('batch_inspectionData')) || [];
@@ -106,18 +78,12 @@ function addRowToTable(batch_inspection) {
         <td>${batch_inspection.batchID}</td>
         <td>${batch_inspection.inspectorID}</td>
         <td>${batch_inspection.certifications}</td>
-        <td style="display: flex; gap: 10px;">
-            <button class="btn btn-success" onclick="editRow(this)">
-                <i class="fas fa-edit"></i>
-            </button>
-            <button class="btn" onclick="deleteRow(this)">
-                <i class="fa fa-trash" aria-hidden="true"></i>
-            </button>
-            <button class="btn" onclick="printRow(this)">
-                <i class="fa fa-print" aria-hidden="true"></i>
-            </button>
+        <td>
+        <button class="btn btn-success" onclick="editRow(this)"><i class="fas fa-edit"></i></button>
+        <button class="btn" onclick="deleteRow(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+        <button class="btn" onclick="printRow(this)"><i class="fa fa-print" aria-hidden="true"></i></button>
         </td>
-`;
+    `;
 
     row.addEventListener('click', () => {
         if (selectedRow) selectedRow.classList.remove('selected');
@@ -127,61 +93,6 @@ function addRowToTable(batch_inspection) {
     });
 
     tableBody.appendChild(row);
-}
-
-function editRow(button) {
-    const row = button.parentNode.parentNode; // Get the parent row
-    const cells = row.querySelectorAll('td'); // Get all cells in the row
-
-    if (button.querySelector('i').classList.contains('fa-edit')) {
-        // Switch to edit mode
-        cells.forEach((cell, index) => {
-            if (index < 6) { // Exclude the last column (Action buttons)
-                const currentValue = cell.textContent;
-                if (index === 5) { // Handle certifications (comma-separated values)
-                    const certificationsArray = currentValue.split(',').map(item => item.trim());
-                    cell.innerHTML = `
-                        <input type="text" value="${certificationsArray.join(', ')}" class="edit-input">
-                    `;
-                } else {
-                    cell.innerHTML = `<input type="text" value="${currentValue}" class="edit-input">`;
-                }
-            }
-        });
-
-        // Change the edit icon to a save icon
-        button.innerHTML = '<i class="fa fa-save"></i>';
-    } else {
-        // Save the changes
-        cells.forEach((cell, index) => {
-            if (index < 6) { // Exclude the last column (Action buttons)
-                const input = cell.querySelector('.edit-input');
-                if (input) {
-                    const newValue = input.value.trim();
-                    cell.textContent = newValue;
-                }
-            }
-        });
-
-        // Update the localStorage data
-        const inspectionID = cells[1].textContent; // Assuming Inspection ID is in the second cell
-        let batch_inspectionData = JSON.parse(localStorage.getItem('batch_inspectionData')) || [];
-        const updatedIndex = batch_inspectionData.findIndex(item => item.inspectionID === inspectionID);
-        if (updatedIndex > -1) {
-            batch_inspectionData[updatedIndex] = {
-                date: cells[0].textContent,
-                inspectionID: cells[1].textContent,
-                inspectionType: cells[2].textContent,
-                batchID: cells[3].textContent,
-                inspectorID: cells[4].textContent,
-                certifications: cells[5].textContent
-            };
-            localStorage.setItem('batch_inspectionData', JSON.stringify(batch_inspectionData));
-        }
-
-        // Change the save icon back to an edit icon
-        button.innerHTML = '<i class="fa fa-edit"></i>';
-    }
 }
 
 function deleteRow(button) {

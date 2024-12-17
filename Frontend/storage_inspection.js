@@ -85,7 +85,7 @@ function editRow(button) {
             <option value="Excellent" ${cells[7].textContent === "Excellent" ? "selected" : ""}>Excellent</option>
         </select>`;
 
-    button.innerHTML = `<i class="fas fa-save"></i>`;
+    button.textContent = "Save";
     button.onclick = function () {
         saveRow(this);
     };
@@ -165,9 +165,10 @@ function setDefaultValues() {
     document.getElementById('inspectorID').value = "2222181";
     document.getElementById('storageID').value = generateRandomID("S-");
     document.getElementById('inspectionType').value = "Storage";
-    document.getElementById('maintenanceGrade').value.disabled = " ";
+    document.getElementById('maintenanceGrade').value = " ";
     document.getElementById('pestControlGrade').value = " ";
     document.getElementById('hygieneGrade').value = " ";
+
 }
 
 function loadInspectionData() {
@@ -189,18 +190,12 @@ function addRowToTable(storage_inspection) {
         <td>${storage_inspection.maintenanceGrade}</td>
         <td>${storage_inspection.pestControlGrade}</td>
         <td>${storage_inspection.hygieneGrade}</td>
-        <td style="display: flex; gap: 10px;">
-            <button class="btn btn-success" onclick="editRow(this)">
-                <i class="fas fa-edit"></i>
-            </button>
-            <button class="btn" onclick="deleteRow(this)">
-                <i class="fa fa-trash" aria-hidden="true"></i>
-            </button>
-            <button class="btn" onclick="printRow(this)">
-                <i class="fa fa-print" aria-hidden="true"></i>
-            </button>
+        <td>
+        <button class="btn btn-success" onclick="editRow(this)"><i class="fas fa-edit"></i></button>
+        <button class="btn" onclick="deleteRow(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+        <button class="btn" onclick="printRow(this)"><i class="fa fa-print" aria-hidden="true"></i></button>
         </td>
-`;
+    `;
 
     row.addEventListener('click', () => {
         if (selectedRow) selectedRow.classList.remove('selected');

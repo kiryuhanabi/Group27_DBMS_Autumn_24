@@ -23,11 +23,11 @@
                 <ul class="dropdown">
                     <li><a href="farm_inspection.html">Farm</a></li>
                     <li><a href="batch_inspection.html">Batch</a></li>
-                    <li><a href="lot_inspection.html">Lot</a></li>
-                    <li><a href="p_inspect.html">Processing Center</a></li>
+                    <li><a href="p_inspect.html">Processing</a></li>
                     <li><a href="storage_inspection.html">Storage</a></li>
                 </ul>
             </li>
+            <li><a href="#">Reports</a></li>
             <li><a href="login.html">Log out</a></li>
             <li><a href="notifications.html"><i class="fa fa-bell" aria-hidden="true"></i></a></li>
         </ul>
@@ -35,7 +35,7 @@
     </nav>
 
     <div class="dashboard">
-        <h2>Batch Inspection</h2>
+        <h2>Batch Inspection Dashboard</h2>
         <script src="batch_inspection.js"></script>
 
         <div class="inspection-filters">
@@ -52,30 +52,8 @@
                     </div>
                     <div class="input-row">
                         <label for="inspectionType">Inspect-Type:</label>
-                        <select id="inspectionType" name="inspectionType" required>
-                            <option value="Batch">Batch</option>
-                            <option value="Lot">Lot</option>
-                        </select>
+                        <input type="text" id="inspectionType" name="inspectionType">
                     </div>
-                    <div class="input-row">
-                        <label for="certifications">Certifications:</label>
-                        <div class="checkbox-container" id="certifications-container">
-                            <label>
-                                <input type="checkbox" name="certifications" value="
-                                Organic">
-                                Organic
-                            </label>
-                            <label>
-                                <input type="checkbox" name="certifications" value="Halal">
-                                Halal
-                            </label>
-                            <label>
-                                <input type="checkbox" name="certifications" value="Vegan">
-                                Vegan
-                            </label>
-                        </div>
-                    </div>
-                    
                 </div>
         
                 <div class="right-column">
@@ -88,13 +66,23 @@
                         <label for="inspectorID">Inspector ID:</label>
                         <input type="text" id="inspectorID" name="inspectorID">
                     </div>
+
+                    <div class="input-row">
+                        <label for="certifications">Certifications:</label>
+                        <select id="certifications" name="certifications">
+                            <option value=" "></option>
+                            <option value="Organic">Organic</option>
+                            <option value="Halal">Halal</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         
-            <button class="btn" id="addInspectionButton" onclick="addInspection()"><i class="fa fa-plus" aria-hidden="true"></i>  Add Inspection</button>
+            <button class="btn" onclick="addInspection()"><i class="fa fa-plus" aria-hidden="true"></i>  Add Inspection</button>
         </div>
 
         <div class="table-container">
+            <h2>Overview of Inspections</h2>
             <table id="inspectionTable">
                 <thead>
                     <tr>

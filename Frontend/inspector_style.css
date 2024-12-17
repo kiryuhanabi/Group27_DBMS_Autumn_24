@@ -8,7 +8,7 @@
 }
 
 body {
-    background-image: url('ins_background.png');
+    background-image: url('ins_background.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -131,20 +131,12 @@ ul li:hover ul.dropdown {
 .table-container {
     margin: 2rem auto;
     width: 80%;
-    max-width: 500px;
-    margin-top: 5px;
+    max-width: 1000px;
+    margin-top: auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     border-radius: 8px; 
     overflow: hidden; 
 }
-.container {
-    display: flex;
-    flex-wrap: wrap; /* Allows wrapping to multiple rows */
-    gap: 20px; /* Adds spacing between tables */
-    justify-content: space-between; /* Adjusts horizontal spacing */
-    margin: 20px auto; /* Centers the container */
-    max-width: 1200px; /* Adjust as needed for your layout */
-  }
 
 table {
     width: 100%;
@@ -166,7 +158,6 @@ th {
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
-
 
 td {
     padding: 1rem;
