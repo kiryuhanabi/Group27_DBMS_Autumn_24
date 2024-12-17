@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
-  <link rel="stylesheet" href="storage.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storage Dashboard</title>
+    <link rel="stylesheet" href="storage.css">
 </head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <script defer src="storage.js"></script>
-
 <body>
+<<<<<<< HEAD
   <div class="sidebar">
     <h2><img src="logo.png" alt="Agro Logo" class="logo-img"> Agro Storage</h2>
     <ul>
@@ -93,36 +90,44 @@
           </div>
         </div>
       </div>
+=======
+>>>>>>> 9d5fb3fef309186e0f29edb53f166c08de79d465
     
+    <header>
+        <h1>
+            <img src="logo.png" alt="Agro Logo" class="logo-img"> Agro Storage
+        </h1>
+    </header>
 
+    <nav class="nav">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Reports</a>
+                <ul class="dropdown">
+                    <li><a href="#">Monthly Reports</a></li>
+                    <li><a href="#">Yearly Reports</a></li>
+                </ul>
+            </li>
+            <li><a href="storage_transport.html">Storage Transport</a></li>
+            <li><a href="shipment_transport.html">Shipment Transport</a></li>
+            <li><a href="#">Notifications</a></li>
+            <li><a href="Inspector_about.html">About</a></li>
+            <li><a href="login.html">Log out</a></li>
+        </ul>
+    </nav>
 
-
-        <section class="dashboard">
-            
-            <div class="summary-cards">
-                <div class="card total-products">
-                    <h2 id="t_products">Loading...</h2>
-                    <p>Total Products</p>
-                </div>
-                <div class="card storage-capacity">
-                    <h2 id="s_Capacity">Loading...</h2>
-                    <p>Storage Capacity</p>
-                </div>
-                <div class="card temperature">
-                    <h2 id="temperature">Loading...</h2>
-                    <p>Temperature</p>
-                </div>
-                <div class="card humidity">
-                    <h2 id="humidity">Loading...</h2>
-                    <p>Humidity</p>
-                </div>
+            <div class="realtime-info">
+                <p id="datetime"></p>
+                <p id="temperature">Temperature: Loading...</p>
             </div>
-        </section>
 
-      <section class="container">
+
+    <section class="content">
+
+
+  
         <div class="table-container">
             <h2>Storage Overview</h2>
-            
             <table>
                 <thead>
                     <tr>
@@ -133,53 +138,51 @@
                     </tr>
                 </thead>
                 <tbody>
+                    
                     <tr>
-                        <td>ST002331</td>
+                        <td>ST001</td>
                         <td>Freezing</td>
                         <td>30 days</td>
-                        <td>Mirpur 2, Dhaka</td>
+                        <td>Dhaka A</td>
                     </tr>
+                </tbody>
+                <tbody>
+                   
                     <tr>
-                        <td>ST003362</td>
+                        <td>ST002</td>
                         <td>Common</td>
                         <td>60 days</td>
-                        <td>Purbachal, Dhaka</td>
+                        <td>Dhaka B</td>
                     </tr>
+                </tbody>
+                <tbody>
+                    
                     <tr>
-                        <td>ST005673</td>
+                        <td>ST003</td>
                         <td>Dry</td>
                         <td>90 days</td>
-                        <td>Lalmonirhat, Dhaka</td>
+                        <td>Dhaka B</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </section>
 
-    <section class="charts-container">
-      <h2>Analytics</h2>
-      <div class="charts-wrapper">
-<div class="chart" data-scroll="animate">
-  <h3>Storage Transport Overview</h3>
-  <canvas id="storageTransportChart"></canvas>
-</div>
+  
+    <script>
+        
+        function updateDateTime() {
+            const now = new Date();
+            document.getElementById('datetime').textContent = now.toLocaleString();
+        }
+        setInterval(updateDateTime, 1000);
 
-<div class="chart" data-scroll="animate">
-  <h3>Shipment Transport Overview</h3>
-  <canvas id="shipmentTransportChart"></canvas>
-</div>
-
-<div class="chart pie-animate" data-scroll="animate">
-  <h3>Revenue from Storage</h3>
-  <canvas id="revenueChart"></canvas>
-</div>
-
-<div class="chart pie-animate" data-scroll="animate">
-  <h3>Cost Analysis</h3>
-  <canvas id="costChart"></canvas>
-</div>
-</div>
-  </section>
-  </div>
+        
+        function updateTemperature() {
+            const simulatedTemp = (Math.random() * 5 + 18).toFixed(1); 
+            document.getElementById('temperature').textContent = `Temperature: ${simulatedTemp}°C`;
+        }
+        setInterval(updateTemperature, 5000);
+    </script>
 </body>
 </html>

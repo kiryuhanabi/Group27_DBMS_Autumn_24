@@ -1,9 +1,47 @@
+<?php
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db = "crud"; 
+
+$conn = new mysqli($host, $user, $pass, $db);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$message = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $inspectionDate = $_POST['inspectionDate'];
+    $inspectorID = $_POST['inspectorID'];
+    $storageID = $_POST['storageID'];
+    $maintenanceGrade = $_POST['maintenanceGrade'];
+    $pestControlGrade = $_POST['pestControlGrade'];
+    $hygieneGrade = $_POST['hygieneGrade'];
+
+    $sql = "INSERT INTO tblstorageinspection (`Date`, `Inspector ID`, `Storage Maintenance Grade`, `Storage ID`, `Pest Control Grade`, `Storage Hygene Grade`)
+        VALUES ('$inspectionDate', '$inspectorID', '$maintenanceGrade', '$storageID', '$pestControlGrade', '$hygieneGrade')";
+
+    if ($conn->query($sql) === TRUE) {
+        $message = "Inspection added successfully!";
+    } else {
+        $message = "Error: " . $conn->error;
+    }
+}
+
+$sql = "SELECT * FROM tblstorageinspection";
+$result = $conn->query($sql);
+
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farm Inspection</title>
+    <title>Storage Inspection Dashboard</title>
     <link rel="stylesheet" href="inspection_style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css" integrity="sha512-3PN6gfRNZEX4YFyz+sIyTF6pGlQiryJu9NlGhu9LrLMQ7eDjNgudQoFDK3WSNAayeIKc6B8WXXpo4a7HqxjKwg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -21,25 +59,25 @@
             <li>
                 <a href="#">Inspection Type</a>
                 <ul class="dropdown">
-                    <li><a href="farm_inspection.html">Farm</a></li>
+                    <li><a href="farm_inspection.php">Farm</a></li>
                     <li><a href="batch_inspection.html">Batch</a></li>
-                    <li><a href="p_inspect.html">Processing</a></li>
-                    <li><a href="storage_inspection.html">Storage</a></li>
+                    <li><a href="lot_inspection.php">Lot</a></li>
+                    <li><a href="p_inspect.html">Processing Center</a></li>
+                    <li><a href="storage_inspection.php">Storage</a></li>
                 </ul>
             </li>
-            <li><a href="#">Reports</a></li>
             <li><a href="login.html">Log out</a></li>
             <li><a href="notifications.html"><i class="fa fa-bell" aria-hidden="true"></i></a></li>
         </ul>
     </nav>
 
     <div class="dashboard">
-        <h2>Storage Inspection Dashboard</h2>
-        
+        <h2>Storage Inspection</h2>
         <script src="storage_inspection.js"></script>
 
         <div class="inspection-filters">
             <h3>Add New inspection</h3>
+            <form action="" method="POST">
             <div class="form-group">
                 <div class="left-column">
                     <div class="input-row">
@@ -48,52 +86,43 @@
                     </div>
 
                     <div class="input-row">
-                        <label for="inspectionID">Inspection ID:</label>
-                        <input type="text" id="inspectionID" name="inspectionID">
-                    </div>
-
-                    <div class="input-row">
                         <label for="storageID">Storage ID:</label>
                         <input type="text" id="storageID" name="storageID">
                     </div>
+
                     <div class="input-row">
-                        <label for="inspectionType">Inspect-Type:</label>
-                        <input type="text" id="inspectionType" name="inspectionType">
+                        <label for="inspectorID">Inspector ID:</label>
+                        <input type="text" id="inspectorID" name="inspectorID">
                     </div>
                 </div>
         
                 <div class="right-column">
                     <div class="input-row">
-                        <label for="inspectorID">Inspector ID:</label>
-                        <input type="text" id="inspectorID" name="inspectorID">
-                    </div>
-
-                    <div class="input-row">
                         <label for="maintenanceGrade">Maintenance Grade:</label>
                         <select id="maintenanceGrade" name="maintenanceGrade">
-                            <option value=" "> </option>
+                            <option value="" disabled>Select Grade</option>
                             <option value="Poor">Poor</option>
                             <option value="Acceptable">Acceptable</option>
-                            <option value="Good">Good</option>
-                            <option value="Excellent">Excellent</option>
+                            <option value="Decent">Good</option>
+                            <option value="Perfect">Excellent</option>
                         </select>
                     </div>
 
                     <div class="input-row">
                         <label for="pestControlGrade">Pest Control Grade:</label>
                         <select id="pestControlGrade" name="pestControlGrade">
-                            <option value=" "> </option>
+                            <option value="" disabled>Select Grade</option>
                             <option value="Poor">Poor</option>
                             <option value="Acceptable">Acceptable</option>
-                            <option value="Good">Good</option>
-                            <option value="Excellent">Excellent</option>
+                            <option value="Decent">Good</option>
+                            <option value="Perfect">Excellent</option>
                         </select>
                     </div>
 
                     <div class="input-row">
                         <label for="hygieneGrade">Hygiene Grade:</label>
                         <select id="hygieneGrade" name="hygieneGrade">
-                            <option value=" "> </option>
+                            <option value="" disabled>Select Grade</option>
                             <option value="Poor">Poor</option>
                             <option value="Acceptable">Acceptable</option>
                             <option value="Good">Good</option>
@@ -102,8 +131,8 @@
                     </div>
                 </div>
             </div>
-        
-            <button class="btn" onclick="addInspection()"><i class="fa fa-plus" aria-hidden="true"></i>  Add Inspection</button>
+            <button class="btn" type="submit"><i class="fa fa-plus" aria-hidden="true"></i>  Add Inspection</button>
+        </form>
         </div>
 
         <div class="table-container">
@@ -112,17 +141,30 @@
                 <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Inspection ID</th>
-                        <th>Type</th>
                         <th>Storage ID</th>
                         <th>Inspector ID</th>
-                        <th>Maintenance</th>
-                        <th>Pest Control</th>
-                        <th>Hygiene</th>
-                        <th>Action</th>
+                        <th>Maintenance Grade</th>
+                        <th>Pest Control Grade</th>
+                        <th>Hygiene Grade</th>
                     </tr>
                 </thead>
                 <tbody id="inspectionTableBody">
+                <?php if ($result->num_rows > 0): ?>
+                        <?php while ($row = $result->fetch_assoc()): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($row['date']); ?></td>
+                                <td><?php echo htmlspecialchars($row['Storage ID']); ?></td>
+                                <td><?php echo htmlspecialchars($row['Inspector ID']); ?></td>
+                                <td><?php echo htmlspecialchars($row['Storage Maintenance Grade']); ?></td>
+                                <td><?php echo htmlspecialchars($row['Pest Control Grade']); ?></td>
+                                <td><?php echo htmlspecialchars($row['Storage Hygene Grade']); ?></td>
+                            </tr>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="7">No records found</td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>    

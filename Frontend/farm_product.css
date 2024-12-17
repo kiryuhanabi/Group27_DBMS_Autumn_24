@@ -8,11 +8,11 @@
 }
 
 body {
+    background-image: url('ins_background.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     color: white;
-    
 }
 .dashboard {
     text-align: center;
@@ -87,7 +87,7 @@ ul li:hover ul.dropdown {
     display: block;
 }
 
-.transport-filters label {
+.inspection-filters label {
     color: #010101;
 }
 
@@ -119,7 +119,7 @@ ul li:hover ul.dropdown {
     color: #333;
 }
 
-.transport-filters {
+.inspection-filters {
     max-width: 640px;
     margin: 10px auto;
     padding: 20px;
@@ -128,7 +128,7 @@ ul li:hover ul.dropdown {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.transport-filters h3 {
+.inspection-filters h3 {
     text-align: center;
     color: #4CAF50;
     margin-bottom: 20px;
@@ -159,13 +159,13 @@ ul li:hover ul.dropdown {
     text-align: right;
 }
 
-.transport-filters label {
+.inspection-filters label {
     font-weight: bold;
     color: #333;
 }
 
-.transport-filters input,
-.transport-filters select {
+.inspection-filters input,
+.inspection-filters select {
     padding: 8px;
     font-size: 14px;
     border: 1px solid #ddd;
@@ -177,11 +177,11 @@ ul li:hover ul.dropdown {
 .btn {
     display: block;
     width: 100%;
-    margin-top: 20px;
+    margin-top: 10px;
     padding: 10px;
-    font-size: 16px;
+    font-size: 14px;
     color: #fff;
-    background-color: #007bff;
+    background-color: #34495e;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -190,56 +190,79 @@ ul li:hover ul.dropdown {
 }
 
 .btn:hover {
-    background-color: #0056b3;
+    background-color: #4CAF50;
 }
 
 .table-container {
-    text-align: center;
+    /*margin: 2rem auto;
+    width: 90%;
+    max-width: 1200px;
+    margin-top: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    border-radius: 8px;*/ 
     overflow-x: auto;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 
 table {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 16px;
-    min-width: 400px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    animation: slideIn 1s ease-out;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
 }
 
-@keyframes slideIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
 
-table thead tr {
+thead {
     background-color: #4CAF50;
-    color: #fff;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.05em;
 }
 
-table th, table td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
+th {
+    padding: 1rem;
     text-align: center;
-    color: #000;
+    border-bottom: 1px solid #ddd;
 }
 
-table tbody tr {
-    transition: background-color 0.3s ease;
+td {
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    color: #404340;
 }
 
-table tbody tr:hover {
-    background-color: rgba(76, 175, 80, 0.2);
+tbody tr {
+    transition: background-color 0.3s ease; 
 }
-.selected {
-    background-color: #d1e7dd !important;
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1; 
+    cursor: pointer;
+}
+
+
+
+
+
+@media (max-width: 768px) {
+    th, td {
+        padding: 0.75rem;
+        font-size: 0.9em; 
+    }
 }
 
 .details-btn {
     padding: 8px 12px;
     color: #fff;
-    background-color: #007bff;
+    background-color: #34495e;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -247,102 +270,5 @@ table tbody tr:hover {
 }
 
 .details-btn:hover {
-    background-color: #0056b3;
-}
-<<<<<<< HEAD:Frontend/shipment_Creat.css
-
-
-
-h1, h2 {
-    margin: 0;
-    color: #333;
-}
-
-
-.form-section, .table-section {
-    background-color: #fff;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-
-.actions {
-    display: flex;
-    justify-content: center;
-    gap: 10px; 
-}
-
-.actions button {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 4px;
-    color: white;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.actions button:nth-child(1) {
-    background-color: #007bff;
-}
-
-.actions button:nth-child(1):hover {
-    background-color: #0056b3;
-}
-
-.actions button:nth-child(2) {
-    background-color: #028d34; 
-}
-
-.actions button:nth-child(2):hover {
-    background-color: #026d27;
-}
-
-.actions button:nth-child(3) {
-    background-color: #c0392b;
-}
-
-.actions button:nth-child(3):hover {
-    background-color: #76231b;
-}
-
-.transport-filters .input-row {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-label[for="searchInput"] {
-    color: rgb(154, 10, 10);
-    font-weight: bold;
-}
-
-
-#searchInput {
-    width: calc(100% - 20px);
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-top: 5px;
-}
-
-
-=======
->>>>>>> 9d5fb3fef309186e0f29edb53f166c08de79d465:Frontend/shipment_transport.css
+    background-color: #4CAF50;
+} 
