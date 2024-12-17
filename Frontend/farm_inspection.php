@@ -1,3 +1,41 @@
+<?php
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db = "mytest"; 
+
+$conn = new mysqli($host, $user, $pass, $db);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$message = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $inspectionDate = $_POST['inspectionDate'];
+    $inspectionID = $_POST['inspectionID'];
+    $inspectionType = $_POST['inspectionType'];
+    $farmID = $_POST['farmID'];
+    $inspectorID = $_POST['inspectorID'];
+    $qualityGrade = $_POST['qualityGrade'];
+
+    $sql = "INSERT INTO test (`date`, `iID`, `iType`, `fID`, `insID`, `quality`)
+        VALUES ('$inspectionDate', '$inspectionID', '$inspectionType', '$farmID', '$inspectorID', '$qualityGrade')";
+
+    if ($conn->query($sql) === TRUE) {
+        $message = "Inspection added successfully!";
+    } else {
+        $message = "Error: " . $conn->error;
+    }
+}
+
+$sql = "SELECT * FROM test";
+$result = $conn->query($sql);
+
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,14 +69,14 @@
             <li><a href="login.html">Log out</a></li>
             <li><a href="notifications.html"><i class="fa fa-bell" aria-hidden="true"></i></a></li>
         </ul>
-
     </nav>
 
     <div class="dashboard">
         <h2>Farm Inspection</h2>
-        <script src="farm_inspection.js"></script>
+        <script src="batch_inspection.js"></script>
         <div class="inspection-filters">
             <h3>Add New Inspection</h3>
+            <form action="" method="POST">
                 <div class="form-group">
                     <div class="left-column">
                         <div class="input-row">
@@ -52,25 +90,23 @@
                         <div class="input-row">
                             <label for="inspectionType">Inspect-Type:</label>
                             <select id="inspectionType" name="inspectionType" required>
-                                <option disabled selected>Select Type</option>
+                                <option disabled>Select Type</option>
                                 <option value="Soil">Soil</option>
                                 <option value="Fertilizer">Fertilizer</option>
                                 <option value="Maintenance">Maintenance</option>
                             </select>
                         </div>
                     </div>
-            
+        
                     <div class="right-column">
                         <div class="input-row">
                             <label for="farmID">Farm ID:</label>
                             <input type="text" id="farmID" name="farmID" required>
                         </div>
-        
                         <div class="input-row">
                             <label for="inspectorID">Inspector ID:</label>
                             <input type="text" id="inspectorID" name="inspectorID" required>
                         </div>
-        
                         <div class="input-row">
                             <label for="qualityGrade">Quality Grade:</label>
                             <select id="qualityGrade" name="qualityGrade" required>
@@ -82,9 +118,11 @@
                             </select>
                         </div>
                     </div>
-                </div>         
-                <button class="btn" onclick="addInspection()"><i class="fa fa-plus" aria-hidden="true"></i> Add Inspection</button>
-        </div>        
+                </div>
+                <button class="btn" type="submit"><i class="fa fa-plus" aria-hidden="true"></i> Add Inspection</button>
+            </form>
+            <p><?php echo $message; ?></p>
+        </div>                
 
         <div class="table-container">
             <table id="inspectionTable">
@@ -100,6 +138,23 @@
                     </tr>
                 </thead>
                 <tbody id="inspectionTableBody">
+                    <?php if ($result->num_rows > 0): ?>
+                        <?php while ($row = $result->fetch_assoc()): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($row['date']); ?></td>
+                                <td><?php echo htmlspecialchars($row['iID']); ?></td>
+                                <td><?php echo htmlspecialchars($row['iType']); ?></td>
+                                <td><?php echo htmlspecialchars($row['fID']); ?></td>
+                                <td><?php echo htmlspecialchars($row['insID']); ?></td>
+                                <td><?php echo htmlspecialchars($row['quality']); ?></td>
+                                <td><button class="btn-delete">Delete</button></td>
+                            </tr>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="7">No records found</td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>     
