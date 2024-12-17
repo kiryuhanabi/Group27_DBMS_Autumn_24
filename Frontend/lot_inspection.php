@@ -62,7 +62,7 @@ $conn->close();
                     <li><a href="batch_inspection.html">Batch</a></li>
                     <li><a href="lot_inspection.php">Lot</a></li>
                     <li><a href="p_inspect.html">Processing</a></li>
-                    <li><a href="storage_inspection.html">Storage</a></li>
+                    <li><a href="storage_inspection.php">Storage</a></li>
                 </ul>
             </li>
             <li><a href="login.html">Log out</a></li>
