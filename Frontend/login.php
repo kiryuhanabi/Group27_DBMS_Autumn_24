@@ -13,7 +13,7 @@ $message = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $login_id = $conn->real_escape_string($_POST['id']);
-    $password = $_POST['password'];
+    $password = $conn->real_escape_string($_POST['password']);
     $user_type = $conn->real_escape_string($_POST['user_type']);
 
     // Fetch the user's record
@@ -23,8 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         
-        // Verify password
-        if (password_verify($password, $row['Password'])) {
+        // Direct password comparison (plain-text)
+        if ($password === $row['Password']) {
             // Redirect to user-specific page
             $redirect_pages = [
                 'inspector' => 'inspector.php',
