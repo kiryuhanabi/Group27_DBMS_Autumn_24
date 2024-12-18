@@ -103,8 +103,8 @@ $conn->close();
                             <option value="" disabled>Select Grade</option>
                             <option value="Poor">Poor</option>
                             <option value="Acceptable">Acceptable</option>
-                            <option value="Decent">Good</option>
-                            <option value="Perfect">Excellent</option>
+                            <option value="Decent">Decent</option>
+                            <option value="Perfect">Perfect</option>
                         </select>
                     </div>
 
@@ -114,8 +114,8 @@ $conn->close();
                             <option value="" disabled>Select Grade</option>
                             <option value="Poor">Poor</option>
                             <option value="Acceptable">Acceptable</option>
-                            <option value="Decent">Good</option>
-                            <option value="Perfect">Excellent</option>
+                            <option value="Decent">Decent</option>
+                            <option value="Perfect">Perfect</option>
                         </select>
                     </div>
 
@@ -125,8 +125,8 @@ $conn->close();
                             <option value="" disabled>Select Grade</option>
                             <option value="Poor">Poor</option>
                             <option value="Acceptable">Acceptable</option>
-                            <option value="Good">Good</option>
-                            <option value="Excellent">Excellent</option>
+                            <option value="Decent">Decent</option>
+                            <option value="Perfect">Perfect</option>
                         </select>
                     </div>
                 </div>
