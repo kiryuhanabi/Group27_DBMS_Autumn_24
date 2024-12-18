@@ -22,11 +22,11 @@
                 <ul class="dropdown">
                     <li><a href="farm_inspection.php">Farm</a></li>
                     <li><a href="batch_inspection.html">Batch</a></li>
-                    <li><a href="p_inspect.html">Processing</a></li>
-                    <li><a href="storage_inspection.html">Storage</a></li>
+                    <li><a href="lot_inspection.php">Lot</a></li>
+                    <li><a href="p_inspect.php">Processing Center</a></li>
+                    <li><a href="storage_inspection.php">Storage</a></li>
                 </ul>
             </li>
-            <li><a href="#">Reports</a></li>
             <li><a href="login.html">Log out</a></li>
         </ul>
     </nav>
@@ -44,30 +44,22 @@
         <table>
             <thead>
                 <tr>
-                    <th>Inspection ID</th>
                     <th>Type</th>
                     <th>Date</th>
-                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>2XXXXX</td>
                     <td>Farm</td>
                     <td>2024-10-28</td>
-                    <td>Completed</td>
                 </tr>
                 <tr>
-                    <td>3XXXXX</td>
                     <td>Storage</td>
-                    <td>----</td>
-                    <td>Pending</td>
+                    <td>2024-10-30</td>
                 </tr>
                 <tr>
-                    <td>4XXXXX</td>
                     <td>Processing-Center</td>
                     <td>2024-10-30</td>
-                    <td>Completed</td>
                 </tr>
             </tbody>
         </table>
@@ -90,7 +82,7 @@
                 plugins: {
                     legend: {
                         labels: {
-                            color: 'white' /* Ensure visibility of labels */
+                            color: 'white'
                         }
                     }
                 }

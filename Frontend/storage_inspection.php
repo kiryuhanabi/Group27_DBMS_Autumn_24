@@ -62,7 +62,7 @@ $conn->close();
                     <li><a href="farm_inspection.php">Farm</a></li>
                     <li><a href="batch_inspection.html">Batch</a></li>
                     <li><a href="lot_inspection.php">Lot</a></li>
-                    <li><a href="p_inspect.html">Processing Center</a></li>
+                    <li><a href="p_inspect.php">Processing Center</a></li>
                     <li><a href="storage_inspection.php">Storage</a></li>
                 </ul>
             </li>
