@@ -24,70 +24,131 @@
         </ul>
     </nav>
 
-    </nav>
-
     <div class="dashboard">
         <h2>Product</h2>
-        <script src="farm_product.js"></script>
+
         <div class="inspection-filters">
             <h3>Add New Product</h3>
-            <form id="addInspectionForm">
+            <form id="addProductForm">
                 <div class="form-group">
                     <div class="left-column">
                         <div class="input-row">
-                            <label for="productname">Procuct Name</label>
+                            <label for="productname">Product Name:</label>
                             <input type="text" id="productname" name="productname" required>
                         </div>
                         <div class="input-row">
-                            <label for="type">Type</label>
+                            <label for="type">Type:</label>
                             <input type="text" id="type" name="type" required>
                         </div>
                         <div class="input-row">
                             <label for="season">Best Season:</label>
                             <select id="season" name="season" required>
-                                <option value="summer">summer</option>
-                                <option value="rainy">rainy</option>
-                                <option value="winter">winter</option>
-                                <option value="spring">spring</option>
+                                <option value="summer">Summer</option>
+                                <option value="rainy">Rainy</option>
+                                <option value="winter">Winter</option>
+                                <option value="spring">Spring</option>
                             </select>
                         </div>
                     </div>
             
                     <div class="right-column">
                         <div class="input-row">
-                            <label for="humidity">Optimum humidity:</label>
+                            <label for="humidity">Optimum Humidity:</label>
                             <input type="text" id="humidity" name="humidity" required>
                         </div>
-        
                         <div class="input-row">
-                            <label for="inspectorID">Optimum temperature:</label>
-                            <input type="text" id="inspectorID" name="inspectorID" required>
+                            <label for="temperature">Optimum Temperature:</label>
+                            <input type="text" id="temperature" name="temperature" required>
                         </div>
-        
-                       
                     </div>
                 </div>         
-                <button class="btn" onclick="addInspection()"><i class="fa fa-plus" aria-hidden="true"></i> Add product</button>
+                <button class="btn" type="submit"><i class="fa fa-plus" aria-hidden="true"></i> Add Product</button>
             </form>
         </div>        
 
         <div class="table-container">
-            <h2>Overview of Product</h2>
-            <table id="inspectionTable">
+            <h2>Overview of Products</h2>
+            <table id="productTable">
                 <thead>
                     <tr>
                         <th>Product ID</th>
                         <th>Name</th>
                         <th>Type</th>
-                        <th>Best season</th>
-                        <th>Optimum temperature</th>
-                        <th>Optimum humidity</th>
+                        <th>Best Season</th>
+                        <th>Optimum Temperature</th>
+                        <th>Optimum Humidity</th>
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody id="inspectionTableBody">
-                </tbody>
+                <tbody id="productTableBody"></tbody>
             </table>
-        </div>     
-    </body>
+        </div>
+    </div>
+
+    <script>
+        let productId = 1; // Start product ID auto-increment
+
+        // Add Product Form Submission
+        document.getElementById("addProductForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const productName = document.getElementById("productname").value;
+            const type = document.getElementById("type").value;
+            const season = document.getElementById("season").value;
+            const humidity = document.getElementById("humidity").value;
+            const temperature = document.getElementById("temperature").value;
+
+            const newRow = `
+                <tr>
+                    <td>${productId}</td>
+                    <td>${productName}</td>
+                    <td>${type}</td>
+                    <td>${season}</td>
+                    <td>${temperature}</td>
+                    <td>${humidity}</td>
+                    <td>
+                        <button class="btn edit-btn" onclick="editRow(this)">Edit</button>
+                        <button class="btn delete-btn" onclick="deleteRow(this)">Delete</button>
+                    </td>
+                </tr>
+            `;
+
+            document.getElementById("productTableBody").insertAdjacentHTML("beforeend", newRow);
+
+            productId++; // Increment the product ID
+            this.reset(); // Reset the form
+        });
+
+        // Edit Row Functionality
+        function editRow(button) {
+            const row = button.closest("tr");
+            const cells = row.querySelectorAll("td");
+
+            // Toggle Edit/Save
+            if (button.textContent === "Edit") {
+                // Replace text with input fields
+                for (let i = 1; i < cells.length - 1; i++) {
+                    const cellValue = cells[i].innerText;
+                    cells[i].innerHTML = `<input type="text" value="${cellValue}" />`;
+                }
+
+                button.textContent = "Save"; // Change button to Save
+            } else {
+                // Save updated values back to table
+                const inputs = row.querySelectorAll("input");
+                inputs.forEach((input, index) => {
+                    cells[index + 1].innerText = input.value; // Update the table with input values
+                });
+
+                button.textContent = "Edit"; // Change button back to Edit
+            }
+        }
+
+        // Delete Row Functionality
+        function deleteRow(button) {
+            const row = button.closest("tr");
+            row.remove(); // Remove the row from the table
+        }
+    </script>
+</body>
 </html>

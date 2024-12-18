@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm</title>
+    <link rel="stylesheet" href="farm.css">
+    <link href="logo.png" rel="icon" type="image/png">
+</head>
+<body>
+    <h1>
+        <img src="logo.png" alt="Farm Logo" class="logo-img">
+        Agro Farm
+    </h1>
+
+    <nav class="nav">
+        <ul class="ul">
+            <li><a href="farm.html">Home</a></li>
+            <li><a href="farm_product.html">Product</a></li>
+            <li><a href="farm_batch.html">Batch</a></li>
+            <li><a href="login.html">Logout</a></li>
+        </ul>
+    </nav>
+
+    <section class="farm-info-container">
+        <h2>Farm Information</h2>
+
+        <!-- Table to display farm details -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Farm ID</th>
+                        <th>Farm Name</th>
+                        <th>Street</th>
+                        <th>City</th>
+                        <th>Number of Fields</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Update Farm Information Button -->
+        <div class="button-container">
+            <button onclick="location.href='farm_update.html'" class="btn">Update Farm Information</button>
+        </div>
+    </section>
+
+    <script src="farm.js"></script>
+</body>
+</html>

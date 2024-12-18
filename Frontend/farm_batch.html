@@ -24,61 +24,107 @@
         </ul>
     </nav>
 
-    </nav>
-
     <div class="dashboard">
         <h2>Batch</h2>
-        <script src="farm_batch.js"></script>
+
         <div class="inspection-filters">
             <h3>Create Batch</h3>
-            <form id="addInspectionForm">
+            <form id="addBatchForm" action="batch_processing.php" method="POST">
+                <!-- First Row: Harvest Date and Expirey Date -->
                 <div class="form-group">
-                    <div class="left-column">
-                        <div class="input-row">
-                            <label for="harvestDate">Harvest Date:</label>
-                            <input type="date" id="harvestDate" name="harvestDate" required>
-                        </div>
-                        <div class="input-row">
-                            <label for="productID">Product ID:</label>
-                            <input type="text" id="productID" name="productID" required>
-                        </div>
-                        
+                    <div class="input-row">
+                        <label for="harvestDate">Harvest Date:</label>
+                        <input type="date" id="harvestDate" name="harvestDate" required>
                     </div>
-            
-                    <div class="right-column">
-                        <div class="input-row">
-                            <label for="exipreyDate">expirey Date:</label>
-                            <input type="date" id="exipreyDate" name="exipreyDate" required>
-                        </div>
-        
-                        <div class="input-row">
-                            <label for="name">Product Name:</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-        
-                        
+                    <div class="input-row">
+                        <label for="expireyDate">Expirey Date:</label>
+                        <input type="date" id="expireyDate" name="expireyDate" required>
                     </div>
-                </div>         
-                <button class="btn" onclick="addInspection()"><i class="fa fa-plus" aria-hidden="true"></i> Add Batch</button>
+                </div>
+                <!-- Second Row: Product ID and Quantity -->
+                <div class="form-group">
+                    <div class="input-row">
+                        <label for="productID">Product ID:</label>
+                        <input type="text" id="productID" name="productID" required>
+                    </div>
+                    <div class="input-row">
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" id="quantity" name="quantity" min="1" required>
+                    </div>
+                </div>
+                <button class="btn" type="submit"><i class="fa fa-plus" aria-hidden="true"></i> Add Batch</button>
             </form>
-        </div>        
+        </div>
 
         <div class="table-container">
-            <h2>Overview of Inspections</h2>
-            <table id="inspectionTable">
+            <h2>Batch Overview</h2>
+            <table id="batchTable">
                 <thead>
                     <tr>
-                        <th>Product ID</th>
-                        <th>Product Name</th>
-                        <th>Batch ID</th>
+                        <th>Batch Barcode</th>
                         <th>Harvest Date</th>
                         <th>Expirey Date</th>
-                        <th>Action</th>
+                        <th>Quantity</th>
+                        <th>Product ID</th>
+                        <th>Farm ID</th>
                     </tr>
                 </thead>
-                <tbody id="inspectionTableBody">
+                <tbody id="batchTableBody">
+                    <!-- Example static row -->
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                 </tbody>
             </table>
-        </div>     
-    </body>
+        </div>
+    </div>
+
+    <script>
+        // Auto-increment logic example (mock for client-side demo)
+        let batchBarcode = 1; // Start with a base barcode
+        let farmID = 5001; // Farm ID
+
+        const addBatchForm = document.getElementById("addBatchForm");
+        const batchTableBody = document.getElementById("batchTableBody");
+
+        addBatchForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const harvestDate = document.getElementById("harvestDate").value;
+            const expireyDate = document.getElementById("expireyDate").value;
+            const productID = document.getElementById("productID").value;
+            const quantity = document.getElementById("quantity").value;
+
+            // Validation: Ensure Product ID is not empty
+            if (!productID) {
+                alert("Product ID cannot be empty.");
+                return;
+            }
+
+            // Add new batch row
+            const newRow = `
+                <tr>
+                    <td>${batchBarcode}</td>
+                    <td>${harvestDate}</td>
+                    <td>${expireyDate}</td>
+                    <td>${quantity}</td>
+                    <td>${productID}</td>
+                    <td>${farmID}</td>
+                </tr>
+            `;
+            batchTableBody.insertAdjacentHTML("beforeend", newRow);
+
+            // Increment IDs
+            batchBarcode++;
+
+            // Optionally reset form inputs
+            addBatchForm.reset();
+        });
+    </script>
+</body>
 </html>

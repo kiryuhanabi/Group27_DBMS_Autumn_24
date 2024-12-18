@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Farm</title>
+    <link rel="stylesheet" href="farm.css">
+    <link href="logo.png" rel="icon" type="image/png">
+    <style>
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .button-container .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        <img src="logo.png" alt="Farm Logo" class="logo-img">
+        Agro Farm - Update Information
+    </h1>
+
+    <nav class="nav">
+        <ul class="ul">
+            <li><a href="farm.html">Home</a></li>
+            <li><a href="farm_product.html">Product</a></li>
+            <li><a href="farm_batch.html">Batch</a></li>
+            <li><a href="login.html">Logout</a></li>
+        </ul>
+    </nav>
+
+    <section class="farm-update-container">
+        <h2>Update Farm Information</h2>
+        <!-- Display message dynamically -->
+        <div id="message" class="alert" style="display:none;">
+            <p></p>
+        </div>
+
+        <!-- Form for updating farm information -->
+        <form id="farmUpdateForm">
+            <div class="input-row">
+                <label for="farmName">Farm Name:</label>
+                <input type="text" id="farmName" name="farmName" value="" required>
+            </div>
+
+            <div class="input-row">
+                <label for="street">Street:</label>
+                <input type="text" id="street" name="street" value="" required>
+            </div>
+
+            <div class="input-row">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" value="" required>
+            </div>
+
+            <div class="input-row">
+                <label for="numFields">Number of Fields:</label>
+                <input type="number" id="numFields" name="numFields" value="" min="1" required>
+            </div>
+
+            <!-- Buttons -->
+            <div class="button-container">
+                <button type="button" id="addButton" class="btn">Add</button>
+                <button type="button" id="updateButton" class="btn">Update</button>
+            </div>
+        </form>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Simulate fetching farm data (for update)
+            const farmData = {
+                farmName: "",
+                street: "",
+                city: "",
+                numFields: ""
+            };
+
+            // Populate the form with the fetched data
+            document.getElementById("farmName").value = farmData.farmName;
+            document.getElementById("street").value = farmData.street;
+            document.getElementById("city").value = farmData.city;
+            document.getElementById("numFields").value = farmData.numFields;
+
+            // Add button click handler
+            document.getElementById("addButton").addEventListener("click", () => {
+                handleFormAction("add");
+            });
+
+            // Update button click handler
+            document.getElementById("updateButton").addEventListener("click", () => {
+                handleFormAction("update");
+            });
+
+            // Handle form actions
+            function handleFormAction(action) {
+                const farmName = document.getElementById("farmName").value;
+                const street = document.getElementById("street").value;
+                const city = document.getElementById("city").value;
+                const numFields = document.getElementById("numFields").value;
+
+                // Simulate storing the data in localStorage (you can replace this with an API call)
+                let farms = JSON.parse(localStorage.getItem("farms")) || [];
+
+                if (action === "add") {
+                    farms.push({ farmName, street, city, numFields });
+                    alert("Farm added successfully!");
+                } else if (action === "update") {
+                    // Simulate updating the first item (replace with actual logic)
+                    if (farms.length > 0) {
+                        farms[0] = { farmName, street, city, numFields };
+                        alert("Farm updated successfully!");
+                    } else {
+                        alert("No farm data to update!");
+                        return;
+                    }
+                }
+
+                localStorage.setItem("farms", JSON.stringify(farms));
+
+                // Redirect to farm.html
+                window.location.href = "farm.html";
+            }
+        });
+    </script>
+</body>
+</html>
