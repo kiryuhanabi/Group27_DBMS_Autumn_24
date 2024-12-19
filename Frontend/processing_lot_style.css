@@ -1,169 +1,194 @@
-/* General Reset */
-body, html {
+/* Background image styling */
+body {
     margin: 0;
     padding: 0;
-    height: 100%;
+    font-family: Arial, sans-serif; /* Default font for the page */
+    background: url('processing_lot.jpg') no-repeat center center fixed;
+    background-size: cover; /* Ensure the background covers the entire page */
+    color: #333; /* Default text color */
 }
 
-/* Background Image */
-.background-image {
-    background-image: url('processing_lot.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 100%;
-    width: 100%;
-}
-
-/* Title Header */
+/* Header styling for the page title */
 .title-header {
-    text-align: center;
-    color: white;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.5);
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    text-align: center; /* Center-align the header */
+    padding: 20px 0; /* Add vertical padding */
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background for contrast */
+    color: white; /* White text color */
+    font-size: 36px; /* Larger font size for the title */
+    font-weight: bold; /* Bold font for emphasis */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); /* Subtle shadow for readability */
+    margin: 0; /* Remove default margin */
 }
 
-/* Navigation Menu */
-.nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    text-align: center;
-    background: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    padding: 10px 0;
+/* Navigation bar styling */
+.nav {
+    background-color: rgba(0, 0, 0, 0.8); /* Dark semi-transparent background */
+    padding: 10px 0; /* Add vertical padding */
+    text-align: center; /* Center-align the navigation */
 }
 
-.nav ul li {
-    display: inline;
+.nav .ul {
+    list-style-type: none; /* Remove bullet points */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    display: inline-block; /* Center the list */
 }
 
-.nav ul li a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-    padding: 10px 15px;
-    transition: background 0.3s, color 0.3s;
+.nav .ul li {
+    display: inline; /* Display items in a single line */
+    margin: 0 15px; /* Add spacing between items */
 }
 
-.nav ul li a:hover {
-    background: white;
-    color: black;
-    border-radius: 5px;
+.nav .ul li a {
+    text-decoration: none; /* Remove underline */
+    color: white; /* White text */
+    font-size: 18px; /* Adjust font size */
+    font-weight: bold; /* Bold font for links */
+    transition: color 0.3s; /* Smooth hover effect */
 }
 
-/* Lot Container */
-.lot-container {
-    text-align: center;
-    color: white;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 20px;
-    margin: 20px;
-    border-radius: 10px;
-    max-width: 80%;
-    margin: 0 auto;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+.nav .ul li a:hover {
+    color: #007bff; /* Blue color on hover */
 }
 
-/* Form Styling */
+/* General styling for the form container */
 form {
-    width: 100%;
-    margin: 20px auto;
-    max-width: 700px;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+    padding: 20px; /* Add padding for spacing */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for a 3D effect */
+    max-width: 500px; /* Restrict the form width */
+    margin: 20px auto; /* Center the form */
 }
 
+/* Aligning section headings */
+.lot-container h2, 
+.lot-container h3 {
+    text-align: center; /* Center the headings */
+    margin-bottom: 20px; /* Add spacing after the headings */
+    color: white; /* Text color for headings */
+    font-weight: bold; /* Bold font for emphasis */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Add subtle shadow for readability */
+}
+
+/* Styling for form labels */
 form label {
-    display: block;
-    text-align: center; /* Center the label horizontally */
-    margin-bottom: 5px;
-    color: black;
+    color: #000000; /* Black text color */
+    font-weight: bold; /* Bold for better visibility */
+    font-size: 16px; /* Adjust font size */
 }
 
-form input {
-    width: calc(100% - 20px);
-    margin: 10px 0;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    text-align: center; /* Center the text and placeholder */
+/* General input and select field styling */
+form input,
+form select,
+form textarea {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding inside fields */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    margin-bottom: 15px; /* Spacing between fields */
+    font-size: 16px; /* Readable font size */
+    color: black; /* Input text color */
 }
 
+/* Styling for dropdown (Batch Barcode) */
+form select#batchBarcode {
+    background-color: white; /* Dropdown background color */
+    color: black; /* Dropdown text color */
+}
+
+/* Styling for date and time inputs */
 form input[type="date"],
 form input[type="time"] {
-    text-align: center;
-    line-height: normal; /* Adjusts for vertical alignment */
+    appearance: none; /* Remove default browser styles */
+    background-color: white; /* Clean white background */
+    color: black; /* Input text color */
 }
 
+/* Button styling */
 form button {
-    width: calc(100% - 20px);
-    margin: 10px 0;
-    padding: 10px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    background: #4CAF50;
-    color: white;
-    cursor: pointer;
-    transition: background 0.3s;
+    width: 100%; /* Full-width button */
+    padding: 10px; /* Padding */
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text color */
+    font-size: 16px; /* Larger font size */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth hover effect */
 }
 
+/* Button hover effect */
 form button:hover {
-    background: #45a049;
+    background-color: #0056b3; /* Darker blue on hover */
 }
 
-/* Table Styling */
+/* Table styling */
 table {
-    width: 100%;
-    margin: 20px auto;
-    max-width: 700px;
-    background: rgba(255, 255, 255, 0.9);
-    border-collapse: collapse;
-    text-align: center;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    width: 100%; /* Full-width table */
+    border-collapse: collapse; /* Remove gaps between table cells */
+    margin-top: 20px; /* Space above the table */
+    background-color: rgba(255, 255, 255, 0.9); /* Transparent white background */
 }
 
 table th,
 table td {
-    padding: 10px;
-    border: 1px solid #ccc;
-    color: black;
+    padding: 10px; /* Padding for cells */
+    text-align: center; /* Center-align text */
+    border: 1px solid #ccc; /* Add borders to cells */
 }
 
 table th {
-    background: #f2f2f2;
+    background-color: #007bff; /* Blue background for header */
+    color: white; /* White text */
+    font-weight: bold;
 }
 
-.edit-btn, .delete-btn {
+table td {
+    background-color: #f9f9f9; /* Light background for rows */
+}
+
+/* Action buttons in the table */
+.edit-btn,
+.delete-btn {
     padding: 5px 10px;
-    font-size: 14px;
     border: none;
-    border-radius: 5px;
+    border-radius: 3px;
+    color: white;
+    font-size: 14px;
     cursor: pointer;
+    text-decoration: none; /* Remove underline from links */
 }
 
 .edit-btn {
-    background: #2196F3;
-    color: white;
-}
-
-.edit-btn:hover {
-    background: #0b7dda;
+    background-color: #28a745; /* Green background for edit button */
 }
 
 .delete-btn {
-    background: #f44336;
-    color: white;
+    background-color: #dc3545; /* Red background for delete button */
+}
+
+.edit-btn:hover {
+    background-color: #218838; /* Darker green on hover */
 }
 
 .delete-btn:hover {
-    background: #da190b;
+    background-color: #c82333; /* Darker red on hover */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 600px) {
+    form {
+        padding: 15px; /* Adjust padding for smaller screens */
+    }
+
+    form label {
+        font-size: 14px; /* Adjust label font size */
+    }
+
+    form input,
+    form select,
+    form button {
+        font-size: 14px; /* Adjust input and button font size */
+    }
 }

@@ -1,0 +1,131 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+header {
+    background-color: #2c3e50;
+    padding: 20px;
+    color: white;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+header .logo-img {
+    width: 40px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+nav {
+    background-color: #34495e;
+    padding: 10px 0;
+    text-align: center;
+}
+
+nav .ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav .ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav .ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav .ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Form Container */
+.iot-update-container {
+    max-width: 600px;
+    margin: 30px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.iot-update-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+}
+
+.iot-update-container form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.iot-update-container form div {
+    display: flex;
+    flex-direction: column;
+}
+
+.iot-update-container form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.iot-update-container form input {
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.iot-update-container form input:focus {
+    border-color: #2c3e50;
+    outline: none;
+}
+
+/* Button Styling */
+.btn-container {
+    text-align: center;
+}
+
+.update-btn {
+    background-color: #2c3e50;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 200px;
+    transition: background-color 0.3s;
+}
+
+.update-btn:hover {
+    background-color: #34495e;
+}
+
+/* Small Fixes for Responsiveness */
+@media (max-width: 768px) {
+    .iot-update-container {
+        padding: 15px;
+        width: 90%;
+    }
+    
+    .update-btn {
+        width: 100%;
+    }
+}
