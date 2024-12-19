@@ -63,7 +63,7 @@ h1 {
     color: #00bcd4; /* Light blue text on hover */
 }
 
-/* Center information container */
+/* Center Information Container */
 .center-info-container {
     text-align: center;
     margin-top: 20px;
@@ -81,29 +81,106 @@ h1 {
     color: black; /* Black text for content */
 }
 
-/* Table styling */
-.center-table {
+/* IoT Device Reading Container (similar to Center Info) */
+.iot-reading-container {
+    text-align: center;
+    margin-top: 20px;
+    padding: 20px;
+    width: 80%;
+    max-width: 900px;
+    background-color: #ffffff; /* White background for content */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.iot-reading-container h2,
+.iot-reading-container p {
+    margin-bottom: 15px;
+    color: black; /* Black text for content */
+}
+
+/* Form Styling for IoT Device */
+#addIotDeviceForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center form elements vertically */
+    margin-bottom: 20px;
+    padding: 20px;
+    width: 80%;
+    max-width: 900px;
+    background-color: #ffffff; /* White background for form */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 0 auto; /* Ensures the form container itself is centered */
+}
+
+#addIotDeviceForm div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    width: 100%;
+    max-width: 600px;
+}
+
+#addIotDeviceForm label {
+    font-size: 16px;
+    color: black; /* Black text for labels */
+    flex: 1; /* Allow labels to align evenly */
+    margin-right: 10px;
+    text-align: right; /* Align text to the right */
+}
+
+#addIotDeviceForm input {
+    flex: 2; /* Allow inputs to take up more space */
+    padding: 8px 10px;
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+    max-width: 300px; /* Limit max width for inputs */
+}
+
+#addIotDeviceForm button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #00bcd4; /* Light blue button */
+    color: white; /* White text for button */
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#addIotDeviceForm button:hover {
+    background-color: #0097a7; /* Darker blue on hover */
+}
+
+/* Table Styling for IoT Device */
+.iot-table {
     margin: 0 auto;
     width: 100%;
     border-collapse: collapse;
     color: black; /* Black text for table */
 }
 
-.center-table thead {
+.iot-table thead {
     background-color: #f2f2f2; /* Light gray background for header */
 }
 
-.center-table th, .center-table td {
+.iot-table th, .iot-table td {
     padding: 12px;
     text-align: center;
     border: 1px solid #ccc; /* Light gray border */
 }
 
-.center-table tbody tr:nth-child(even) {
+.iot-table tbody tr:nth-child(even) {
     background-color: #f9f9f9; /* Light gray for alternating rows */
 }
 
-.center-table tbody tr:hover {
+.iot-table tbody tr:hover {
     background-color: #f1f1f1; /* Slightly darker gray on hover */
 }
 

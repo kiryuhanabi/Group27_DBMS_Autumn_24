@@ -25,31 +25,83 @@
         </ul>
     </nav>
 
+    <!-- Center Information Section -->
     <section class="center-info-container">
         <h2>Center Information</h2>
         <div id="centerInfo">
             <p>Connection successful</p>
-            <!-- Example information display -->
             <div id="infoDetails">
-                <!-- Replace these placeholder values dynamically with actual data -->
                 <p><strong>Center ID:</strong> Center001</p>
                 <p><strong>Type:</strong> Processing</p>
                 <p><strong>Location:</strong> 123 Main Street, City, Country</p>
-                <p><strong>Humidity:</strong> 50%</p>
-                <p><strong>Temperature:</strong> 25°C</p>
-                <p><strong>Date:</strong> 2024-12-19</p>
-                <p><strong>Time:</strong> 12:00 PM</p>
             </div>
-            <!-- Fallback if no information is available -->
             <div id="noInfoMessage" style="display: none;">
                 <p>No center information found for your account.</p>
             </div>
         </div>
         <button class="btn" onclick="window.location.href='processing_update.html'">Add/Update</button>
     </section>
-    
-    
 
+    <!-- IoT Device Reading Section -->
+    <section class="iot-reading-container">
+        <h2>IoT Device Reading</h2>
+
+        <!-- Add IoT Device Form -->
+        <form id="addIotDeviceForm">
+            <div>
+                <label for="centerId">Center ID:</label>
+                <input type="text" id="centerId" name="centerId" required>
+            </div>
+            <div>
+                <label for="temperature">Temperature:</label>
+                <input type="number" id="temperature" name="temperature" step="0.1" required>
+            </div>
+            <div>
+                <label for="humidity">Humidity:</label>
+                <input type="number" id="humidity" name="humidity" step="0.1" required>
+            </div>
+            <div>
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+            <div>
+                <label for="time">Time:</label>
+                <input type="time" id="time" name="time" required>
+            </div>
+            <button class="btn" type="submit">Add</button>
+        </form>
+
+        <!-- IoT Device Reading Table -->
+        <table border="1" cellspacing="0" cellpadding="10" class="center-table">
+            <thead>
+                <tr>
+                    <th>IoT ID</th>
+                    <th>Center ID</th>
+                    <th>Temperature</th>
+                    <th>Humidity</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>IOT001</td>
+                    <td>Center001</td>
+                    <td>25°C</td>
+                    <td>50%</td>
+                    <td>2024-12-19</td>
+                    <td>12:00 PM</td>
+                    <td><button class="btn" onclick="editRow()">Edit</button></td>
+                    <td><button class="btn" onclick="deleteRow()">Delete</button></td>
+                </tr>
+                <!-- Additional rows will be dynamically added here -->
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Batch Details Section -->
     <section class="batch-info-container">
         <h2>Batch Details</h2>
         <table border="1" cellspacing="0" cellpadding="10">
@@ -74,7 +126,6 @@
                     <td>F67890</td>
                     <td><button class="convert-btn" onclick="window.location.href='processing_lot.html'">Convert to Lot</button></td>
                 </tr>
-                <!-- Additional rows will be dynamically added here -->
             </tbody>
         </table>
     </section>
