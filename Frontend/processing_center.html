@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processing Center</title>
+    <link rel="stylesheet" href="processing_style.css">
+    <link href="logo.png" rel="icon" type="image/png">
+</head>
+<body>
+    <header class="header">
+        <h1>
+            <img src="logo.png" alt="Processing Center Logo" class="logo-img">
+            Processing Center
+        </h1>
+    </header>
+
+    <nav class="nav">
+        <ul class="ul">
+            <li><a href="processing_center.html">Home</a></li>
+            <li><a href="processing_inspection.html">Inspection</a></li>
+            <li><a href="processing_lot.html">Processing Lot</a></li>
+            <li><a href="starting_page.html">Logout</a></li>
+        </ul>
+    </nav>
+
+    <section class="center-info-container">
+        <h2>Center Information</h2>
+        <div id="centerInfo">
+            <p>Connection successful</p>
+            <p>No center information found for your account.</p>
+        </div>
+        <button class="btn" onclick="window.location.href='processing_update.html'">Add/Update</button>
+    </section>
+
+    <section class="batch-info-container">
+        <h2>Batch Details</h2>
+        <table border="1" cellspacing="0" cellpadding="10">
+            <thead>
+                <tr>
+                    <th>Batch Barcode</th>
+                    <th>Harvest Date</th>
+                    <th>Expiry Date</th>
+                    <th>Quantity</th>
+                    <th>Product ID</th>
+                    <th>Farm ID</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Example Barcode</td>
+                    <td>2024-12-01</td>
+                    <td>2025-12-01</td>
+                    <td>100</td>
+                    <td>P12345</td>
+                    <td>F67890</td>
+                    <td><button class="convert-btn" onclick="window.location.href='processing_lot.html'">Convert to Lot</button></td>
+                </tr>
+                <!-- Additional rows will be dynamically added here -->
+            </tbody>
+        </table>
+    </section>
+</body>
+</html>

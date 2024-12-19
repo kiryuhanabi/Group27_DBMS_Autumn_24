@@ -1,110 +1,126 @@
-/* General Styling */
+/* General styles */
 body {
-    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-image: url('processing_bg.png');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    color: #333;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff; /* White background */
+    color: black; /* Black text */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* Title Header Section */
-.title-header {
+/* Header */
+.header {
     text-align: center;
-    margin-top: 0;
-    padding: 20px 0;
-    color: white;
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
-    font-size: 2rem;
-    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    background-color: #ffffff; /* White background for header */
+    padding: 10px 0;
+    margin: 0;
 }
 
-/* Navigation Bar */
+h1 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: black; /* Black text for header */
+    margin: 0;
+}
+
+.logo-img {
+    height: 50px;
+    margin-right: 15px;
+}
+
+/* Navigation bar */
 .nav {
-    background-color: #34495e;
-    padding: 10px 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #000000; /* Black navigation bar */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0;
 }
 
 .ul {
-    list-style: none;
-    display: flex;
-    justify-content: space-around;
+    list-style-type: none;
     margin: 0;
     padding: 0;
+    display: flex;
+}
+
+.ul li {
+    padding: 14px 20px;
 }
 
 .ul li a {
-    color: white;
     text-decoration: none;
-    font-weight: bold;
-    padding: 8px 12px;
-    border-radius: 4px;
-    transition: background-color 0.3s, color 0.3s; /* Smooth hover effect */
+    color: white; /* White text for navigation links */
+    font-size: 16px;
+    transition: color 0.3s;
 }
 
 .ul li a:hover {
-    background-color: white;
-    color: #34495e; /* Text color contrast for hover */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+    color: #00bcd4; /* Light blue text on hover */
 }
 
-/* Overview Section */
-.overview-container {
-    margin: 20px;
-    padding: 30px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-.overview-container h2 {
+/* Center information container */
+.center-info-container {
     text-align: center;
-    margin-bottom: 30px;
-    font-size: 1.6rem;
-    color: #333;
-}
-
-/* Charts Layout */
-.charts-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-}
-
-.chart {
-    flex: 1;
-    max-width: 40%;
-    padding: 15px;
-    background-color: white;
+    margin-top: 20px;
+    padding: 20px;
+    width: 80%;
+    max-width: 900px;
+    background-color: #ffffff; /* White background for content */
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.chart h3 {
-    margin-bottom: 10px;
-    font-size: 1.2rem;
-    color: #555;
+.center-info-container h2,
+.center-info-container p {
+    margin-bottom: 15px;
+    color: black; /* Black text for content */
 }
 
-canvas {
+/* Table styling */
+.center-table {
+    margin: 0 auto;
     width: 100%;
-    height: 200px;
-    max-width: 250px;
-    max-height: 250px;
-    margin: auto;
+    border-collapse: collapse;
+    color: black; /* Black text for table */
 }
 
-/* Responsive Hover Effects */
-.chart:hover {
-    transform: scale(1.03); /* Slight zoom effect */
-    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+.center-table thead {
+    background-color: #f2f2f2; /* Light gray background for header */
 }
 
-.overview-container:hover {
-    background-color: rgba(255, 255, 255, 0.9); /* Slightly brighter on hover */
-    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
+.center-table th, .center-table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ccc; /* Light gray border */
+}
+
+.center-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Light gray for alternating rows */
+}
+
+.center-table tbody tr:hover {
+    background-color: #f1f1f1; /* Slightly darker gray on hover */
+}
+
+/* Update button */
+.btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #00bcd4; /* Light blue button */
+    color: white; /* White text for button */
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #0097a7; /* Darker blue on hover */
 }
