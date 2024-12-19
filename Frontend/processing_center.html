@@ -29,10 +29,26 @@
         <h2>Center Information</h2>
         <div id="centerInfo">
             <p>Connection successful</p>
-            <p>No center information found for your account.</p>
+            <!-- Example information display -->
+            <div id="infoDetails">
+                <!-- Replace these placeholder values dynamically with actual data -->
+                <p><strong>Center ID:</strong> Center001</p>
+                <p><strong>Type:</strong> Processing</p>
+                <p><strong>Location:</strong> 123 Main Street, City, Country</p>
+                <p><strong>Humidity:</strong> 50%</p>
+                <p><strong>Temperature:</strong> 25°C</p>
+                <p><strong>Date:</strong> 2024-12-19</p>
+                <p><strong>Time:</strong> 12:00 PM</p>
+            </div>
+            <!-- Fallback if no information is available -->
+            <div id="noInfoMessage" style="display: none;">
+                <p>No center information found for your account.</p>
+            </div>
         </div>
         <button class="btn" onclick="window.location.href='processing_update.html'">Add/Update</button>
     </section>
+    
+    
 
     <section class="batch-info-container">
         <h2>Batch Details</h2>

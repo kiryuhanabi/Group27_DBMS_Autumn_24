@@ -20,8 +20,8 @@ body, html {
     text-align: center;
     color: white;
     padding: 10px;
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background for better readability */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Add slight shadow for depth */
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* Navigation Menu */
@@ -30,7 +30,7 @@ body, html {
     padding: 0;
     margin: 0;
     text-align: center;
-    background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    background: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
     gap: 15px;
@@ -46,57 +46,124 @@ body, html {
     color: white;
     font-weight: bold;
     padding: 10px 15px;
-    transition: background 0.3s, color 0.3s; /* Smooth hover effects */
+    transition: background 0.3s, color 0.3s;
 }
 
 .nav ul li a:hover {
     background: white;
     color: black;
-    border-radius: 5px; /* Rounded edges for hover effect */
+    border-radius: 5px;
 }
 
 /* Lot Container */
 .lot-container {
     text-align: center;
     color: white;
-    background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    background: rgba(0, 0, 0, 0.6);
     padding: 20px;
     margin: 20px;
     border-radius: 10px;
     max-width: 80%;
     margin: 0 auto;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Add slight shadow for depth */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Form and Table Styling */
-form, table {
+/* Form Styling */
+form {
     width: 100%;
     margin: 20px auto;
-    max-width: 700px; /* Constrain the width of forms and tables */
-    background: rgba(255, 255, 255, 0.9); /* Light background for readability */
+    max-width: 700px;
+    background: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Input and Button Styling */
-form input, form button {
+form label {
+    display: block;
+    text-align: center; /* Center the label horizontally */
+    margin-bottom: 5px;
+    color: black;
+}
+
+form input {
     width: calc(100% - 20px);
     margin: 10px 0;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    text-align: center; /* Center the text and placeholder */
+}
+
+form input[type="date"],
+form input[type="time"] {
+    text-align: center;
+    line-height: normal; /* Adjusts for vertical alignment */
 }
 
 form button {
+    width: calc(100% - 20px);
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
     background: #4CAF50;
     color: white;
-    border: none;
     cursor: pointer;
     transition: background 0.3s;
 }
 
 form button:hover {
     background: #45a049;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    margin: 20px auto;
+    max-width: 700px;
+    background: rgba(255, 255, 255, 0.9);
+    border-collapse: collapse;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+table th,
+table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    color: black;
+}
+
+table th {
+    background: #f2f2f2;
+}
+
+.edit-btn, .delete-btn {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.edit-btn {
+    background: #2196F3;
+    color: white;
+}
+
+.edit-btn:hover {
+    background: #0b7dda;
+}
+
+.delete-btn {
+    background: #f44336;
+    color: white;
+}
+
+.delete-btn:hover {
+    background: #da190b;
 }

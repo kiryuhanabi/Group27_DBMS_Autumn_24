@@ -20,9 +20,28 @@
             <label for="location">Location:</label>
             <input type="text" id="location" name="location" placeholder="Enter Location" required>
 
+            <!-- New Fields -->
+            <label for="humidity">Humidity (%):</label>
+            <input type="number" id="humidity" name="humidity" placeholder="Enter Humidity" step="0.1" required>
+
+            <label for="temperature">Temperature (°C):</label>
+            <input type="number" id="temperature" name="temperature" placeholder="Enter Temperature" step="0.1" required>
+
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="time">Time:</label>
+            <input type="time" id="time" name="time" required>
+
             <div class="btn-container">
-                <button type="submit" class="add-btn">Add</button>
-                <button type="submit" class="update-btn">Update</button>
+                <!-- Add Button with <a> tag -->
+                <a href="processing_center.html">
+                    <button type="button" class="add-btn">Add</button>
+                </a>
+                <!-- Update Button with <a> tag -->
+                <a href="processing_center.html">
+                    <button type="button" class="update-btn">Update</button>
+                </a>
             </div>
         </form>
     </div>
