@@ -1,55 +1,55 @@
 <?php
-// Include database connection
-include 'connect.php';
-session_start();
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db = "crud";
 
-// Initialize variables
+// Connect to the database
+$conn = new mysqli($host, $user, $pass, $db);
+
+// Check the connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 $message = "";
-$farm_id = "";
 
-// Check if user is logged in
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $farmID = $_POST['farmID'];
+    $farmName = $_POST['farmName'];
+    $street = $_POST['street'];
+    $city = $_POST['city'];
+    $numFields = $_POST['numFields'];
 
-    // Fetch current farm data for the logged-in user
-    $sql = "SELECT `Farm ID`, `Farm Name`, `Street`, `City`, `No. of Fields`
-            FROM tblfarm
-            WHERE `Farm ID` = (
-                SELECT `ID` FROM tblsignup WHERE `ID` = '$user_id' AND `User` = 'farm'
-            )";
-    $result = $conn->query($sql);
+    if (isset($_POST['add'])) {
+        // Add new farm information
+        $stmt = $conn->prepare("INSERT INTO tblfarm (`Farm ID`, `Farm Name`, `Street`, `City`, `No. of Fields`) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("isssi", $farmID, $farmName, $street, $city, $numFields);
 
-    if ($result->num_rows > 0) {
-        $farm_data = $result->fetch_assoc();
-        $farm_id = $farm_data['Farm ID'];
-    } else {
-        $message = "No farm data found for this user.";
+        if ($stmt->execute()) {
+            $message = "Farm added successfully!";
+        } else {
+            $message = "Error adding farm: " . $conn->error;
+        }
+        $stmt->close();
+    } elseif (isset($_POST['update'])) {
+        // Update existing farm information
+        $stmt = $conn->prepare("UPDATE tblfarm SET `Farm Name` = ?, `Street` = ?, `City` = ?, `No. of Fields` = ? WHERE `Farm ID` = ?");
+        $stmt->bind_param("sssii", $farmName, $street, $city, $numFields, $farmID);
+
+        if ($stmt->execute()) {
+            $message = "Farm updated successfully!";
+        } else {
+            $message = "Error updating farm: " . $conn->error;
+        }
+        $stmt->close();
     }
-} else {
-    $message = "You must be logged in to update farm information.";
+
+    // Redirect back to the form with a success or error message
+    header("Location: farm_update.php?message=" . urlencode($message));
+    exit;
 }
-
-// Handle the form submission for updating farm data
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $farm_name = $conn->real_escape_string($_POST['farmName']);
-    $street = $conn->real_escape_string($_POST['street']);
-    $city = $conn->real_escape_string($_POST['city']);
-    $num_fields = $conn->real_escape_string($_POST['numFields']);
-
-    // Update query
-    $update_sql = "UPDATE tblfarm 
-                   SET `Farm Name` = '$farm_name', 
-                       `Street` = '$street', 
-                       `City` = '$city', 
-                       `No. of Fields` = '$num_fields' 
-                   WHERE `Farm ID` = '$farm_id'";
-
-    if ($conn->query($update_sql) === TRUE) {
-        $message = "Farm information updated successfully!";
-    } else {
-        $message = "Error updating farm information: " . $conn->error;
-    }
-}
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -61,61 +61,77 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <title>Update Farm</title>
     <link rel="stylesheet" href="farm.css">
     <link href="logo.png" rel="icon" type="image/png">
+    <style>
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .button-container .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <h1>
         <img src="logo.png" alt="Farm Logo" class="logo-img">
-        Agro Farm - Update Information
+        Agro Farm - Add/Update Information
     </h1>
 
     <nav class="nav">
         <ul class="ul">
-            <li><a href="farm.html">Home</a></li>
-            <li><a href="farm_product.html">Product</a></li>
-            <li><a href="farm_batch.html">Batch</a></li>
-            <li><a href="login.html">Logout</a></li>
+            <li><a href="farm.php">Home</a></li>
+            <li><a href="farm_product.php">Product</a></li>
+            <li><a href="farm_batch.php">Batch</a></li>
+            <li><a href="login.php">Logout</a></li>
         </ul>
     </nav>
 
     <section class="farm-update-container">
-        <h2>Update Farm Information</h2>
-        <?php if (!empty($message)): ?>
-            <div class="alert">
-                <p><?php echo $message; ?></p>
+        <h2>Add/Update Farm Information</h2>
+        
+        <!-- Display dynamic message -->
+        <?php if (isset($_GET['message'])): ?>
+            <div id="message" class="alert">
+                <p><?php echo htmlspecialchars($_GET['message']); ?></p>
             </div>
         <?php endif; ?>
-        <?php if (!empty($farm_data)): ?>
-        <form id="farmUpdateForm" method="POST" action="">
+
+        <!-- Form for adding/updating farm information -->
+        <form action="farm_update.php" method="POST">
             <div class="input-row">
                 <label for="farmID">Farm ID:</label>
-                <input type="text" id="farmID" name="farmID" value="<?php echo $farm_data['Farm ID']; ?>" readonly>
+                <input type="number" id="farmID" name="farmID" required>
             </div>
 
             <div class="input-row">
                 <label for="farmName">Farm Name:</label>
-                <input type="text" id="farmName" name="farmName" value="<?php echo $farm_data['Farm Name']; ?>" required>
+                <input type="text" id="farmName" name="farmName" required>
             </div>
 
             <div class="input-row">
                 <label for="street">Street:</label>
-                <input type="text" id="street" name="street" value="<?php echo $farm_data['Street']; ?>" required>
+                <input type="text" id="street" name="street" required>
             </div>
 
             <div class="input-row">
                 <label for="city">City:</label>
-                <input type="text" id="city" name="city" value="<?php echo $farm_data['City']; ?>" required>
+                <input type="text" id="city" name="city" required>
             </div>
 
             <div class="input-row">
                 <label for="numFields">Number of Fields:</label>
-                <input type="number" id="numFields" name="numFields" value="<?php echo $farm_data['No. of Fields']; ?>" min="1" required>
+                <input type="number" id="numFields" name="numFields" min="1" required>
             </div>
 
-            <button type="submit" class="btn">Save Changes</button>
+            <!-- Buttons -->
+            <div class="button-container">
+                <button type="submit" name="add" class="btn">Add Farm</button>
+                <button type="submit" name="update" class="btn">Update Farm</button>
+            </div>
         </form>
-        <?php else: ?>
-            <p>No farm information available to update.</p>
-        <?php endif; ?>
     </section>
 </body>
 </html>

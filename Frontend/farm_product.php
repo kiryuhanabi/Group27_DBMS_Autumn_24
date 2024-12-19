@@ -12,8 +12,20 @@ if ($conn->connect_error) {
 
 $message = "";
 
+// Handle product deletion if the 'id' parameter is passed
+if (isset($_GET['delete_id'])) {
+    $deleteId = $conn->real_escape_string($_GET['delete_id']);
+    $deleteSql = "DELETE FROM tblproduct WHERE `Product ID` = '$deleteId'";
+
+    if ($conn->query($deleteSql) === TRUE) {
+        $message = "Product deleted successfully!";
+    } else {
+        $message = "Error deleting product: " . $conn->error;
+    }
+}
+
+// Handle product addition
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Sanitize the input to prevent SQL injection
     $productName = $conn->real_escape_string($_POST['productname']);
     $type = $conn->real_escape_string($_POST['type']);
     $season = $conn->real_escape_string($_POST['season']);
@@ -21,7 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $temperature = $conn->real_escape_string($_POST['temperature']);
     $nutritionValue = $conn->real_escape_string($_POST['nutritionValue']);
 
-    // Adjust column names to include backticks for names with spaces
     $sql = "INSERT INTO tblproduct (`Product Name`, `Type`, `Best Season`, `Optimum Temperature`, `Optimum Humidity`, `Nutrition Value`)
             VALUES ('$productName', '$type', '$season', '$temperature', '$humidity', '$nutritionValue')";
 
@@ -35,11 +46,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Fetch all products for display in the table
 $sql = "SELECT `Product ID`, `Product Name`, `Type`, `Best Season`, `Optimum Temperature`, `Optimum Humidity`, `Nutrition Value` FROM tblproduct";
 $result = $conn->query($sql);
-
 $conn->close();
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -60,10 +68,10 @@ $conn->close();
 
     <nav class="nav">
         <ul class="ul">
-            <li><a href="farm.html">Home</a></li>
+            <li><a href="farm.php">Home</a></li>
             <li><a href="farm_product.php">Product</a></li>
-            <li><a href="farm_batch.html">Batch</a></li>
-            <li><a href="login.html">Logout</a></li>
+            <li><a href="farm_batch.php">Batch</a></li>
+            <li><a href="login.php">Logout</a></li>
         </ul>
     </nav>
 
@@ -93,7 +101,7 @@ $conn->close();
                             </select>
                         </div>
                     </div>
-            
+                    
                     <div class="right-column">
                         <div class="input-row">
                             <label for="humidity">Optimum Humidity:</label>
@@ -125,6 +133,7 @@ $conn->close();
                         <th>Optimum Temperature</th>
                         <th>Optimum Humidity</th>
                         <th>Nutrition Value</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -138,18 +147,20 @@ $conn->close();
                                 <td><?php echo htmlspecialchars($row['Optimum Temperature']); ?></td>
                                 <td><?php echo htmlspecialchars($row['Optimum Humidity']); ?></td>
                                 <td><?php echo htmlspecialchars($row['Nutrition Value']); ?></td>
+                                <td>
+                                    <button onclick="window.location.href='farm_product_update.php?id=<?php echo $row['Product ID']; ?>'">Edit</button>
+                                    <button onclick="if(confirm('Are you sure you want to delete this product?')) window.location.href='?delete_id=<?php echo $row['Product ID']; ?>';">Delete</button>
+                                </td>
                             </tr>
                         <?php endwhile; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="7">No records found</td>
+                            <td colspan="8">No records found</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
             </table>
         </div>
     </div>
-
 </body>
 </html>
-
