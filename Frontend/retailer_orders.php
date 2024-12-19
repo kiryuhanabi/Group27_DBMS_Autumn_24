@@ -138,7 +138,7 @@
     }
 
     // Handle form submission
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_order'])) {
         $retailerID = $_POST['retailerID'];
         $productName = $_POST['name'];
         $quantity = $_POST['Quantity'];
@@ -159,6 +159,21 @@
         }
     }
 
+    // Handle deletion
+    if (isset($_GET['delete_order_id'])) {
+        $orderID = $_GET['delete_order_id'];
+
+        $stmt = $conn->prepare("DELETE FROM tblorder WHERE `Order ID` = ?");
+        $stmt->bind_param('i', $orderID);
+
+        if ($stmt->execute()) {
+            echo "<script>alert('Order deleted successfully!'); window.location.href='retailer_orders.php';</script>";
+        } else {
+            echo "<script>alert('Failed to delete order.');</script>";
+        }
+        $stmt->close();
+    }
+
     // Fetch all orders
     $orders = $conn->query("SELECT `Order ID`, `Retailer ID`, `Product Name`, `Quantity`, `Date` FROM tblorder");
     ?>
@@ -172,10 +187,9 @@
     <div class="dashboard">
         <nav class="nav">
             <ul class="ul">
-                <li><a href="retailer.html">Home</a></li>
-                <li><a href="retailer_store.html">Store</a></li>
+                <li><a href="retailer.php">Home</a></li>
                 <li><a href="retailer_orders.php">Orders</a></li>
-                <li><a href="login.html">Logout</a></li>
+                <li><a href="login.php">Logout</a></li>
             </ul>
         </nav>
 
@@ -203,7 +217,7 @@
                         <input type="date" id="Date" name="Date">
                     </div>
                 </div>
-                <button type="submit" class="btn">Add order</button>
+                <button type="submit" name="add_order" class="btn">Add order</button>
             </form>
         </div>
 
@@ -231,7 +245,7 @@
                                 <a href="retailer_orders_update.php?order_id=<?= $row['Order ID'] ?>">
                                     <button class="btn">Update</button>
                                 </a>
-                                <a href="retailer_orders_delete.php?order_id=<?= $row['Order ID'] ?>">
+                                <a href="retailer_orders.php?delete_order_id=<?= $row['Order ID'] ?>" onclick="return confirm('Are you sure you want to delete this order?');">
                                     <button class="btn">Delete</button>
                                 </a>
                             </td>
@@ -240,7 +254,8 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    
+
 
     <?php $conn->close(); ?>
 </body>
