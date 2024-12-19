@@ -140,7 +140,7 @@
             </div>
 
             <div class="form-group">
-                <label for="expireyDate">Expirey Date:</label>
+                <label for="expireyDate">Expiry Date:</label>
                 <input type="date" id="expireyDate" name="expireyDate" required>
             </div>
 
@@ -183,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Update query
-    $sql = "UPDATE tblbatch SET `Harvest Date` = ?, `Expirey Date` = ?, `Quantity` = ?, `Product ID` = ?, `Farm ID` = ? WHERE `Batch Barcode` = ?";
+    $sql = "UPDATE tblbatch SET `Harvest Date` = ?, `Expiry Date` = ?, `Quantity` = ?, `Product ID` = ?, `Farm ID` = ? WHERE `Batch Barcode` = ?";
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('ssisss', $harvestDate, $expireyDate, $quantity, $productID, $farmID, $batchBarcode);
