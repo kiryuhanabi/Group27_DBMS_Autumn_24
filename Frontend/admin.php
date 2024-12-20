@@ -10,7 +10,7 @@
         <img src="logo.png" alt="Logo" class="logo">
         <nav class="navbar">
             <ul>
-                <li><a href="#user">User</a></li>
+                <li><a href="admin_user.php">User</a></li>
                 <li><a href="#farm">Farm</a></li>
                 <li><a href="#processing">Processing Center</a></li>
                 <li><a href="#storage">Storage</a></li>

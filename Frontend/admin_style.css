@@ -1,79 +1,84 @@
-/* Global reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body.admin-page {
+/* Set the body text color to black */
+body {
+    color: black;
+    font-family: Arial, sans-serif;
     background: url('admin_bg.jpg') no-repeat center center fixed;
     background-size: cover;
-    font-family: Arial, sans-serif;
-    color: white;
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 50px;
-    background-color: rgba(0, 0, 0, 0.7);
-}
-
-.logo {
-    height: 60px;
+/* Navbar specific styling */
+.navbar {
+    background-color: #333; /* Dark background for navbar */
+    padding: 10px;
+    text-align: center;
 }
 
 .navbar ul {
-    list-style: none;
-    display: flex;
-    gap: 20px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
-.navbar ul li {
-    position: relative;
+.navbar li {
+    display: inline;
+    margin-right: 20px;
 }
 
-.navbar ul li a {
+.navbar a {
+    color: white; /* White text color for nav bar items */
     text-decoration: none;
-    color: white;
-    font-size: 18px;
     font-weight: bold;
-    padding: 10px 20px;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
 }
 
-.navbar ul li a:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: #ffd700;
+.navbar a:hover {
+    color: #ffcc00; /* Highlight color on hover */
 }
 
-/* Log Out Button Style */
+/* Style for the header (logo) */
+header .logo {
+    display: block;
+    margin: 20px auto;
+    max-width: 120px;
+    height: auto;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    margin-top: 30px;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+table th {
+    background-color: #f4f4f4;
+}
+
+/* Main section styling */
+main {
+    text-align: center;
+    padding: 20px;
+    color: black; /* Ensures the text is black for the main content */
+}
+
+h1 {
+    font-size: 36px;
+    color: black;
+}
+
 .btn-logout {
-    background-color: #ff4d4d;
-    padding: 10px 20px;
-    border-radius: 5px;
+    background-color: #f44336;
     color: white;
-    transition: background-color 0.3s;
+    padding: 5px 15px;
+    text-decoration: none;
+    border-radius: 5px;
 }
 
 .btn-logout:hover {
-    background-color: #ff0000;
-}
-
-main {
-    text-align: center;
-    margin-top: 100px;
-}
-
-main h1 {
-    font-size: 36px;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-}
-
-main p {
-    font-size: 20px;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    background-color: #d32f2f;
 }
