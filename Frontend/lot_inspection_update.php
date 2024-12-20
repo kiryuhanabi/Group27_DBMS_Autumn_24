@@ -12,23 +12,34 @@ if ($conn->connect_error) {
 
 $message = "";
 
+$id = $_GET['id'] ?? null;
+
+if ($id === null) {
+    die("Record ID is required.");
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $inspectionDate = $_POST['inspectionDate'];
     $inspectorID = $_POST['inspectorID'];
     $lotNumber = $_POST['lotNumber'];
     $packageQualityGrade = $_POST['packageQualityGrade'];
 
-    $sql = "INSERT INTO tbllotinspection (`Date`, `Inspector ID`, `Lot Number`, `Package Quality Grade`)
-        VALUES ('$inspectionDate', '$inspectorID', '$lotNumber', '$packageQualityGrade')";
+    $sql = "UPDATE tbllotinspection SET 
+            `Date` = '$inspectionDate',
+            `Inspector ID` = '$inspectorID',
+            `Lot Number` = '$lotNumber',
+            `Package Quality Grade` = '$packageQualityGrade'
+            WHERE `Lot Number` = $id";
 
     if ($conn->query($sql) === TRUE) {
-        $message = "Inspection added successfully!";
+        header("Location: lot_inspection.php");
+        exit;
     } else {
         $message = "Error: " . $conn->error;
     }
 }
 
-$sql = "SELECT * FROM tbllotinspection";
+$sql = "SELECT * FROM tbllotinspection WHERE `Lot Number` = $id";
 $result = $conn->query($sql);
 
 $conn->close();
@@ -54,7 +65,7 @@ $conn->close();
 
     <nav class="nav">
         <ul>
-            <li><a href="inspector.html">Home</a></li>
+            <li><a href="inspector.php">Home</a></li>
             <li>
                 <a href="#">Inspection Type</a>
                 <ul class="dropdown">
@@ -74,7 +85,7 @@ $conn->close();
         <script src="lot_inspection.js"></script>
 
         <div class="inspection-filters">
-            <h3>Add New inspection</h3>
+            <h3>Update inspection</h3>
             <form action="" method="POST">
             <div class="form-group">
                 <div class="left-column">
@@ -107,48 +118,8 @@ $conn->close();
                     </div>
                 </div>
             </div>
-            <button class="btn" type="submit">Add Inspection</button>
+            <button class="btn" type="submit">Update Inspection</button>
             </form>
         </div>
-
-        <div class="table-container">
-            <h2>Overview of Inspections</h2>
-            <table id="inspectionTable">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Inspector ID</th>
-                        <th>Lot Number</th>
-                        <th>Package Quality</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="inspectionTableBody">
-                    <?php if ($result->num_rows > 0): ?>
-                        <?php while ($row = $result->fetch_assoc()): ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($row['Date']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Inspector ID']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Lot Number']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Package Quality Grade']); ?></td>
-                                <td>
-                                    <form method="POST" action="lot_inspection_delete.php">
-                                        <input type="hidden" name="id" value="<?php echo $row['Lot Number']; ?>">
-                                        <button type="submit" name="delete" class="btn"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
-                                    </form>
-                                    <form method="GET" action="lot_inspection_update.php">
-                                        <input type="hidden" name="id" value="<?php echo $row['Lot Number']; ?>">
-                                        <button type="submit" name="update" class="btn"><i class="fas fa-edit" aria-hidden="true"></i> Update</button>
-                                    </form>
-                            </tr>
-                        <?php endwhile; ?>
-                    <?php else: ?>
-                        <tr>
-                            <td colspan="5">No records found</td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>     
     </body>
 </html>

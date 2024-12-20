@@ -11,6 +11,11 @@ if ($conn->connect_error) {
 }
 
 $message = "";
+$id = $_GET['id'] ?? null;
+
+if ($id === null) {
+    die("Record ID is required.");
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $inspectionDate = $_POST['inspectionDate'];
@@ -20,17 +25,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pestControlGrade = $_POST['pestControlGrade'];
     $hygieneGrade = $_POST['hygieneGrade'];
 
-    $sql = "INSERT INTO tblstorageinspection (`Date`, `Inspector ID`, `Storage Maintenance Grade`, `Storage ID`, `Pest Control Grade`, `Storage Hygene Grade`)
-        VALUES ('$inspectionDate', '$inspectorID', '$maintenanceGrade', '$storageID', '$pestControlGrade', '$hygieneGrade')";
+    $sql = "UPDATE tblstorageinspection SET 
+            `date` = '$inspectionDate',
+            `Inspector ID` = '$inspectorID',
+            `Storage ID` = '$storageID',
+            `Storage Maintenance Grade` = '$maintenanceGrade',
+            `Storage Hygene Grade`= '$hygieneGrade',
+            `Pest Control Grade` = '$pestControlGrade'
+            WHERE `Storage ID` = $id";
 
     if ($conn->query($sql) === TRUE) {
-        $message = "Inspection added successfully!";
+        header("Location: storage_inspection.php");
+        exit;
     } else {
         $message = "Error: " . $conn->error;
     }
 }
 
-$sql = "SELECT * FROM tblstorageinspection";
+$sql = "SELECT * FROM tblstorageinspection WHERE `Storage ID` = $id";
 $result = $conn->query($sql);
 
 $conn->close();
@@ -76,7 +88,7 @@ $conn->close();
         <script src="storage_inspection.js"></script>
 
         <div class="inspection-filters">
-            <h3>Add New inspection</h3>
+            <h3>Update inspection</h3>
             <form action="" method="POST">
             <div class="form-group">
                 <div class="left-column">
@@ -131,53 +143,8 @@ $conn->close();
                     </div>
                 </div>
             </div>
-            <button class="btn" type="submit"><i class="fa fa-plus" aria-hidden="true"></i>  Add Inspection</button>
+            <button class="btn" type="submit"><i class="fa fa-plus" aria-hidden="true"></i>  Update Inspection</button>
         </form>
-        </div>
-
-        <div class="table-container">
-            <h2>Overview of Inspections</h2>
-            <table id="inspectionTable">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Storage ID</th>
-                        <th>Inspector ID</th>
-                        <th>Maintenance Grade</th>
-                        <th>Pest Control Grade</th>
-                        <th>Hygiene Grade</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="inspectionTableBody">
-                <?php if ($result->num_rows > 0): ?>
-                        <?php while ($row = $result->fetch_assoc()): ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($row['date']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Storage ID']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Inspector ID']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Storage Maintenance Grade']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Pest Control Grade']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Storage Hygene Grade']); ?></td>
-                                <td>
-                                    <form method="POST" action="storage_inspection_delete.php">
-                                        <input type="hidden" name="id" value="<?php echo $row['Storage ID']; ?>">
-                                        <button type="submit" name="delete" class="btn"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
-                                    </form>
-                                    <form method="GET" action="storage_inspection_update.php">
-                                        <input type="hidden" name="id" value="<?php echo $row['Storage ID']; ?>">
-                                        <button type="submit" name="update" class="btn"><i class="fas fa-edit" aria-hidden="true"></i> Update</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        <?php endwhile; ?>
-                    <?php else: ?>
-                        <tr>
-                            <td colspan="7">No records found</td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>    
+        </div>  
     </body>
 </html>

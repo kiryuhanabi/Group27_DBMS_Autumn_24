@@ -11,30 +11,50 @@ if ($conn->connect_error) {
 }
 
 $message = "";
+$id = $_GET['id'] ?? null;
+
+if ($id === null) {
+    die("Record ID is required.");
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $inspectionDate = $_POST['inspectionDate'];
     $batchBarcode = $_POST['batchBarcode'];
     $inspectorID = $_POST['inspectorID'];
     $unAffectedQuality = $_POST['unAffectedQuality'];
+    $affectedBatchQuantity = $_POST['affectedBatchQuantity'];
     $certification = $_POST['certification'];
 
-    $sql = "INSERT INTO tblbatchinspection (`Date`, `Inspector ID`, `Batch Barcode`, `Unaffected Quality Grade`, `Certification`)
-        VALUES ('$inspectionDate', '$inspectorID', '$batchBarcode', '$unAffectedQuality', '$certification')";
+    $sql = "UPDATE tblbatchinspection SET 
+            `Date`= '$inspectionDate',
+            `Inspector ID`= '$inspectorID',
+            `Batch Barcode`= '$batchBarcode',
+            `Unaffected Quality Grade`= '$unAffectedQuality',
+            `Certification`= '$certification'
+            WHERE `Batch Barcode` = $id";
 
-    $sql_cer = "INSERT INTO tblbatchcertification (`Batch Barcode`,`Certification`) VALUES ('$batchBarcode','$certification')";
+    $sql_cer = "UPDATE tblbatchcertification SET
+                `Certification`= '$certification'
+                WHERE `Batch Barcode`= $id";
     $result_cer = $conn->query($sql_cer);
-    
+
     if ($conn->query($sql) === TRUE) {
-        $message = "Inspection added successfully!";
+        header("Location: batch_inspection.php");
+        exit;
     } else {
-        $message = "Error: " . $conn->error;
+        $message = "Error updating record: " . $conn->error;
     }
+
 }
 
-$sql = "SELECT * FROM tblbatchinspection";
+$sql = "SELECT * FROM tblbatchinspection WHERE `Batch Barcode` = $id";
 $result = $conn->query($sql);
 
+if ($result->num_rows === 0) {
+    die("Record not found.");
+}
+
+$row = $result->fetch_assoc();
 $conn->close();
 ?>
 
@@ -79,7 +99,7 @@ $conn->close();
         <script src="batch_inspection.js"></script>
 
         <div class="inspection-filters">
-            <h3>Add New inspection</h3>
+            <h3>Update Inspection</h3>
             <form action="" method="POST">
             <div class="form-group">
                 <div class="left-column">
@@ -118,50 +138,8 @@ $conn->close();
                 </div>
             </div>
         
-            <button class="btn" id="addInspectionButton" type="submit"><i class="fa fa-plus" aria-hidden="true"></i>  Add Inspection</button>
+            <button class="btn" id="addInspectionButton" type="submit"><i class="fa fa-edit" aria-hidden="true"></i>  Update Inspection</button>
             </form>
-        </div>
-
-        <div class="table-container">
-            <table id="inspectionTable">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Batch Barcode</th>
-                        <th>Inspector ID</th>
-                        <th>Unaffected Batch Quality</th>
-                        <th>Certification</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="inspectionTableBody">
-                    <?php if ($result->num_rows > 0): ?>
-                        <?php while ($row = $result->fetch_assoc()): ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($row['Date']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Inspector ID']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Batch Barcode']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Unaffected Quality Grade']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Certification']); ?></td>
-                                <td>
-                                    <form method="POST" action="batch_inspection_delete.php">
-                                        <input type="hidden" name="id" value="<?php echo $row['Batch Barcode']; ?>">
-                                        <button type="submit" name="delete" class="btn"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
-                                    </form>
-                                    <form method="GET" action="batch_inspection_update.php">
-                                        <input type="hidden" name="id" value="<?php echo $row['Batch Barcode']; ?>">
-                                        <button type="submit" name="update" class="btn"><i class="fas fa-edit" aria-hidden="true"></i> Update</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        <?php endwhile; ?>
-                    <?php else: ?>
-                        <tr>
-                            <td colspan="5">No records found</td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>     
+        </div>    
     </body>
 </html>
