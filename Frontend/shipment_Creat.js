@@ -1,26 +1,19 @@
 const { jsPDF } = window.jspdf;
 
-let selectedRow = null;
 
-window.onload = function() {
-    loadTransportData();
-};
+const messageIcon = document.getElementById('message-icon');
+const messageDropdown = document.getElementById('message-dropdown');
 
-function addTransport() {
-    const date = document.getElementById('transportDate').value;
-    const transportID = document.getElementById('transportID').value;
-    const transportType = document.getElementById('transportType').value;
-    const cargoType = document.getElementById('cargoType').value;
-    const temperatureRange = document.getElementById('temperatureRange').value;
-    const loadWeight = document.getElementById('loadWeight').value;
+messageIcon.addEventListener('click', (e) => {
+  e.stopPropagation();
+  messageDropdown.classList.toggle('active');
+});
 
-<<<<<<< HEAD:Frontend/shipment_Creat.js
 document.addEventListener('click', (e) => {
   if (!messageDropdown.contains(e.target) && e.target !== messageIcon) {
     messageDropdown.classList.remove('active');
   }
 });
-
 
 
 const notificationIcon = document.getElementById('notification-icon');
@@ -124,6 +117,8 @@ document.addEventListener("DOMContentLoaded", loadFromLocalStorage);
 
 
 
+
+
 document.addEventListener('DOMContentLoaded', () => {
   loadTableData();
 
@@ -147,25 +142,31 @@ function filterTable() {
   });
 }
 
+document.getElementById('searchInput').addEventListener('input', function() {
+  const filter = this.value.toLowerCase(); // Convert search input to lowercase for case-insensitive search
+  const rows = document.querySelectorAll('tbody tr'); // Select all table rows inside <tbody>
+
+  rows.forEach(row => {
+      const shipmentID = row.cells[0].textContent.toLowerCase(); // Get text from the 'Shipment ID' column
+      const shTransportID = row.cells[1].textContent.toLowerCase(); // Get text from the 'shTransport ID' column
+
+      // Check if the search query matches either 'Shipment ID' or 'shTransport ID'
+      if (shipmentID.includes(filter) || shTransportID.includes(filter)) {
+          row.style.display = ''; // Show the row if it matches
+      } else {
+          row.style.display = 'none'; // Hide the row if it doesn't match
+      }
+  });
+});
+//=================================================
 
 
 
 
-let editRowIndex = null;
-
-let shtransportIDCounter = localStorage.getItem('shtransportIDCounter') 
-    ? parseInt(localStorage.getItem('shtransportIDCounter')) 
-    : 1;
-
-let shipmentIDCounter = localStorage.getItem('shipmentIDCounter') 
-    ? parseInt(localStorage.getItem('shipmentIDCounter')) 
-    : 1;
-
-let retailerIDCounter = localStorage.getItem('retailerIDCounter') 
-    ? parseInt(localStorage.getItem('retailerIDCounter')) 
-    : 1;
-
-document.addEventListener('DOMContentLoaded', loadTableData);
+let editRowIndex = null; // Track index of row being edited
+let shtransportIDCounter = parseInt(localStorage.getItem('shtransportIDCounter') || "1");
+let shipmentIDCounter = parseInt(localStorage.getItem('shipmentIDCounter') || "1");
+let retailerIDCounter = parseInt(localStorage.getItem('retailerIDCounter') || "1");
 
 function addUpdateTransport() {
     const transportType = document.getElementById('transportType').value.trim();
@@ -174,19 +175,15 @@ function addUpdateTransport() {
     const quantity = document.getElementById('quantity').value.trim();
 
     if (!transportType || !cargoType || !temperatureRange || !quantity) {
-=======
-    if (!date || !transportID || !cargoType || !temperatureRange || !loadWeight) {
->>>>>>> 9d5fb3fef309186e0f29edb53f166c08de79d465:Frontend/shipment_transport.js
         alert("Please fill in all fields.");
         return;
     }
 
-<<<<<<< HEAD:Frontend/shipment_Creat.js
     const stransports = JSON.parse(localStorage.getItem('stransports')) || [];
     let transportDate, shtransportID, shipmentID, retailerID;
 
     if (editRowIndex === null) {
-        // New Entry
+        // New Entry Logic
         transportDate = new Date().toISOString().split('T')[0];
         shtransportID = `sht${String(shtransportIDCounter).padStart(6, '0')}`;
         shipmentID = `s${String(shipmentIDCounter).padStart(6, '0')}`;
@@ -208,131 +205,65 @@ function addUpdateTransport() {
         shipmentIDCounter++;
         retailerIDCounter++;
 
-        // Update localStorage counters
+        // Save updated counters to localStorage
         localStorage.setItem('shtransportIDCounter', shtransportIDCounter);
         localStorage.setItem('shipmentIDCounter', shipmentIDCounter);
         localStorage.setItem('retailerIDCounter', retailerIDCounter);
-    } else {
-        // Editing existing row
-        const existingTransport = stransports[editRowIndex];
-        transportDate = existingTransport.transportDate;
-        shtransportID = existingTransport.shtransportID;
-        shipmentID = existingTransport.shipmentID;
-        retailerID = existingTransport.retailerID;
 
+        alert("Shipment created successfully!");
+    } else {
+        // Update Existing Entry Logic
+        const existingTransport = stransports[editRowIndex];
         stransports[editRowIndex] = {
-            transportDate,
-            shtransportID,
-            shipmentID,
-            retailerID,
+            ...existingTransport, // Retain existing IDs and date
             transportType,
             cargoType,
             temperatureRange,
             quantity
         };
 
-        editRowIndex = null;
-=======
-    const transport = { date, transportID, transportType, cargoType, temperatureRange, loadWeight };
-
-    let transportData = JSON.parse(localStorage.getItem('shipmentTransportData')) || [];
-    transportData.push(transport);
-    localStorage.setItem('shipmentTransportData', JSON.stringify(transportData));
-
-    addRowToTable(transport);
-
-    document.getElementById('transportDate').value = "";
-    document.getElementById('transportID').value = "";
-    document.getElementById('transportType').value = "";
-    document.getElementById('cargoType').value = "";
-    document.getElementById('temperatureRange').value = "";
-    document.getElementById('loadWeight').value = "";
-}
-
-function loadTransportData() {
-    const transportData = JSON.parse(localStorage.getItem('shipmentTransportData')) || [];
-    transportData.forEach(transport => addRowToTable(transport));
-}
-
-function addRowToTable(transport) {
-    const tableBody = document.getElementById('transportTableBody');
-    const row = document.createElement('tr');
-
-    row.innerHTML = `
-        <td>${transport.date}</td>
-        <td>${transport.transportID}</td>
-        <td>${transport.transportType}</td>
-        <td>${transport.cargoType}</td>
-        <td>${transport.temperatureRange}</td>
-        <td>${transport.loadWeight}</td>
-        <td><button class="btn" onclick="printRow(this)">Print</button></td>
-    `;
-
-    row.addEventListener('click', () => {
-        if (selectedRow) selectedRow.classList.remove('selected');
-        row.classList.add('selected');
-        selectedRow = row;
-        document.querySelector('.delete-btn').disabled = false;
-    });
-
-    tableBody.appendChild(row);
-}
-
-function deleteSelectedRow() {
-    if (!selectedRow) {
-        alert("To delete the transport history, please select the correct transport row.");
-        return;
->>>>>>> 9d5fb3fef309186e0f29edb53f166c08de79d465:Frontend/shipment_transport.js
+        alert("Shipment updated successfully!");
+        editRowIndex = null; // Reset editing state
     }
-    const transportID = selectedRow.cells[1].innerText;
-    selectedRow.remove();
-    selectedRow = null;
-    document.querySelector('.delete-btn').disabled = true;
 
-<<<<<<< HEAD:Frontend/shipment_Creat.js
+    // Save updated list to localStorage
     localStorage.setItem('stransports', JSON.stringify(stransports));
+
+    // Update the table
     updateTable();
     clearInputs();
 }
 
-function loadTableData() {
-    updateTable();
-}
 
-function updateTable() {
-    const tableBody = document.getElementById('transportTableBody');
-    tableBody.innerHTML = '';
-    const stransports = JSON.parse(localStorage.getItem('stransports')) || [];
 
-    stransports.forEach((transport, index) => {
-        const row = document.createElement('tr');
-
-        row.innerHTML = `
-            <td>${transport.transportDate}</td>
-            <td>${transport.shipmentID}</td>
-            <td>${transport.shtransportID}</td>
-            <td>${transport.transportType}</td>
-            <td>${transport.retailerID}</td>
-            <td>${transport.cargoType}</td>
-            <td>${transport.temperatureRange}</td>
-            <td>${transport.quantity}</td>
-            <td class="actions">
-                <button onclick="viewDetails(this)">View</button>
-                <button onclick="editTransport(this)">Edit</button>
-                <button onclick="deleteTransport(this)">Delete</button>
-                <button onclick="sendToTransport(${index})">Send to Transport</button>
-                
-            </td>
-        `;
-
-        tableBody.appendChild(row);
-    });
+async function loadTableData() {
+  const response = await fetch('shipment_create.php');
+  const shipments = await response.json();
+  const tableBody = document.getElementById('transportTableBody');
+  tableBody.innerHTML = '';
+  shipments.forEach((shipment) => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+          <td>${shipment.Shipment_ID}</td>
+          <td>${shipment.shTransport_ID}</td>
+          <td>${shipment.Retailer_ID}</td>
+          <td>${shipment.Shipment_Date}</td>
+          <td>${shipment.Shipment_Quantity}</td>
+          <td>${shipment.Operating_Temperature}</td>
+          <td class="actions">
+              <button onclick="viewDetails(this)">View</button>
+              <button onclick="editTransport(this)">Edit</button>
+              <button onclick="deleteTransport(${shipment.Shipment_ID})">Delete</button>
+          </td>
+      `;
+      tableBody.appendChild(row);
+  });
 }
 
 
 
 
-function sendToTransport(index) {
+/*function sendToTransport(index) {
   const stransports = JSON.parse(localStorage.getItem('stransports')) || [];
   const transportToSend = stransports[index];
 
@@ -353,7 +284,7 @@ function sendToTransport(index) {
   alert("Transport data sent successfully!");
 }
 
-
+*/
 
 
 function editTransport(button) {
@@ -389,20 +320,12 @@ function clearInputs() {
 
 
 
-function viewDetails(button) {
-=======
-    let transportData = JSON.parse(localStorage.getItem('shipmentTransportData')) || [];
-    transportData = transportData.filter(transport => transport.transportID !== transportID);
-    localStorage.setItem('shipmentTransportData', JSON.stringify(transportData));
-}
-
-
-function printRow(button) {
->>>>>>> 9d5fb3fef309186e0f29edb53f166c08de79d465:Frontend/shipment_transport.js
-    const row = button.closest('tr');
-    const rowData = Array.from(row.cells).slice(0, -1).map(cell => cell.innerText);
-
+function generatePDF(shipmentID, shTransportID, retailerID, shipmentDate, shipmentQuantity, operatingTemperature) {
+    // const row = button.closest('tr');
+    // const rowData = Array.from(row.cells).slice(0, -1).map(cell => cell.innerText);
+    const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
+    
     doc.setFontSize(16);
     doc.setFont("helvetica", "bold");
 
@@ -420,17 +343,20 @@ function printRow(button) {
 
     doc.setFontSize(12);
     doc.setFont("helvetica", "normal");
-    doc.text(`Date: ${rowData[0]}`, 20, 80);
-    doc.text(`Shipment ID: ${rowData[1]}`, 20, 90);
-    doc.text(`Shipment Transport ID: ${rowData[2]}`, 20, 100);
-    doc.text(`Transport Type: ${rowData[3]}`, 20, 110);
-    doc.text(`Retailer ID: ${rowData[4]}`, 20, 120);
-    doc.text(`Cargo Type: ${rowData[5]}`, 20, 130);
-    doc.text(`Operating Temperature: ${rowData[6]}`, 20, 140);
-    doc.text(`Quantity: ${rowData[7]} kg`, 20, 150);
-
+    doc.text(`Shipment ID: ${shipmentID}`, 20, 80);
+    doc.text(`Transport ID: ${shTransportID}`, 20, 90);
+    doc.text(`Retailer ID: ${retailerID}`, 20, 100);
+    doc.text(`Shipment Date: ${shipmentDate}`, 20, 110);
+    doc.text(`Shipment Quantity: ${shipmentQuantity}`, 20, 120);
+    doc.text(`Operating Temperature: ${operatingTemperature}`, 20, 130);
     doc.text("Signature:", 20, 160);
     doc.line(40, 160, 100, 160); 
 
-    doc.save("Shipment Details.pdf");
+    doc.save(`Shipment_${shipmentID}.pdf`);
+
+
+
+
+
+    
 }
