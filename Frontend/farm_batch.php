@@ -93,25 +93,6 @@
                         die("Connection failed: " . $conn->connect_error);
                     }
 
-                    // Handle adding a new batch
-                    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                        $harvestDate = $_POST['harvestDate'];
-                        $expiryDate = $_POST['expireyDate'];
-                        $productID = $_POST['productID'];
-                        $quantity = $_POST['quantity'];
-                        $farmID = $_POST['farmID'];
-
-                        $sql = "INSERT INTO tblbatch (`Harvest Date`, `Expiry Date`, `Quantity`, `Product ID`, `Farm ID`) 
-                                VALUES ('$harvestDate', '$expiryDate', '$quantity', '$productID', '$farmID')";
-
-                        if ($conn->query($sql) === TRUE) {
-                            echo "<script>alert('Batch added successfully.'); window.location.href = 'farm_batch.php';</script>";
-                        } else {
-                            echo "<script>alert('Error adding batch: " . $conn->error . "');</script>";
-                        }
-                    }
-
-                    // Fetch and display all batches
                     $sql = "SELECT * FROM tblbatch";
                     $result = $conn->query($sql);
 
@@ -120,7 +101,7 @@
                             echo "<tr>
                                 <td>{$row['Batch Barcode']}</td>
                                 <td>{$row['Harvest Date']}</td>
-                                <td>{$row['Expiry Date']}</td>
+                                <td>{$row['Expirey Date']}</td>
                                 <td>{$row['Quantity']}</td>
                                 <td>{$row['Product ID']}</td>
                                 <td>{$row['Farm ID']}</td>
@@ -143,7 +124,7 @@
 </body>
 </html>
 <?php
-// Handle batch deletion
+// Connect to the database
 $conn = new mysqli('localhost', 'root', '', 'crud');
 
 if ($conn->connect_error) {
@@ -152,6 +133,8 @@ if ($conn->connect_error) {
 
 if (isset($_GET['barcode'])) {
     $barcode = $conn->real_escape_string($_GET['barcode']);
+
+    // Delete the batch
     $sql = "DELETE FROM tblbatch WHERE `Batch Barcode` = '$barcode'";
 
     if ($conn->query($sql) === TRUE) {
