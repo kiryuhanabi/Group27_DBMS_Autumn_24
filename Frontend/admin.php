@@ -12,7 +12,7 @@
             <ul>
                 <li><a href="admin_user.php">User</a></li>
                 <li><a href="#farm">Farm</a></li>
-                <li><a href="#processing">Processing Center</a></li>
+                <li><a href="admin_processing_center.php">Processing Center</a></li>
                 <li><a href="#storage">Storage</a></li>
                 <li><a href="#transport">Transport</a></li>
                 <li><a href="#retailer">Retailer</a></li>

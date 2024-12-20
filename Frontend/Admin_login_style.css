@@ -62,6 +62,16 @@ form {
     border-color: #007bff;
     outline: none;
 }
+/* Center the "Edit User" text */
+.form-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333; /* Dark color for visibility */
+    margin-bottom: 20px;
+    text-align: center;
+    text-transform: uppercase; /* Optional: Adds uppercase text styling */
+}
+
 
 button {
     padding: 12px;
