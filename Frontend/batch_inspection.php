@@ -17,11 +17,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $batchBarcode = $_POST['batchBarcode'];
     $inspectorID = $_POST['inspectorID'];
     $unAffectedQuality = $_POST['unAffectedQuality'];
-    $affectedBatchQuantity = $_POST['affectedBatchQuantity'];
     $certification = $_POST['certification'];
 
-    $sql = "INSERT INTO tblbatchinspection (`Date`, `Inspector ID`, `Batch Barcode`, `Unaffected Quality Grade`, `Affected Quantity`, `Certification`)
-        VALUES ('$inspectionDate', '$inspectorID', '$batchBarcode', '$unAffectedQuality', '$affectedBatchQuantity', '$certification')";
+    $sql = "INSERT INTO tblbatchinspection (`Date`, `Inspector ID`, `Batch Barcode`, `Unaffected Quality Grade`, `Certification`)
+        VALUES ('$inspectionDate', '$inspectorID', '$batchBarcode', '$unAffectedQuality', '$certification')";
 
     $sql_cer = "INSERT INTO tblbatchcertification (`Batch Barcode`,`Certification`) VALUES ('$batchBarcode','$certification')";
     $result_cer = $conn->query($sql_cer);
@@ -102,7 +101,7 @@ $conn->close();
         
                 <div class="right-column">
                 <div class="input-row">
-                        <label for="unAffectedQuality">Unaffected Quality:</label>
+                        <label for="unAffectedQuality">Unaffected Batch Quality:</label>
                         <select id="unAffectedQuality" name="unAffectedQuality" required>
                             <option disabled selected>Select Type</option>
                             <option value="Poor">Poor</option>
@@ -110,11 +109,6 @@ $conn->close();
                             <option value="Decent">Decent</option>
                             <option value="Perfect">Perfect</option>
                         </select>
-                    </div>
-
-                    <div class="input-row">
-                        <label for="affectedBatchQuantity">Affected Batch Quantity:</label>
-                        <input type="number" id="affectedBatchQuantity" name="affectedBatchQuantity">
                     </div>
 
                     <div class="input-row">
@@ -136,7 +130,6 @@ $conn->close();
                         <th>Batch Barcode</th>
                         <th>Inspector ID</th>
                         <th>Unaffected Batch Quality</th>
-                        <th>Affected Batch Quantity</th>
                         <th>Certification</th>
                         <th>Action</th>
                     </tr>
@@ -149,7 +142,6 @@ $conn->close();
                                 <td><?php echo htmlspecialchars($row['Inspector ID']); ?></td>
                                 <td><?php echo htmlspecialchars($row['Batch Barcode']); ?></td>
                                 <td><?php echo htmlspecialchars($row['Unaffected Quality Grade']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Affected Quantity']); ?></td>
                                 <td><?php echo htmlspecialchars($row['Certification']); ?></td>
                                 <td>
                                     <form method="POST" action="batch_inspection_delete.php">
@@ -165,7 +157,7 @@ $conn->close();
                         <?php endwhile; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="6">No records found</td>
+                            <td colspan="5">No records found</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>

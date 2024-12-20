@@ -30,7 +30,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             `Inspector ID`= '$inspectorID',
             `Batch Barcode`= '$batchBarcode',
             `Unaffected Quality Grade`= '$unAffectedQuality',
-            `Affected Quantity`= '$affectedBatchQuantity',
             `Certification`= '$certification'
             WHERE `Batch Barcode` = $id";
 
@@ -122,7 +121,7 @@ $conn->close();
         
                 <div class="right-column">
                 <div class="input-row">
-                        <label for="unAffectedQuality">Unaffected Quality:</label>
+                        <label for="unAffectedQuality">Unaffected Batch Quality:</label>
                         <select id="unAffectedQuality" name="unAffectedQuality" required>
                             <option disabled selected>Select Type</option>
                             <option value="Poor">Poor</option>
@@ -130,11 +129,6 @@ $conn->close();
                             <option value="Decent">Decent</option>
                             <option value="Perfect">Perfect</option>
                         </select>
-                    </div>
-
-                    <div class="input-row">
-                        <label for="affectedBatchQuantity">Affected Batch Quantity:</label>
-                        <input type="number" id="affectedBatchQuantity" name="affectedBatchQuantity">
                     </div>
 
                     <div class="input-row">
