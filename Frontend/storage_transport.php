@@ -38,7 +38,7 @@ $result = $conn->query($sql);
           <li><a href="#"><i class="fas fa-warehouse"></i> Storage Transport</a></li>
           <li><a href="shipment_Creat.php"><i class="fas fa-truck"></i> Create Shipment</a></li>
           <li><a href="setting.html"><i class="fa fa-cog"></i> Settings</a></li>
-          <li><a href="login.html"><i class="fa fa-sign-out-alt"></i> Logout</a></li>
+          <li><a href="starting_page.php"><i class="fa fa-sign-out-alt"></i> Logout</a></li>
         </ul>
       </div>
       <div class="content">

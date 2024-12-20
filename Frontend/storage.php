@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 // Handle form submission for adding rows
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action']) && $_POST['action'] === 'add') {
-        // Add new row
+        // Add new rowa
         $type = $_POST['type'];
         $duration = $_POST['duration'];
         $location = $_POST['location'];
@@ -107,7 +107,7 @@ if ($result->num_rows > 0) {
       <li><a href="storage_transport.php"><i class="fas fa-warehouse"></i> Storage Transport</a></li>
       <li><a href="shipment_Creat.php"><i class="fas fa-truck"></i> Create Shipment</a></li>
       <li><a href="setting.html"><i class="fa fa-cog"></i> Settings</a></li>
-      <li><a href="login.html"><i class="fa fa-sign-out-alt"></i> Logout</a></li>
+      <li><a href="starting_page.php"><i class="fa fa-sign-out-alt"></i> Logout</a></li>
     </ul>
   </div>
   <div class="content">

@@ -104,7 +104,7 @@ saveBtn.addEventListener("click", () => {
 signOutBtn.addEventListener("click", () => {
 
   localStorage.clear();
-  window.location.href = "login.html";
+  window.location.href = "starting_page.php";
 });
 
 

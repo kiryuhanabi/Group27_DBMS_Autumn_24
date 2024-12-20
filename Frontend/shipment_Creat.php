@@ -91,7 +91,7 @@ $result = $conn->query($fetchQuery);
               <li><a href="storage_transport.php"><i class="fas fa-warehouse"></i> Storage Transport</a></li>
               <li><a href="#"><i class="fas fa-truck"></i> Create Shipment</a></li>
               <li><a href="setting.html"><i class="fa fa-cog"></i> Settings</a></li>
-              <li><a href="login.html"><i class="fa fa-sign-out-alt"></i> Logout</a></li>
+              <li><a href="starting_page.php"><i class="fa fa-sign-out-alt"></i> Logout</a></li>
             </ul>
           </div>
         
@@ -193,7 +193,7 @@ $result = $conn->query($fetchQuery);
             <button type="submit">Create Shipment</button>
             <div class="input-row">
             <label for="searchInput">Search Shipment:</label>
-            <input type="text" id="searchInput" placeholder="Search by shipment ID or shTransport ID or Retailer ID">
+            <input type="text" id="searchInput" placeholder="Search by shipment ID or shTransport ID">
             </div>
             </form>
         </div>

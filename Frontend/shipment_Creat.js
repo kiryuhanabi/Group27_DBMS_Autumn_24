@@ -106,7 +106,7 @@ saveBtn.addEventListener("click", () => {
 signOutBtn.addEventListener("click", () => {
 
   localStorage.clear();
-  window.location.href = "login.html";
+  window.location.href = "starting_page.php";
 });
 
 
@@ -263,29 +263,6 @@ async function loadTableData() {
 
 
 
-/*function sendToTransport(index) {
-  const stransports = JSON.parse(localStorage.getItem('stransports')) || [];
-  const transportToSend = stransports[index];
-
-  if (!transportToSend) {
-      alert("Unable to send transport data. Item not found.");
-      return;
-  }
-
-  // Retrieve or initialize transport shipments in localStorage
-  const transportShipments = JSON.parse(localStorage.getItem('transportShipments')) || [];
-
-  // Add the selected transport data to the new storage
-  transportShipments.push(transportToSend);
-
-  // Save back to localStorage
-  localStorage.setItem('transportShipments', JSON.stringify(transportShipments));
-
-  alert("Transport data sent successfully!");
-}
-
-*/
-
 
 function editTransport(button) {
     const row = button.parentNode.parentNode;
@@ -335,7 +312,7 @@ function generatePDF(shipmentID, shTransportID, retailerID, shipmentDate, shipme
 
     doc.setFontSize(24);
     doc.setTextColor(0, 128, 0);
-    doc.text("Agro", 105, 53, { align: "center" });
+    doc.text("AGRO ANZEN", 105, 53, { align: "center" });
     
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(18);

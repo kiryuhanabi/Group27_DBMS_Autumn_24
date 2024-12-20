@@ -513,7 +513,13 @@ table tbody tr:hover {
 }
   
 .delete-btn{
-  background-color: #c0392b; 
+  padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #c0392b; 
 }
 .delete-btn:hover {
   background-color: #a93226;

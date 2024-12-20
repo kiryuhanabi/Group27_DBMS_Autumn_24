@@ -105,7 +105,7 @@ saveBtn.addEventListener("click", () => {
 signOutBtn.addEventListener("click", () => {
 
   localStorage.clear();
-  window.location.href = "login.html";
+  window.location.href = "starting_page.php";
 });
 
 
@@ -161,7 +161,7 @@ document.querySelectorAll('.view-btn').forEach(button => {
     doc.addImage(logoBase64, 'PNG', 85, 10, 40, 40); 
     doc.setFontSize(24);
     doc.setTextColor(0, 128, 0);
-    doc.text("Agro", 105, 53, { align: "center" });
+    doc.text("AGRO ANZEN", 105, 53, { align: "center" });
     
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(18);
