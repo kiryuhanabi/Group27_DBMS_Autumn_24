@@ -1,42 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farm Batch</title>
-    <link rel="stylesheet" href="inspection_style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css" integrity="sha512-3PN6gfRNZEX4YFyz+sIyTF6pGlQiryJu9NlGhu9LrLMQ7eDjNgudQoFDK3WSNAayeIKc6B8WXXpo4a7HqxjKwg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script>
-        function confirmDelete(barcode) {
-            if (confirm("Are you sure you want to delete this batch?")) {
-                window.location.href = `farm_batch.php?barcode=${barcode}`;
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="admin_style.css">
+    <link href="logo.png" rel="icon" type="image/png">
+    <title>Admin Dashboard</title>
 </head>
-<body>
+<body class="admin-page">
     <header>
-        <h1>
-            <img src="logo.png" alt="Agro Logo" class="logo-img"> Agro
-        </h1>
-    </header>
-
-    <nav class="nav">
-        <ul class="ul">
-            <li><a href="farm.php">Home</a></li>
-            <li><a href="farm_product.php">Product</a></li>
-            <li><a href="farm_batch.php">Batch</a></li>
-            <li><a href="login.php">Logout</a></li>
-        </ul>
-    </nav>
-
-    <div class="dashboard">
+        <img src="logo.png" alt="Logo" class="logo">
+        <nav class="navbar">
+            <ul>
+                <li><a href="admin_user.php">User</a></li>
+                <li><a href="#" class="dropdown">Farm</a>
+                    <ul class="dropdown-content">
+                        <li><a href="admin_farm.php">Farm Information</a></li>
+                        <li><a href="admin_farm_product.php">Farm Product</a></li>
+                        <li><a href="admin_farm_batch.php">Farm Batch</a></li>
+                    </ul></li>
+                <li>
+                    <a href="#" class="dropdown">Processing Center</a>
+                    <ul class="dropdown-content">
+                        <li><a href="admin_center_information.php">Center Information</a></li>
+                        <li><a href="admin_iot_reading.php">IoT Device Reading</a></li>
+                        <li><a href="admin_processing_lot.php">Processing Lot</a></li>
+                    </ul>
+                </li>
+                <li><a href="#storage">Storage</a></li>
+                <li><a href="#transport">Transport</a></li>
+                <li><a href="#retailer">Retailer</a></li>
+                <li><a href="starting_page.php" class="btn-logout">Log Out</a></li>
+            </ul>
+        </nav>
+        <div class="dashboard">
         <h2>Batch</h2>
 
         <div class="inspection-filters">
             <h3>Create Batch</h3>
-            <form id="addBatchForm" action="farm_batch.php" method="POST">
+            <form id="addBatchForm" action="admin_farm_batch.php" method="POST">
                 <div class="form-group">
                     <div class="input-row">
                         <label for="harvestDate">Harvest Date:</label>
@@ -104,7 +104,7 @@
                                 VALUES ('$harvestDate', '$expiryDate', '$quantity', '$productID', '$farmID')";
 
                         if ($conn->query($sql) === TRUE) {
-                            echo "<script>alert('Batch added successfully.'); window.location.href = 'farm_batch.php';</script>";
+                            echo "<script>alert('Batch added successfully.'); window.location.href = 'admin_farm_batch.php';</script>";
                         } else {
                             echo "<script>alert('Error adding batch: " . $conn->error . "');</script>";
                         }
@@ -124,7 +124,7 @@
                                 <td>{$row['Product ID']}</td>
                                 <td>{$row['Farm ID']}</td>
                                 <td>
-                                    <a href='farm_batch_update.php?barcode={$row['Batch Barcode']}' class='btn update-btn'>Update</a>
+                                    <a href='admin_farm_batch_update.php?barcode={$row['Batch Barcode']}' class='btn update-btn'>Update</a>
                                     <button onclick=\"confirmDelete('{$row['Batch Barcode']}')\" class='btn delete-btn'>Delete</button>
                                 </td>
                             </tr>";
@@ -156,9 +156,9 @@ if (isset($_GET['barcode'])) {
     $sql = "DELETE FROM tblbatch WHERE `Batch Barcode` = '$barcode'";
 
     if ($conn->query($sql) === TRUE) {
-        echo "<script>alert('Batch deleted successfully.'); window.location.href = 'farm_batch.php';</script>";
+        echo "<script>alert('Batch deleted successfully.'); window.location.href = 'admin_farm_batch.php';</script>";
     } else {
-        echo "<script>alert('Error deleting batch: " . $conn->error . "'); window.location.href = 'farm_batch.php';</script>";
+        echo "<script>alert('Error deleting batch: " . $conn->error . "'); window.location.href = 'admin_farm_batch.php';</script>";
     }
 }
 
