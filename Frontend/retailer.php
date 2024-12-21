@@ -147,7 +147,7 @@
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>";
                         echo "<td>" . $row['Shipment ID'] . "</td>";
-                        echo "<td>" . $row['Transport ID'] . "</td>";
+                        echo "<td>" . $row['shTransport ID'] . "</td>";
                         echo "<td>" . $row['Retailer ID'] . "</td>";
                         echo "<td>" . $row['Shipment Date'] . "</td>";
                         echo "<td>" . $row['Shipment Quantity'] . "</td>";
