@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 17, 2024 at 08:39 PM
+-- Generation Time: Dec 21, 2024 at 06:03 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,11 +40,19 @@ CREATE TABLE `tblaffectedbatch` (
 CREATE TABLE `tblbatch` (
   `Batch Barcode` int(13) NOT NULL,
   `Harvest Date` date NOT NULL,
-  `Expirey Date` date NOT NULL,
+  `Expiry Date` date NOT NULL,
   `Quantity` int(7) NOT NULL,
   `Product ID` int(7) NOT NULL,
   `Farm ID` int(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tblbatch`
+--
+
+INSERT INTO `tblbatch` (`Batch Barcode`, `Harvest Date`, `Expiry Date`, `Quantity`, `Product ID`, `Farm ID`) VALUES
+(4, '2024-12-19', '2024-12-28', 50, 9, 12),
+(11, '2024-12-17', '2024-12-27', 50, 18, 16);
 
 -- --------------------------------------------------------
 
@@ -57,6 +65,13 @@ CREATE TABLE `tblbatchcertification` (
   `Certification` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tblbatchcertification`
+--
+
+INSERT INTO `tblbatchcertification` (`Batch Barcode`, `Certification`) VALUES
+(10, 'Halal');
+
 -- --------------------------------------------------------
 
 --
@@ -66,9 +81,9 @@ CREATE TABLE `tblbatchcertification` (
 CREATE TABLE `tblbatchinspection` (
   `Batch Barcode` int(7) NOT NULL,
   `Inspector ID` int(7) NOT NULL,
-  `Affected Quantity` int(10) NOT NULL,
   `Unaffected Quality Grade` text NOT NULL,
-  `Date` date NOT NULL
+  `Date` date NOT NULL,
+  `Certification` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -84,6 +99,14 @@ CREATE TABLE `tblfarm` (
   `City` varchar(20) NOT NULL,
   `No. of Fields` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tblfarm`
+--
+
+INSERT INTO `tblfarm` (`farm ID`, `Farm Name`, `Street`, `City`, `No. of Fields`) VALUES
+(12, 'Goldwing', '123 avenue', 'tangail', 1000),
+(16, 'Abir Golf', '123 avenue', 'dhaka', 12);
 
 -- --------------------------------------------------------
 
@@ -105,7 +128,7 @@ CREATE TABLE `tblfarminspection` (
 --
 
 INSERT INTO `tblfarminspection` (`Inspector ID`, `Farm ID`, `Maintenance Grade`, `Fertilizer Grade`, `Soil Quality Grade`, `Date`) VALUES
-(2222181, 215, 'Poor', 'Acceptable', 'Decent', '2024-12-18');
+(2222181, 12, 'Acceptable', 'Decent', 'Perfect', '2024-12-18');
 
 -- --------------------------------------------------------
 
@@ -143,13 +166,6 @@ CREATE TABLE `tbllotinspection` (
   `Package Quality Grade` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `tbllotinspection`
---
-
-INSERT INTO `tbllotinspection` (`Inspector ID`, `Lot Number`, `Date`, `Package Quality Grade`) VALUES
-(2222181, 168631, '2024-12-18', 'Perfect');
-
 -- --------------------------------------------------------
 
 --
@@ -158,12 +174,19 @@ INSERT INTO `tbllotinspection` (`Inspector ID`, `Lot Number`, `Date`, `Package Q
 
 CREATE TABLE `tblorder` (
   `Order ID` int(7) NOT NULL,
-  `Shipment ID` int(7) NOT NULL,
   `Retailer ID` int(7) NOT NULL,
   `Product Name` text NOT NULL,
   `Quantity` int(10) NOT NULL,
   `Date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tblorder`
+--
+
+INSERT INTO `tblorder` (`Order ID`, `Retailer ID`, `Product Name`, `Quantity`, `Date`) VALUES
+(3, 55555, 'baked beet', 60, '2024-12-21'),
+(4, 1213, 'sweet corn', 10, '2024-12-26');
 
 -- --------------------------------------------------------
 
@@ -203,6 +226,13 @@ CREATE TABLE `tblprocessingcenter` (
   `Location` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tblprocessingcenter`
+--
+
+INSERT INTO `tblprocessingcenter` (`Center ID`, `Type`, `Location`) VALUES
+(17, 'Big', 'Dhaka');
+
 -- --------------------------------------------------------
 
 --
@@ -227,7 +257,11 @@ CREATE TABLE `tblprocessinginspection` (
 
 CREATE TABLE `tblprocessingiot` (
   `pIoT ID` int(7) NOT NULL,
-  `Center ID` int(7) NOT NULL
+  `Center ID` int(7) NOT NULL,
+  `Temperature` varchar(19) NOT NULL,
+  `Humidity` varchar(10) NOT NULL,
+  `Date` date NOT NULL,
+  `Time` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -237,14 +271,30 @@ CREATE TABLE `tblprocessingiot` (
 --
 
 CREATE TABLE `tblprocessinglot` (
+  `Batch Barcode` int(13) NOT NULL,
   `Lot Number` int(7) NOT NULL,
   `Date` date NOT NULL,
   `Time` time NOT NULL,
   `Manufactured Date` date NOT NULL,
-  `Expirey Date` date NOT NULL,
+  `Expiry Date` date NOT NULL,
   `stTransport ID` int(7) NOT NULL,
   `Center ID` int(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tblprocessinglot`
+--
+
+INSERT INTO `tblprocessinglot` (`Batch Barcode`, `Lot Number`, `Date`, `Time`, `Manufactured Date`, `Expiry Date`, `stTransport ID`, `Center ID`) VALUES
+(4, 3, '2024-12-21', '00:08:00', '2024-12-21', '2024-12-31', 0, 17),
+(4, 4, '2024-12-21', '00:08:00', '2024-12-21', '2024-12-31', 18, 17),
+(4, 5, '2024-12-21', '00:08:00', '2024-12-21', '2024-12-31', 18, 17),
+(4, 6, '2024-12-21', '00:08:00', '2024-12-21', '2024-12-31', 18, 17),
+(4, 7, '2024-12-21', '00:08:00', '2024-12-21', '2024-12-31', 18, 17),
+(4, 8, '2024-12-21', '00:08:00', '2024-12-21', '2024-12-31', 18, 17),
+(4, 9, '2024-12-21', '00:08:00', '2024-12-21', '2024-12-31', 18, 17),
+(4, 10, '2024-12-21', '00:08:00', '2024-12-21', '2024-12-31', 18, 17),
+(4, 11, '2024-12-21', '00:08:00', '2024-12-21', '2024-12-31', 18, 17);
 
 -- --------------------------------------------------------
 
@@ -267,7 +317,6 @@ CREATE TABLE `tblprocessingshipmentquantity` (
 CREATE TABLE `tblprocessingtransport` (
   `pTransport ID` int(7) NOT NULL,
   `Date` date NOT NULL,
-  `Type` varchar(10) NOT NULL,
   `Transport Type` varchar(10) NOT NULL,
   `Temperature Range` varchar(10) NOT NULL,
   `Load Weight` int(10) NOT NULL
@@ -281,12 +330,21 @@ CREATE TABLE `tblprocessingtransport` (
 
 CREATE TABLE `tblproduct` (
   `Product ID` int(7) NOT NULL,
+  `Product Name` text NOT NULL,
   `Type` text NOT NULL,
   `Best Season` text NOT NULL,
   `Optimum Temperature` varchar(6) NOT NULL,
   `Optimum Humidity` varchar(6) NOT NULL,
   `Nutrition Value` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tblproduct`
+--
+
+INSERT INTO `tblproduct` (`Product ID`, `Product Name`, `Type`, `Best Season`, `Optimum Temperature`, `Optimum Humidity`, `Nutrition Value`) VALUES
+(17, 'beet', 'dry', 'summer', '50-60', '30%', '100cal/g'),
+(18, 'Apple', 'dry', 'summer', '50-60', '30%', '100cal/g');
 
 -- --------------------------------------------------------
 
@@ -299,8 +357,20 @@ CREATE TABLE `tblretailer` (
   `First Name` text NOT NULL,
   `Last Name` text NOT NULL,
   `Phone` varchar(20) NOT NULL,
-  `Email` varchar(20) NOT NULL
+  `Store Name` text NOT NULL,
+  `Address` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tblretailer`
+--
+
+INSERT INTO `tblretailer` (`Retailer ID`, `First Name`, `Last Name`, `Phone`, `Store Name`, `Address`) VALUES
+(15, 'Md . Abir Shahriar', 'Safowan', '01601874131', 'ka', 'Alif Tower, house no. 14, Road no. 6, Satmasjid Housing, Mohammadpur, Dhaka'),
+(12345, 'Md . Abir Shahriar', 'Safowan', '01601874131', 'ga', 'Alif Tower, house no. 14, Road no. 6, Satmasjid Housing, Mohammadpur, Dhaka'),
+(123456, 'MD. Nabil', 'Safowan', '01603481310', 'ba', 'Alif Tower, house no. 14, Road no. 6, Satmasjid Housing, Mohammadpur, Dhaka'),
+(1234567, 'Md . Abir Shahriar', 'Shah', '01601874131', 'la', 'Alif Tower, house no. 14, Road no. 6, Satmasjid Housing, Mohammadpur, Dhaka\r\n4th floor(lift) , east side'),
+(1234577, 'MD. Nabil', 'Safowan', '01603481310', 'ga', 'Alif Tower, house no. 14, Road no. 6, Satmasjid Housing, Mohammadpur, Dhaka');
 
 -- --------------------------------------------------------
 
@@ -325,7 +395,7 @@ CREATE TABLE `tblshipment` (
 
 CREATE TABLE `tblshipmenttransport` (
   `shTransport ID` int(7) NOT NULL,
-  `Type` int(7) NOT NULL,
+  `shTransport Type` text NOT NULL,
   `Transport Type` text NOT NULL,
   `Temperature Range` varchar(10) NOT NULL,
   `Storage ID` int(7) NOT NULL
@@ -342,9 +412,24 @@ CREATE TABLE `tblsignup` (
   `First Name` varchar(30) NOT NULL,
   `Last Name` varchar(30) NOT NULL,
   `Email` varchar(30) NOT NULL,
-  `Password` varchar(30) NOT NULL,
+  `Password` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `User` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tblsignup`
+--
+
+INSERT INTO `tblsignup` (`ID`, `First Name`, `Last Name`, `Email`, `Password`, `User`) VALUES
+(8, 'Abir', 'Shahriar', 'ashariar414@gmail.com', '2222', 'farm'),
+(10, 'nabil', 'safowan', 'ashariar414@gmail.com', '$2y$10$pfFM5tFNEMVaMQPAT/VTlOM', 'farm'),
+(11, 'jamee', 'jamee', 'as@gmail.com', '666', 'farm'),
+(13, 'Abir', 'Shah', 'ashariar414@gmail.com', 'abir27', 'farm'),
+(14, 'Md . Abir Shahriar', 'Shahriar', 'ashariar414@gmail.com', 'abir28', 'farm'),
+(15, 'Md . Abir Shahriar', 'Shahriar', 'ashariar414@gmail.com', 'abir33', 'retailer'),
+(16, 'Abir', 'Emon', 'hanabiippo2@gmail.com', 'abiremon', 'farm'),
+(17, 'Nabil', 'Safowan', 'nabil@gmail.com', 'nabil', 'processing_center'),
+(18, 'Shahriar', 'Emon', 'emon@gmail.com', 'emon', 'inspector');
 
 -- --------------------------------------------------------
 
@@ -386,13 +471,6 @@ CREATE TABLE `tblstorageinspection` (
   `Storage Hygene Grade` text NOT NULL,
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tblstorageinspection`
---
-
-INSERT INTO `tblstorageinspection` (`Storage ID`, `Inspector ID`, `Storage Maintenance Grade`, `Pest Control Grade`, `Storage Hygene Grade`, `date`) VALUES
-(5343200, 2222181, 'Acceptable', 'Decent', 'Excellent', '2024-12-18');
 
 -- --------------------------------------------------------
 
@@ -474,6 +552,20 @@ CREATE TABLE `tbltransportoitdevice` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbltransporttrucking`
+--
+
+CREATE TABLE `tbltransporttrucking` (
+  `TransportID` int(11) NOT NULL,
+  `ComingFrom` varchar(255) NOT NULL,
+  `PresentLocation` varchar(255) NOT NULL,
+  `Destination` varchar(255) NOT NULL,
+  `ItemType` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tblunaffectedbatch`
 --
 
@@ -496,7 +588,6 @@ ALTER TABLE `tblaffectedbatch`
 --
 ALTER TABLE `tblbatch`
   ADD PRIMARY KEY (`Batch Barcode`),
-  ADD KEY `p_id_fk` (`Product ID`),
   ADD KEY `f_id_fk` (`Farm ID`);
 
 --
@@ -516,7 +607,7 @@ ALTER TABLE `tblbatchinspection`
 -- Indexes for table `tblfarm`
 --
 ALTER TABLE `tblfarm`
-  ADD KEY `farmID_fk` (`farm ID`);
+  ADD PRIMARY KEY (`farm ID`);
 
 --
 -- Indexes for table `tblfarminspection`
@@ -549,7 +640,6 @@ ALTER TABLE `tbllotinspection`
 --
 ALTER TABLE `tblorder`
   ADD PRIMARY KEY (`Order ID`),
-  ADD KEY `Shipment ID` (`Shipment ID`),
   ADD KEY `Retailer ID` (`Retailer ID`);
 
 --
@@ -560,16 +650,89 @@ ALTER TABLE `tblpiotdevicehumidity`
   ADD KEY `pIoT ID` (`pIoT ID`);
 
 --
+-- Indexes for table `tblplotdevicetemperature`
+--
+ALTER TABLE `tblplotdevicetemperature`
+  ADD PRIMARY KEY (`Date`,`Time`),
+  ADD KEY `pIoT ID` (`pIoT ID`);
+
+--
+-- Indexes for table `tblprocessingiot`
+--
+ALTER TABLE `tblprocessingiot`
+  ADD PRIMARY KEY (`pIoT ID`);
+
+--
+-- Indexes for table `tblprocessinglot`
+--
+ALTER TABLE `tblprocessinglot`
+  ADD PRIMARY KEY (`Lot Number`);
+
+--
+-- Indexes for table `tblprocessingshipmentquantity`
+--
+ALTER TABLE `tblprocessingshipmentquantity`
+  ADD KEY `Shipment ID` (`Shipment ID`),
+  ADD KEY `Lot Number` (`Lot Number`);
+
+--
 -- Indexes for table `tblproduct`
 --
 ALTER TABLE `tblproduct`
   ADD PRIMARY KEY (`Product ID`);
 
 --
+-- Indexes for table `tblretailer`
+--
+ALTER TABLE `tblretailer`
+  ADD PRIMARY KEY (`Retailer ID`);
+
+--
 -- Indexes for table `tblsignup`
 --
 ALTER TABLE `tblsignup`
   ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `tblsiottemperature`
+--
+ALTER TABLE `tblsiottemperature`
+  ADD PRIMARY KEY (`Date`,`Time`),
+  ADD KEY `sIoT ID` (`sIoT ID`);
+
+--
+-- Indexes for table `tblstorageiot`
+--
+ALTER TABLE `tblstorageiot`
+  ADD PRIMARY KEY (`sIoT ID`),
+  ADD KEY `Storage ID` (`Storage ID`);
+
+--
+-- Indexes for table `tblstorageiothumidity`
+--
+ALTER TABLE `tblstorageiothumidity`
+  ADD PRIMARY KEY (`Date`,`Time`),
+  ADD KEY `sIoT ID` (`sIoT ID`);
+
+--
+-- Indexes for table `tbltiotdevicehumidity`
+--
+ALTER TABLE `tbltiotdevicehumidity`
+  ADD PRIMARY KEY (`Date`,`Time`),
+  ADD KEY `tIoT ID` (`tIoT ID`);
+
+--
+-- Indexes for table `tbltiotdevicetemperature`
+--
+ALTER TABLE `tbltiotdevicetemperature`
+  ADD PRIMARY KEY (`Date`,`Time`),
+  ADD KEY `tIoT ID` (`tIoT ID`);
+
+--
+-- Indexes for table `tbltransporttrucking`
+--
+ALTER TABLE `tbltransporttrucking`
+  ADD PRIMARY KEY (`TransportID`);
 
 --
 -- Indexes for table `tblunaffectedbatch`
@@ -585,7 +748,7 @@ ALTER TABLE `tblunaffectedbatch`
 -- AUTO_INCREMENT for table `tblbatch`
 --
 ALTER TABLE `tblbatch`
-  MODIFY `Batch Barcode` int(13) NOT NULL AUTO_INCREMENT;
+  MODIFY `Batch Barcode` int(13) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tblfarmtype`
@@ -594,16 +757,58 @@ ALTER TABLE `tblfarmtype`
   MODIFY `farm ID` int(7) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `tblinspector`
+--
+ALTER TABLE `tblinspector`
+  MODIFY `Inspector ID` int(7) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tblorder`
+--
+ALTER TABLE `tblorder`
+  MODIFY `Order ID` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `tblprocessingiot`
+--
+ALTER TABLE `tblprocessingiot`
+  MODIFY `pIoT ID` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tblprocessinglot`
+--
+ALTER TABLE `tblprocessinglot`
+  MODIFY `Lot Number` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
 -- AUTO_INCREMENT for table `tblproduct`
 --
 ALTER TABLE `tblproduct`
-  MODIFY `Product ID` int(7) NOT NULL AUTO_INCREMENT;
+  MODIFY `Product ID` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `tblretailer`
+--
+ALTER TABLE `tblretailer`
+  MODIFY `Retailer ID` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1234578;
 
 --
 -- AUTO_INCREMENT for table `tblsignup`
 --
 ALTER TABLE `tblsignup`
-  MODIFY `ID` int(7) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `tblstorageiot`
+--
+ALTER TABLE `tblstorageiot`
+  MODIFY `sIoT ID` int(7) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbltransporttrucking`
+--
+ALTER TABLE `tbltransporttrucking`
+  MODIFY `TransportID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -613,14 +818,81 @@ ALTER TABLE `tblsignup`
 -- Constraints for table `tblbatch`
 --
 ALTER TABLE `tblbatch`
-  ADD CONSTRAINT `tblbatch_ibfk_1` FOREIGN KEY (`Farm ID`) REFERENCES `tblfarm` (`farm ID`),
-  ADD CONSTRAINT `tblbatch_ibfk_2` FOREIGN KEY (`Product ID`) REFERENCES `tblproduct` (`Product ID`);
+  ADD CONSTRAINT `tblbatch_ibfk_1` FOREIGN KEY (`Farm ID`) REFERENCES `tblfarm` (`farm ID`);
 
 --
--- Constraints for table `tblfarm`
+-- Constraints for table `tblpiotdevicehumidity`
 --
-ALTER TABLE `tblfarm`
-  ADD CONSTRAINT `tblfarm_ibfk_1` FOREIGN KEY (`farm ID`) REFERENCES `tblsignup` (`ID`);
+ALTER TABLE `tblpiotdevicehumidity`
+  ADD CONSTRAINT `tblpiotdevicehumidity_ibfk_1` FOREIGN KEY (`pIoT ID`) REFERENCES `tblprocessingiot` (`pIoT ID`);
+
+--
+-- Constraints for table `tblplotdevicetemperature`
+--
+ALTER TABLE `tblplotdevicetemperature`
+  ADD CONSTRAINT `tblplotdevicetemperature_ibfk_1` FOREIGN KEY (`pIoT ID`) REFERENCES `tblprocessingiot` (`pIoT ID`);
+
+--
+-- Constraints for table `tblprocessingshipmentquantity`
+--
+ALTER TABLE `tblprocessingshipmentquantity`
+  ADD CONSTRAINT `tblprocessingshipmentquantity_ibfk_1` FOREIGN KEY (`Lot Number`) REFERENCES `tblprocessinglot` (`Lot Number`),
+  ADD CONSTRAINT `tblprocessingshipmentquantity_ibfk_2` FOREIGN KEY (`Shipment ID`) REFERENCES `tblshipment` (`Shipment ID`);
+
+--
+-- Constraints for table `tblshipment`
+--
+ALTER TABLE `tblshipment`
+  ADD CONSTRAINT `tblshipment_ibfk_1` FOREIGN KEY (`Retailer ID`) REFERENCES `tblretailer` (`Retailer ID`),
+  ADD CONSTRAINT `tblshipment_ibfk_2` FOREIGN KEY (`shTransport ID`) REFERENCES `tblshipmenttransport` (`shTransport ID`);
+
+--
+-- Constraints for table `tblshipmenttransport`
+--
+ALTER TABLE `tblshipmenttransport`
+  ADD CONSTRAINT `tblshipmenttransport_ibfk_1` FOREIGN KEY (`Storage ID`) REFERENCES `tblstorage` (`Storage ID`);
+
+--
+-- Constraints for table `tblsiottemperature`
+--
+ALTER TABLE `tblsiottemperature`
+  ADD CONSTRAINT `tblsiottemperature_ibfk_1` FOREIGN KEY (`sIoT ID`) REFERENCES `tblstorageiot` (`sIoT ID`);
+
+--
+-- Constraints for table `tblstorageiot`
+--
+ALTER TABLE `tblstorageiot`
+  ADD CONSTRAINT `tblstorageiot_ibfk_1` FOREIGN KEY (`Storage ID`) REFERENCES `tblstorage` (`Storage ID`);
+
+--
+-- Constraints for table `tblstorageiothumidity`
+--
+ALTER TABLE `tblstorageiothumidity`
+  ADD CONSTRAINT `tblstorageiothumidity_ibfk_1` FOREIGN KEY (`sIoT ID`) REFERENCES `tblstorageiot` (`sIoT ID`);
+
+--
+-- Constraints for table `tblstoragetransport`
+--
+ALTER TABLE `tblstoragetransport`
+  ADD CONSTRAINT `tblstoragetransport_ibfk_1` FOREIGN KEY (`Storage ID`) REFERENCES `tblstorage` (`Storage ID`);
+
+--
+-- Constraints for table `tbltiotdevicehumidity`
+--
+ALTER TABLE `tbltiotdevicehumidity`
+  ADD CONSTRAINT `tbltiotdevicehumidity_ibfk_1` FOREIGN KEY (`tIoT ID`) REFERENCES `tbltransportoitdevice` (`tIoT ID`);
+
+--
+-- Constraints for table `tbltiotdevicetemperature`
+--
+ALTER TABLE `tbltiotdevicetemperature`
+  ADD CONSTRAINT `tbltiotdevicetemperature_ibfk_1` FOREIGN KEY (`tIoT ID`) REFERENCES `tbltransportoitdevice` (`tIoT ID`);
+
+--
+-- Constraints for table `tbltransportoitdevice`
+--
+ALTER TABLE `tbltransportoitdevice`
+  ADD CONSTRAINT `tbltransportoitdevice_ibfk_1` FOREIGN KEY (`shTransport ID`) REFERENCES `tblshipmenttransport` (`shTransport ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
