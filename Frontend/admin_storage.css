@@ -1,0 +1,124 @@
+form {
+    display: flex;
+    justify-content: center;
+    border-radius: 8px;
+    
+  }
+  
+  form input {
+    
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  form button {
+    margin-left: 5px;
+    height: 38px;
+    background-color: rgb(10, 115, 191); /* Sky blue color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+
+  table {
+    background-color: #a7f3a9;
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 16px;
+      min-width: 400px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      animation: slideIn 1s ease-out;
+  }
+  
+  @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+  }
+  
+  table thead tr {
+      background-color: #4CAF50;
+      color: #214222;
+  }
+  
+  table th, table td {
+      padding: 12px 15px;
+      border: 1px solid #4CAF50;
+      text-align: center;
+  }
+  
+  table tbody tr:hover {
+      background-color:  rgba(76, 175, 80, 0.2);
+  }
+    
+  .delete-btn{
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #c0392b; 
+  }
+  .delete-btn:hover {
+    background-color: #a93226;
+    
+  }
+  .view-btn{padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #007bff; 
+  }
+  .view-btn:hover {
+    background-color: #093c69;
+
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px; 
+}
+
+.actions button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.actions button:nth-child(1) {
+  background-color: #007bff; 
+}
+
+.actions button:nth-child(1):hover {
+  background-color: #0056b3;
+}
+.actions button:nth-child(2) {
+    background-color: #c0392b;
+}
+
+.actions button:nth-child(2):hover {
+    background-color: #a93226;
+}
+
+.actions button:nth-child(3) {
+    background-color: #0e6841; 
+}
+
+.actions button:nth-child(3):hover {
+    background-color: #1c9534;
+}
+  
