@@ -11,6 +11,11 @@ if ($conn->connect_error) {
 }
 
 $message = "";
+$id = $_GET['id'] ?? null;
+
+if ($id === null) {
+    die("Record ID is required.");
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $inspectionDate = $_POST['inspectionDate'];
@@ -21,17 +26,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $staffSafetyGrade = $_POST['staffSafetyGrade'];
     $hygieneGrade = $_POST['hygieneGrade'];
 
-    $sql = "INSERT INTO tblprocessinginspection (`Date`, `Inspector ID`, `Machine Quality Grade`, `Center ID`, `Processing Quality Grade`, `Center Hygene Grade`, `Staff Safety Grade`)
-        VALUES ('$inspectionDate', '$inspectorID', '$machineQuality', '$centerID', '$processingQuality', '$hygieneGrade', '$staffSafetyGrade')";
+    $sql = "UPDATE tblprocessinginspection SET 
+                `Date` = '$inspectionDate',
+                `Inspector ID` = '$inspectorID',
+                `Machine Quality Grade` = '$machineQuality',
+                `Center ID` = '$centerID',
+                `Processing Quality Grade` = '$processingQuality',
+                `Staff Safety Grade` = '$staffSafetyGrade',
+                `Center Hygene Grade` = '$hygieneGrade'
+            WHERE `Center ID` = $id";
 
     if ($conn->query($sql) === TRUE) {
-        $message = "Inspection added successfully!";
+        header("Location: p_inspect.php");
+        exit;
     } else {
-        $message = "Error: " . $conn->error;
+        $message = "Error updating record: " . $conn->error;
     }
 }
 
-$sql = "SELECT * FROM tblprocessinginspection";
+$sql = "SELECT * FROM tblprocessinginspection WHERE `Center ID` = $id";
 $result = $conn->query($sql);
 
 $conn->close();
@@ -78,7 +91,7 @@ $conn->close();
         <script src="p_inspect.js"></script>
 
         <div class="inspection-filters">
-            <h3>Add New inspection</h3>
+            <h3>Update inspection</h3>
             <form action="" method="POST">
             <div class="form-group">
                 <div class="left-column">
@@ -144,55 +157,8 @@ $conn->close();
                     </div>
                 </div>
             </div>
-            <button class="btn" id= "addInspectionButton" type="submit">Add Inspection</button>
+            <button class="btn" id= "addInspectionButton" type="submit">Update Inspection</button>
             </form>
-        </div>
-
-        <div class="table-container">
-            <h2>Overview of Inspections</h2>
-            <table id="inspectionTable">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Center ID</th>
-                        <th>Inspector ID</th>
-                        <th>Machine Quality</th>
-                        <th>Processing Quality</th>
-                        <th>Hygiene Quality</th>
-                        <th>Staff Safety Grade</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="inspectionTableBody">
-                    <?php if ($result->num_rows > 0): ?>
-                    <?php while ($row = $result->fetch_assoc()): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($row['Date']); ?></td>
-                            <td><?php echo htmlspecialchars($row['Center ID']); ?></td>
-                            <td><?php echo htmlspecialchars($row['Inspector ID']); ?></td>
-                            <td><?php echo htmlspecialchars($row['Machine Quality Grade']); ?></td>
-                            <td><?php echo htmlspecialchars($row['Processing Quality Grade']); ?></td>
-                            <td><?php echo htmlspecialchars($row['Center Hygene Grade']); ?></td>
-                            <td><?php echo htmlspecialchars($row['Staff Safety Grade']); ?></td>
-                            <td>
-                                <form method="POST" action="p_inspect_delete.php">
-                                    <input type="hidden" name="id" value="<?php echo $row['Center ID']; ?>">
-                                    <button type="submit" name="delete" class="btn"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
-                                </form>
-                                <form method="GET" action="p_inspect_update.php">
-                                    <input type="hidden" name="id" value="<?php echo $row['Center ID']; ?>">
-                                    <button type="submit" name="update" class="btn"><i class="fas fa-edit" aria-hidden="true"></i> Update</button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endwhile; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="8">No records found</td>
-                    </tr>
-                <?php endif; ?>
-                </tbody>
-            </table>
-        </div>    
+        </div> 
     </body>
 </html>

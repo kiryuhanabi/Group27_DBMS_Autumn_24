@@ -2,7 +2,7 @@
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db = "crud"; 
+$db = "crud";
 
 $conn = new mysqli($host, $user, $pass, $db);
 
@@ -11,6 +11,11 @@ if ($conn->connect_error) {
 }
 
 $message = "";
+$id = $_GET['id'] ?? null;
+
+if ($id === null) {
+    die("Record ID is required.");
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $inspectionDate = $_POST['inspectionDate'];
@@ -20,19 +25,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fertilizerGrade = $_POST['fertilizerGrade'];
     $soilQualityGrade = $_POST['soilQualityGrade'];
 
-    $sql = "INSERT INTO tblfarminspection (`Date`, `Inspector ID`, `Maintenance Grade`, `Farm ID`, `Fertilizer Grade`, `Soil Quality Grade`)
-        VALUES ('$inspectionDate', '$inspectorID', '$maintenanceGrade', '$farmID', '$fertilizerGrade', '$soilQualityGrade')";
+    $sql = "UPDATE tblfarminspection SET 
+                `Date` = '$inspectionDate',
+                `Inspector ID` = '$inspectorID',
+                `Maintenance Grade` = '$maintenanceGrade',
+                `Farm ID` = '$farmID',
+                `Fertilizer Grade` = '$fertilizerGrade',
+                `Soil Quality Grade` = '$soilQualityGrade'
+            WHERE `Farm ID` = $id";
 
     if ($conn->query($sql) === TRUE) {
-        $message = "Inspection added successfully!";
+        header("Location: farm_inspection.php");
+        exit;
     } else {
-        $message = "Error: " . $conn->error;
+        $message = "Error updating record: " . $conn->error;
     }
 }
 
-$sql = "SELECT * FROM tblfarminspection";
+// Fetch the current record details
+$sql = "SELECT * FROM tblfarminspection WHERE `Farm ID` = $id";
 $result = $conn->query($sql);
 
+if ($result->num_rows === 0) {
+    die("Record not found.");
+}
+
+$row = $result->fetch_assoc();
 $conn->close();
 ?>
 
@@ -60,7 +78,7 @@ $conn->close();
                 <a href="#">Inspection Type</a>
                 <ul class="dropdown">
                     <li><a href="farm_inspection.php">Farm</a></li>
-                    <li><a href="batch_inspection.php">Batch</a></li>
+                    <li><a href="batch_inspection.html">Batch</a></li>
                     <li><a href="lot_inspection.php">Lot</a></li>
                     <li><a href="p_inspect.php">Processing Center</a></li>
                     <li><a href="storage_inspection.php">Storage</a></li>
@@ -130,52 +148,12 @@ $conn->close();
                         </div>     
                     </div>
                 </div>         
-                <button class="btn" type="submit"><i class="fa fa-plus" aria-hidden="true"></i> Add Inspection</button>
+                <button class="btn" type="submit"><i class="fa fa-refresh" aria-hidden="true"></i>Update Inspection</button>
             </form>
-        </div>        
-
-        <div class="table-container">
-            <table id="inspectionTable">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Inspector ID</th>
-                        <th>Farm ID</th>
-                        <th>Maintenance Grade</th>
-                        <th>Fertilizer Grade</th>
-                        <th>Soil Quality Grade</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="inspectionTableBody">
-                    <?php if ($result->num_rows > 0): ?>
-                        <?php while ($row = $result->fetch_assoc()): ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($row['Date']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Inspector ID']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Farm ID']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Maintenance Grade']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Fertilizer Grade']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Soil Quality Grade']); ?></td>
-                                <td>
-                                    <form method="POST" action="farm_inspection_delete.php">
-                                        <input type="hidden" name="id" value="<?php echo $row['Farm ID']; ?>">
-                                        <button type="submit" name="delete" class="btn"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
-                                    </form>
-                                    <form method="GET" action="farm_inspection_update.php">
-                                        <input type="hidden" name="id" value="<?php echo $row['Farm ID']; ?>">
-                                        <button type="submit" name="update" class="btn"><i class="fas fa-edit" aria-hidden="true"></i> Update</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        <?php endwhile; ?>
-                    <?php else: ?>
-                        <tr>
-                            <td colspan="7">No records found</td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>     
-    </body>
+        </div>
+        <?php if ($message): ?>
+            <p class="error-message"><?php echo htmlspecialchars($message); ?></p>
+        <?php endif; ?>
+    </div>
+</body>
 </html>

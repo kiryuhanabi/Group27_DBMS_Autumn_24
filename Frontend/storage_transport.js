@@ -1,90 +1,127 @@
-const { jsPDF } = window.jspdf;
 
-let editRowIndex = null;
-let transportIDCounter = localStorage.getItem('transportIDCounter') 
-    ? parseInt(localStorage.getItem('transportIDCounter')) 
-    : 1;
+const messageIcon = document.getElementById('message-icon');
+const messageDropdown = document.getElementById('message-dropdown');
 
-
-document.addEventListener('DOMContentLoaded', loadTableData);
-
-function addOrUpdateTransport() {
-    const transportType = document.getElementById('transportType').value.trim();
-    const cargoType = document.getElementById('cargoType').value.trim();
-    const temperatureRange = document.getElementById('temperatureRange').value.trim();
-    const loadWeight = document.getElementById('loadWeight').value.trim();
-
-    if (!transportType || !cargoType || !temperatureRange || !loadWeight) {
-        alert("Please fill in all fields.");
-        return;
-    }
-
-    const transportDate = new Date().toISOString().split('T')[0];
-    const transportID = `st${String(transportIDCounter).padStart(6, '0')}`;
-
-    const newTransport = {
-        transportDate,
-        transportID,
-        transportType,
-        cargoType,
-        temperatureRange,
-        loadWeight,
-    };
-
-    let transports = JSON.parse(localStorage.getItem('transports')) || [];
-
-    if (editRowIndex === null) {
-  
-        transports.push(newTransport);
-        transportIDCounter++;
-        localStorage.setItem('transportIDCounter', transportIDCounter);
-    } else {
-
-        transports[editRowIndex] = newTransport;
-        editRowIndex = null;
-    }
-
-    localStorage.setItem('transports', JSON.stringify(transports));
-
-    updateTable();
-    clearInputs();
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    loadTableData();
-
-    document.getElementById('searchInput').addEventListener('input', filterTable);
+messageIcon.addEventListener('click', (e) => {
+  e.stopPropagation();
+  messageDropdown.classList.toggle('active');
 });
 
-function filterTable() {
-    const query = document.getElementById('searchInput').value.trim().toLowerCase();
-    const tableBody = document.getElementById('transportTableBody');
-    const rows = Array.from(tableBody.getElementsByTagName('tr'));
+document.addEventListener('click', (e) => {
+  if (!messageDropdown.contains(e.target) && e.target !== messageIcon) {
+    messageDropdown.classList.remove('active');
+  }
+});
 
-    rows.forEach(row => {
-        const transportID = row.cells[1].innerText.toLowerCase();
-        const transportType = row.cells[2].innerText.toLowerCase();
 
-        if (transportID.includes(query) || transportType.includes(query)) {
-            row.style.display = '';
-        } else {
-            row.style.display = 'none';
-        }
-    });
+
+const notificationIcon = document.getElementById('notification-icon');
+const notificationDropdown = document.getElementById('notification-dropdown');
+notificationIcon.addEventListener('click', (e) => {
+  e.stopPropagation();
+  notificationDropdown.classList.toggle('active');
+});
+
+document.addEventListener('click', (e) => {
+  if (!notificationDropdown.contains(e.target) && e.target !== notificationIcon) {
+    notificationDropdown.classList.remove('active');
+  }
+});
+
+
+
+const userIcon = document.getElementById("user-icon");
+const userDropdown = document.getElementById("user-dropdown");
+const customizeProfileBtn = document.getElementById("customize-profile-btn");
+const customizeModal = document.getElementById("customize-modal");
+const saveBtn = document.getElementById("save-btn");
+const cancelBtn = document.getElementById("cancel-btn");
+const signOutBtn = document.getElementById("sign-out-btn");
+
+const nameInput = document.getElementById("name-input");
+const emailInput = document.getElementById("email-input");
+const userName = document.getElementById("user-name");
+const userEmail = document.getElementById("user-email");
+const userInitial = document.getElementById("user-initial");
+
+function saveToLocalStorage(name, email) {
+  localStorage.setItem("userName", name);
+  localStorage.setItem("userEmail", email);
 }
 
-function editTransport(button) {
-    const row = button.parentNode.parentNode;
-    editRowIndex = row.rowIndex - 1;
+function loadFromLocalStorage() {
+  const storedName = localStorage.getItem("userName");
+  const storedEmail = localStorage.getItem("userEmail");
 
-    const transports = JSON.parse(localStorage.getItem('transports')) || [];
-    const transport = transports[editRowIndex];
-
-    document.getElementById('transportType').value = transport.transportType;
-    document.getElementById('cargoType').value = transport.cargoType;
-    document.getElementById('temperatureRange').value = transport.temperatureRange;
-    document.getElementById('loadWeight').value = transport.loadWeight;
+  if (storedName) {
+    userName.textContent = storedName;
+    userInitial.textContent = storedName.charAt(0).toUpperCase();
+    nameInput.value = storedName;
+  }
+  if (storedEmail) {
+    userEmail.textContent = storedEmail;
+    emailInput.value = storedEmail; 
+  }
 }
+
+userIcon.addEventListener("click", (e) => {
+  e.stopPropagation();
+  userDropdown.classList.toggle("active");
+});
+
+document.addEventListener("click", (e) => {
+  if (!userDropdown.contains(e.target) && e.target !== userIcon) {
+    userDropdown.classList.remove("active");
+  }
+});
+
+customizeProfileBtn.addEventListener("click", () => {
+  customizeModal.style.display = "flex";
+});
+
+cancelBtn.addEventListener("click", () => {
+  customizeModal.style.display = "none";
+});
+
+saveBtn.addEventListener("click", () => {
+  const updatedName = nameInput.value.trim();
+  const updatedEmail = emailInput.value.trim();
+
+  if (updatedName) {
+    userName.textContent = updatedName;
+    userInitial.textContent = updatedName.charAt(0).toUpperCase();
+  }
+
+  if (updatedEmail) {
+    userEmail.textContent = updatedEmail;
+  }
+
+
+  saveToLocalStorage(updatedName, updatedEmail);
+
+  customizeModal.style.display = "none";
+});
+
+signOutBtn.addEventListener("click", () => {
+
+  localStorage.clear();
+  window.location.href = "starting_page.php";
+});
+
+
+document.addEventListener("DOMContentLoaded", loadFromLocalStorage);
+
+
+
+
+
+
+
+   
+
+   
+
+
 
 function deleteTransport(button) {
     const row = button.parentNode.parentNode;
@@ -97,49 +134,25 @@ function deleteTransport(button) {
     updateTable();
 }
 
-function loadTableData() {
-    updateTable();
-}
-
-function updateTable() {
-    const tableBody = document.getElementById('transportTableBody');
-    tableBody.innerHTML = '';
-    const transports = JSON.parse(localStorage.getItem('transports')) || [];
-
-    transports.forEach((transport) => {
-        const row = document.createElement('tr');
-
-        row.innerHTML = `
-            <td>${transport.transportDate}</td>
-            <td>${transport.transportID}</td>
-            <td>${transport.transportType}</td>
-            <td>${transport.cargoType}</td>
-            <td>${transport.temperatureRange}</td>
-            <td>${transport.loadWeight}</td>
-            <td class="actions">
-                <button onclick="viewDetails(this)">View</button>
-                <button onclick="editTransport(this)">Edit</button>
-                <button onclick="deleteTransport(this)">Delete</button>
-            </td>
-        `;
-
-        tableBody.appendChild(row);
-    });
-}
-
-function clearInputs() {
-    document.getElementById('transportType').value = '';
-    document.getElementById('cargoType').value = '';
-    document.getElementById('temperatureRange').value = '';
-    document.getElementById('loadWeight').value = '';
-}
 
 
-function viewDetails(button) {
-    const row = button.closest('tr');
-    const rowData = Array.from(row.cells).slice(0, -1).map(cell => cell.innerText);
 
-    const doc = new jsPDF();
+document.querySelectorAll('.view-btn').forEach(button => {
+  button.addEventListener('click', function () {
+      const row = this.closest('tr'); // Get the closest row for the clicked button
+
+      // Extract data from the row
+      const transportID = row.querySelector('td:nth-child(1)').textContent;
+      const storageID = row.querySelector('td:nth-child(2)').textContent;
+      const storageType = row.querySelector('td:nth-child(3)').textContent;
+      const date = row.querySelector('td:nth-child(4)').textContent;
+      const transportType = row.querySelector('td:nth-child(5)').textContent;
+      const temperatureRange = row.querySelector('td:nth-child(6)').textContent;
+      const loadWeight = row.querySelector('td:nth-child(7)').textContent;
+
+      // Create a new jsPDF instance
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
     doc.setFontSize(16);
     doc.setFont("helvetica", "bold");
 
@@ -148,7 +161,7 @@ function viewDetails(button) {
     doc.addImage(logoBase64, 'PNG', 85, 10, 40, 40); 
     doc.setFontSize(24);
     doc.setTextColor(0, 128, 0);
-    doc.text("Agro", 105, 53, { align: "center" });
+    doc.text("AGRO ANZEN", 105, 53, { align: "center" });
     
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(18);
@@ -156,16 +169,18 @@ function viewDetails(button) {
 
     doc.setFontSize(12);
     doc.setFont("helvetica", "normal");
-    doc.text(`Date: ${rowData[0]}`, 20, 80);
-    doc.text(`Transport ID: ${rowData[1]}`, 20, 90);
-    doc.text(`Type: ${rowData[2]}`, 20, 100);
-    doc.text(`Cargo Type: ${rowData[3]}`, 20, 110);
-    doc.text(`Temperature Range: ${rowData[4]}`, 20, 120);
-    doc.text(`Load Weight: ${rowData[5]} kg`, 20, 130);
+    
+    doc.text(`Transport ID: ${transportID}`, 20, 80);
+    doc.text(`Storage ID: ${storageID}`, 20, 90);
+    doc.text(`Storage Type: ${storageType}`, 20, 100);
+    doc.text(`Date: ${date}`, 20, 110);
+    doc.text(`Transport Type: ${transportType}`, 20, 120);
+    doc.text(`Temperature Range: ${temperatureRange}`, 20, 130);
+    doc.text(`Load Weight: ${loadWeight}`, 20, 140);
+    doc.text("Signature:", 20, 170);
+    doc.line(40, 170, 100, 170);
 
-    doc.text("Signature:", 20, 150);
-    doc.line(40, 150, 100, 150); 
-
-    doc.save("StorageTransportDetails.pdf");
-}
-
+        // Save the PDF with a dynamic filename
+    doc.save(`Transport_${transportID}.pdf`);
+  });
+});
