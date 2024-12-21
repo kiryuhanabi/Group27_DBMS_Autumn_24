@@ -46,9 +46,9 @@ $conn->close();
     </header>
     <nav>
         <ul class="ul">
-            <li><a href="home.php">Home</a></li>
-            <li><a href="view_data.php">View Data</a></li>
-            <li><a href="processing_iot_update.php">Update Data</a></li>
+            <li><a href="processing_center.php">Home</a></li>
+            <li><a href="processing_lot.php">Processing Lot</a></li>
+            <li><a href="starting_page.php">Log Out</a></li>
         </ul>
     </nav>
     <div class="iot-update-container">
