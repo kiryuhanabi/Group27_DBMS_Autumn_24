@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 21, 2024 at 06:03 PM
+-- Generation Time: Dec 21, 2024 at 07:09 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -249,6 +249,13 @@ CREATE TABLE `tblprocessinginspection` (
   `Date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tblprocessinginspection`
+--
+
+INSERT INTO `tblprocessinginspection` (`Center ID`, `Inspector ID`, `Machine Quality Grade`, `Processing Quality Grade`, `Center Hygene Grade`, `Staff Safety Grade`, `Date`) VALUES
+(0, 0, '', '', '', '', '0000-00-00');
+
 -- --------------------------------------------------------
 
 --
@@ -322,6 +329,13 @@ CREATE TABLE `tblprocessingtransport` (
   `Load Weight` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tblprocessingtransport`
+--
+
+INSERT INTO `tblprocessingtransport` (`pTransport ID`, `Date`, `Transport Type`, `Temperature Range`, `Load Weight`) VALUES
+(2210885, '2024-12-21', 'Road', '20-30', 40);
+
 -- --------------------------------------------------------
 
 --
@@ -387,6 +401,13 @@ CREATE TABLE `tblshipment` (
   `Operating Temperature` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tblshipment`
+--
+
+INSERT INTO `tblshipment` (`Shipment ID`, `shTransport ID`, `Retailer ID`, `Shipment Date`, `Shipment Quantity`, `Operating Temperature`) VALUES
+(2410001, 2420001, 2430001, '2024-12-21', 20, '30');
+
 -- --------------------------------------------------------
 
 --
@@ -400,6 +421,13 @@ CREATE TABLE `tblshipmenttransport` (
   `Temperature Range` varchar(10) NOT NULL,
   `Storage ID` int(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tblshipmenttransport`
+--
+
+INSERT INTO `tblshipmenttransport` (`shTransport ID`, `shTransport Type`, `Transport Type`, `Temperature Range`, `Storage ID`) VALUES
+(2218585, 'Dry', 'Road', '20-30', 2122885);
 
 -- --------------------------------------------------------
 
@@ -429,7 +457,9 @@ INSERT INTO `tblsignup` (`ID`, `First Name`, `Last Name`, `Email`, `Password`, `
 (15, 'Md . Abir Shahriar', 'Shahriar', 'ashariar414@gmail.com', 'abir33', 'retailer'),
 (16, 'Abir', 'Emon', 'hanabiippo2@gmail.com', 'abiremon', 'farm'),
 (17, 'Nabil', 'Safowan', 'nabil@gmail.com', 'nabil', 'processing_center'),
-(18, 'Shahriar', 'Emon', 'emon@gmail.com', 'emon', 'inspector');
+(18, 'Shahriar', 'Emon', 'emon@gmail.com', 'emon', 'inspector'),
+(19, 'Jamee', 'Jamee', 'jamee@gmail.com', 'jamee', 'storage'),
+(20, 'abid', 'hasan', 'abid@gmail.com', 'abid', 'transport');
 
 -- --------------------------------------------------------
 
@@ -456,6 +486,13 @@ CREATE TABLE `tblstorage` (
   `Storage Duration` int(8) NOT NULL,
   `Location` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tblstorage`
+--
+
+INSERT INTO `tblstorage` (`Storage ID`, `Storage Type`, `Storage Duration`, `Location`) VALUES
+(19, 'dry', 20, 'Mohmmadpur,Dhaka');
 
 -- --------------------------------------------------------
 
@@ -505,12 +542,20 @@ CREATE TABLE `tblstorageiothumidity` (
 CREATE TABLE `tblstoragetransport` (
   `stTransport ID` int(7) NOT NULL,
   `Storage ID` int(7) NOT NULL,
-  `Transport Storage Type` text NOT NULL,
+  `Storage Type` text NOT NULL,
   `Date` date NOT NULL,
   `Transport Type` text NOT NULL,
   `Temperature Range` varchar(10) NOT NULL,
   `Load Weight` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tblstoragetransport`
+--
+
+INSERT INTO `tblstoragetransport` (`stTransport ID`, `Storage ID`, `Storage Type`, `Date`, `Transport Type`, `Temperature Range`, `Load Weight`) VALUES
+(3123, 3123, 'dry', '2024-12-16', 'road', '20-30', 40),
+(3124, 3124, 'Cold', '2024-12-21', 'Road', '20-30', 40);
 
 -- --------------------------------------------------------
 
@@ -627,13 +672,6 @@ ALTER TABLE `tblfarmtype`
 --
 ALTER TABLE `tblinspector`
   ADD PRIMARY KEY (`Inspector ID`);
-
---
--- Indexes for table `tbllotinspection`
---
-ALTER TABLE `tbllotinspection`
-  ADD KEY `Inspector ID` (`Inspector ID`),
-  ADD KEY `Lot Number` (`Lot Number`);
 
 --
 -- Indexes for table `tblorder`
@@ -796,7 +834,7 @@ ALTER TABLE `tblretailer`
 -- AUTO_INCREMENT for table `tblsignup`
 --
 ALTER TABLE `tblsignup`
-  MODIFY `ID` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `ID` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `tblstorageiot`
@@ -840,19 +878,6 @@ ALTER TABLE `tblprocessingshipmentquantity`
   ADD CONSTRAINT `tblprocessingshipmentquantity_ibfk_2` FOREIGN KEY (`Shipment ID`) REFERENCES `tblshipment` (`Shipment ID`);
 
 --
--- Constraints for table `tblshipment`
---
-ALTER TABLE `tblshipment`
-  ADD CONSTRAINT `tblshipment_ibfk_1` FOREIGN KEY (`Retailer ID`) REFERENCES `tblretailer` (`Retailer ID`),
-  ADD CONSTRAINT `tblshipment_ibfk_2` FOREIGN KEY (`shTransport ID`) REFERENCES `tblshipmenttransport` (`shTransport ID`);
-
---
--- Constraints for table `tblshipmenttransport`
---
-ALTER TABLE `tblshipmenttransport`
-  ADD CONSTRAINT `tblshipmenttransport_ibfk_1` FOREIGN KEY (`Storage ID`) REFERENCES `tblstorage` (`Storage ID`);
-
---
 -- Constraints for table `tblsiottemperature`
 --
 ALTER TABLE `tblsiottemperature`
@@ -869,12 +894,6 @@ ALTER TABLE `tblstorageiot`
 --
 ALTER TABLE `tblstorageiothumidity`
   ADD CONSTRAINT `tblstorageiothumidity_ibfk_1` FOREIGN KEY (`sIoT ID`) REFERENCES `tblstorageiot` (`sIoT ID`);
-
---
--- Constraints for table `tblstoragetransport`
---
-ALTER TABLE `tblstoragetransport`
-  ADD CONSTRAINT `tblstoragetransport_ibfk_1` FOREIGN KEY (`Storage ID`) REFERENCES `tblstorage` (`Storage ID`);
 
 --
 -- Constraints for table `tbltiotdevicehumidity`
