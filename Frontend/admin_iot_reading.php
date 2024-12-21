@@ -4,22 +4,22 @@ include('connect.php');
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $firstName = $_POST['first_name'];
-    $lastName = $_POST['last_name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $userType = $_POST['user'];
+    $centerID = $_POST['center_id'];
+    $temperature = $_POST['temperature'];
+    $humidity = $_POST['humidity'];
+    $date = $_POST['date'];
+    $time = $_POST['time'];
 
-    // SQL query to insert data into tblsignup
-    $insert_sql = "INSERT INTO tblsignup (`First Name`, `Last Name`, `Email`, `Password`, `User`) VALUES (?, ?, ?, ?, ?)";
+    // SQL query to insert data into tbliot
+    $insert_sql = "INSERT INTO tblprocessingiot (`Center ID`, `Temperature`, `Humidity`, `Date`, `Time`) VALUES (?, ?, ?, ?, ?)";
 
     // Prepare and execute the insert statement
     $stmt = $conn->prepare($insert_sql);
-    $stmt->bind_param("sssss", $firstName, $lastName, $email, $password, $userType);
+    $stmt->bind_param("sssss", $centerID, $temperature, $humidity, $date, $time);
 
     if ($stmt->execute()) {
         // Redirect to the same page after insertion
-        header("Location: admin_user.php");
+        header("Location: admin_iot_reading.php");
         exit();
     } else {
         echo "Error adding record: " . $conn->error;
@@ -31,23 +31,23 @@ if (isset($_GET['delete_id'])) {
     $delete_id = $_GET['delete_id'];
 
     // SQL query to delete the record
-    $delete_sql = "DELETE FROM tblsignup WHERE ID = ?";
-    
+    $delete_sql = "DELETE FROM tblprocessingiot WHERE `pIoT ID` = ?";
+
     // Prepare and execute the delete statement
     $stmt = $conn->prepare($delete_sql);
     $stmt->bind_param("i", $delete_id);
 
     if ($stmt->execute()) {
         // Redirect to the same page after deletion
-        header("Location: admin_user.php");
+        header("Location: admin_iot_reading.php");
         exit();
     } else {
         echo "Error deleting record: " . $conn->error;
     }
 }
 
-// SQL query to fetch data from tblsignup
-$sql = "SELECT * FROM tblsignup";
+// SQL query to fetch data from tbliot
+$sql = "SELECT * FROM tblprocessingiot";
 $result = $conn->query($sql);
 ?>
 
@@ -56,7 +56,7 @@ $result = $conn->query($sql);
 <head>
     <link rel="stylesheet" href="admin_style.css">
     <link href="logo.png" rel="icon" type="image/png">
-    <title>User Table</title>
+    <title>IoT Device Reading</title>
 </head>
 <body class="admin-page">
     <header>
@@ -82,41 +82,41 @@ $result = $conn->query($sql);
     </header>
 
     <main>
-        <h1>User Table</h1>
+        <h1>IoT Device Reading</h1>
 
-        <!-- User Table Form -->
-        <form method="POST" class="user-form">
-            <h2>User Table Form</h2>
-            <label for="first_name">First Name:</label>
-            <input type="text" id="first_name" name="first_name" required>
+        <!-- IoT Device Reading Form -->
+        <form method="POST" class="iot-form">
+            <h2>IoT Device Reading Form</h2>
+            <label for="center_id">Center ID:</label>
+            <input type="text" id="center_id" name="center_id" required>
 
-            <label for="last_name">Last Name:</label>
-            <input type="text" id="last_name" name="last_name" required>
+            <label for="temperature">Temperature:</label>
+            <input type="text" id="temperature" name="temperature" required>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <label for="humidity">Humidity:</label>
+            <input type="text" id="humidity" name="humidity" required>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
 
-            <label for="user">User:</label>
-            <input type="text" id="user" name="user" required>
+            <label for="time">Time:</label>
+            <input type="time" id="time" name="time" required>
 
             <button type="submit" class="btn btn-primary">Add</button>
         </form>
 
-        <!-- User Table -->
+        <!-- IoT Device Reading Table -->
         <?php
         if ($result->num_rows > 0) {
             echo '<table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Password</th>
-                            <th>User</th>
+                            <th>IoT ID</th>
+                            <th>Center ID</th>
+                            <th>Temperature</th>
+                            <th>Humidity</th>
+                            <th>Date</th>
+                            <th>Time</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -124,15 +124,15 @@ $result = $conn->query($sql);
             // Output data of each row
             while($row = $result->fetch_assoc()) {
                 echo '<tr>
-                        <td>' . $row['ID'] . '</td>
-                        <td>' . $row['First Name'] . '</td>
-                        <td>' . $row['Last Name'] . '</td>
-                        <td>' . $row['Email'] . '</td>
-                        <td>' . $row['Password'] . '</td>
-                        <td>' . $row['User'] . '</td>
+                        <td>' . $row['pIoT ID'] . '</td>
+                        <td>' . $row['Center ID'] . '</td>
+                        <td>' . $row['Temperature'] . '</td>
+                        <td>' . $row['Humidity'] . '</td>
+                        <td>' . $row['Date'] . '</td>
+                        <td>' . $row['Time'] . '</td>
                         <td>
-                            <a href="admin_user_update.php?id=' . $row['ID'] . '" class="btn btn-warning btn-sm">Edit</a>
-                            <a href="admin_user.php?delete_id=' . $row['ID'] . '" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure you want to delete this?\')">Delete</a>
+                            <a href="admin_iot_reading_update.php?id=' . $row['pIoT ID'] . '" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="admin_iot_reading.php?delete_id=' . $row['pIoT ID'] . '" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure you want to delete this?\')">Delete</a>
                         </td>
                     </tr>';
             }

@@ -6,34 +6,34 @@ include('connect.php');
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
-    // Fetch the user data from the database
-    $sql = "SELECT * FROM tblsignup WHERE ID = ?";
+    // Fetch the IoT data from the database
+    $sql = "SELECT * FROM tblprocessingiot WHERE `pIoT ID` = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
+    $iot = $result->fetch_assoc();
 } else {
-    echo "No user ID provided.";
+    echo "No IoT ID provided.";
     exit();
 }
 
-// Check if the form has been submitted to update the user
+// Check if the form has been submitted to update the IoT data
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $user_role = $_POST['user'];
+    $center_id = $_POST['center_id'];
+    $temperature = $_POST['temperature'];
+    $humidity = $_POST['humidity'];
+    $date = $_POST['date'];
+    $time = $_POST['time'];
 
-    // Update the user data in the database
-    $update_sql = "UPDATE tblsignup SET `First Name` = ?, `Last Name` = ?, Email = ?, Password = ?, User = ? WHERE ID = ?";
+    // Update the IoT data in the database
+    $update_sql = "UPDATE tblprocessingiot SET `Center ID` = ?, `Temperature` = ?, `Humidity` = ?, `Date` = ?, `Time` = ? WHERE `pIoT ID` = ?";
     $update_stmt = $conn->prepare($update_sql);
-    $update_stmt->bind_param("sssssi", $first_name, $last_name, $email, $password, $user_role, $id);
-    
+    $update_stmt->bind_param("sssssi", $center_id, $temperature, $humidity, $date, $time, $id);
+
     if ($update_stmt->execute()) {
-        // Redirect to the user table after updating
-        header("Location: admin_user.php");
+        // Redirect to the IoT readings table after updating
+        header("Location: admin_iot_reading.php");
         exit();
     } else {
         echo "Error updating record: " . $conn->error;
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <link rel="stylesheet" href="admin_user_update_style.css">
     <link href="logo.png" rel="icon" type="image/png">
-    <title>Edit User</title>
+    <title>Edit IoT Reading</title>
 </head>
 <body class="admin-page">
     <header>
@@ -72,31 +72,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </header>
 
     <main>
-        <h2 class="form-title">Edit User</h2>
+        <h2 class="form-title">Edit IoT Reading</h2>
 
-        <!-- Edit User Form -->
+        <!-- Edit IoT Reading Form -->
         <form method="POST">
             <div class="form-group">
-                <label for="first_name">First Name:</label>
-                <input type="text" id="first_name" name="first_name" class="form-control" value="<?php echo $user['First Name']; ?>" required>
+                <label for="center_id">Center ID:</label>
+                <input type="text" id="center_id" name="center_id" class="form-control" value="<?php echo $iot['Center ID']; ?>" required>
             </div>
             <div class="form-group">
-                <label for="last_name">Last Name:</label>
-                <input type="text" id="last_name" name="last_name" class="form-control" value="<?php echo $user['Last Name']; ?>" required>
+                <label for="temperature">Temperature:</label>
+                <input type="text" id="temperature" name="temperature" class="form-control" value="<?php echo $iot['Temperature']; ?>" required>
             </div>
             <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" class="form-control" value="<?php echo $user['Email']; ?>" required>
+                <label for="humidity">Humidity:</label>
+                <input type="text" id="humidity" name="humidity" class="form-control" value="<?php echo $iot['Humidity']; ?>" required>
             </div>
             <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" class="form-control" value="<?php echo $user['Password']; ?>" required>
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" class="form-control" value="<?php echo $iot['Date']; ?>" required>
             </div>
             <div class="form-group">
-                <label for="user">Role:</label>
-                <input type="text" id="user" name="user" class="form-control" value="<?php echo $user['User']; ?>" required>
+                <label for="time">Time:</label>
+                <input type="time" id="time" name="time" class="form-control" value="<?php echo $iot['Time']; ?>" required>
             </div>
-            <button type="submit" class="btn btn-primary">Update User</button>
+            <button type="submit" class="btn btn-primary">Update</button>
         </form>
     </main>
 </body>

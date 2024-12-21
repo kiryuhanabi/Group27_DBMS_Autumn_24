@@ -20,18 +20,48 @@ body {
 }
 
 .navbar li {
-    display: inline;
+    display: inline-block; /* Changed to inline-block to support dropdown */
     margin-right: 20px;
+    position: relative; /* Necessary for dropdown positioning */
 }
 
 .navbar a {
     color: white; /* White text color for nav bar items */
     text-decoration: none;
     font-weight: bold;
+    padding: 8px 12px; /* Padding for clickable area */
+    display: inline-block;
 }
 
 .navbar a:hover {
     color: #ffcc00; /* Highlight color on hover */
+}
+
+/* Dropdown content styling */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd; /* Highlight dropdown items on hover */
+}
+
+/* Show the dropdown on hover */
+.navbar li:hover .dropdown-content {
+    display: block;
 }
 
 /* Style for the header (logo) */
