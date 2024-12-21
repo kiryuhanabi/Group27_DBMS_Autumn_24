@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-$sql = "SELECT * FROM tblfarminspection";
+$sql = "SELECT * FROM tblbatchinspection";
 $result = $conn->query($sql);
 
 $conn->close();
@@ -52,7 +52,8 @@ $conn->close();
                         <li><a href="admin_farm.php">Farm Information</a></li>
                         <li><a href="admin_farm_product.php">Farm Product</a></li>
                         <li><a href="admin_farm_batch.php">Farm Batch</a></li>
-                    </ul></li>
+                    </ul>
+                </li>
                 <li>
                     <a href="#" class="dropdown">Processing Center</a>
                     <ul class="dropdown-content">
@@ -61,7 +62,8 @@ $conn->close();
                         <li><a href="admin_processing_lot.php">Processing Lot</a></li>
                     </ul>
                 </li>
-                <li><a href="#" class="dropdown">Inspector</a>
+                <li>
+                    <a href="#" class="dropdown">Inspector</a>
                     <ul class="dropdown-content">
                         <li><a href="admin_farm_inspection.php">Farm</a></li>
                         <li><a href="admin_batch_inspection.php">Batch</a></li>
@@ -78,76 +80,60 @@ $conn->close();
         </nav>
 
     <section class="form-container">
-        <script src="farm_inspection.js"></script>
+        <script src="batch_inspection.js"></script>
         <div class="inspection-filters">
-            <h3>Create New Inspection</h3>
+            <h3>Create New inspection</h3>
             <form action="" method="POST">
-                <div class="form-group">
-                    <div class="left-column">
-                        <div class="input-row">
-                            <label for="inspectionDate">Date:</label>
-                            <input type="date" id="inspectionDate" name="inspectionDate" required>
-                        </div>
+            <div class="form-group">
+                <div class="left-column">
+                    <div class="input-row">
+                        <label for="inspectionDate">Date:</label>
+                        <input type="date" id="inspectionDate" name="inspectionDate">
+                    </div>
+                    <div class="input-row">
+                        <label for="batchBarcode">Batch Barcode:</label>
+                        <input type="text" id="batchBarcode" name="batchBarcode">
+                    </div>
 
-                        <div class="input-row">
-                            <label for="farmID">Farm ID:</label>
-                            <input type="text" id="farmID" name="farmID" required>
-                        </div>
+                    <div class="input-row">
+                        <label for="inspectorID">Inspector ID:</label>
+                        <input type="text" id="inspectorID" name="inspectorID">
+                    </div>
+                    
+                </div>
         
-                        <div class="input-row">
-                            <label for="inspectorID">Inspector ID:</label>
-                            <input type="text" id="inspectorID" name="inspectorID" required>
-                        </div>
+                <div class="right-column">
+                <div class="input-row">
+                        <label for="unAffectedQuality">Unaffected Batch Quality:</label>
+                        <select id="unAffectedQuality" name="unAffectedQuality" required>
+                            <option disabled selected>Select Type</option>
+                            <option value="Poor">Poor</option>
+                            <option value="Acceptable">Acceptable</option>
+                            <option value="Decent">Decent</option>
+                            <option value="Perfect">Perfect</option>
+                        </select>
                     </div>
-            
-                    <div class="right-column">
-                        <div class="input-row">
-                            <label for="maintenanceGrade">Maintenace Grade:</label>
-                            <select id="maintenanceGrade" name="maintenanceGrade" required>
-                                <option disabled selected>Select Type</option>
-                                <option value="Poor">Poor</option>
-                                <option value="Acceptable">Acceptable</option>
-                                <option value="Decent">Decent</option>
-                                <option value="Perfect">Perfect</option>
-                            </select>
-                        </div>
 
-                        <div class="input-row">
-                            <label for="fertilizerGrade">Fertilizer Grade:</label>
-                            <select id="fertilizerGrade" name="fertilizerGrade" required>
-                                <option disabled selected>Select Type</option>
-                                <option value="Poor">Poor</option>
-                                <option value="Acceptable">Acceptable</option>
-                                <option value="Decent">Decent</option>
-                                <option value="Perfect">Perfect</option>
-                            </select>
-                        </div>   
-                        <div class="input-row">
-                            <label for="soilQualityGrade">Soil Quality Grade:</label>
-                            <select id="soilQualityGrade" name="soilQualityGrade" required>
-                                <option disabled selected>Select Type</option>
-                                <option value="Poor">Poor</option>
-                                <option value="Acceptable">Acceptable</option>
-                                <option value="Decent">Decent</option>
-                                <option value="Perfect">Perfect</option>
-                            </select>
-                        </div>     
+                    <div class="input-row">
+                        <label for="certification">Certification:</label>
+                        <input type="text" id="certification" name="certification">
                     </div>
-                </div>         
-                <button class="btn" type="submit"><i class="fa fa-plus" aria-hidden="true"></i> Add Inspection</button>
+                </div>
+            </div>
+        
+            <button class="btn" id="addInspectionButton" type="submit"><i class="fa fa-plus" aria-hidden="true"></i>  Add Inspection</button>
             </form>
-        </div>        
+        </div>
 
         <div class="table-container">
             <table id="inspectionTable">
                 <thead>
                     <tr>
                         <th>Date</th>
+                        <th>Batch Barcode</th>
                         <th>Inspector ID</th>
-                        <th>Farm ID</th>
-                        <th>Maintenance Grade</th>
-                        <th>Fertilizer Grade</th>
-                        <th>Soil Quality Grade</th>
+                        <th>Unaffected Batch Quality</th>
+                        <th>Certification</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -157,17 +143,16 @@ $conn->close();
                             <tr>
                                 <td><?php echo htmlspecialchars($row['Date']); ?></td>
                                 <td><?php echo htmlspecialchars($row['Inspector ID']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Farm ID']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Maintenance Grade']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Fertilizer Grade']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Soil Quality Grade']); ?></td>
+                                <td><?php echo htmlspecialchars($row['Batch Barcode']); ?></td>
+                                <td><?php echo htmlspecialchars($row['Unaffected Quality Grade']); ?></td>
+                                <td><?php echo htmlspecialchars($row['Certification']); ?></td>
                                 <td>
-                                    <form method="POST" action="admin_farm_inspection_delete.php">
-                                        <input type="hidden" name="id" value="<?php echo $row['Farm ID']; ?>">
+                                    <form method="POST" action="admin_batch_inspection_delete.php">
+                                        <input type="hidden" name="id" value="<?php echo $row['Batch Barcode']; ?>">
                                         <button type="submit" name="delete" class="btn"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
                                     </form>
-                                    <form method="GET" action="admin_farm_inspection_update.php">
-                                        <input type="hidden" name="id" value="<?php echo $row['Farm ID']; ?>">
+                                    <form method="GET" action="admin_batch_inspection_update.php">
+                                        <input type="hidden" name="id" value="<?php echo $row['Batch Barcode']; ?>">
                                         <button type="submit" name="update" class="btn"><i class="fas fa-edit" aria-hidden="true"></i> Update</button>
                                     </form>
                                 </td>
@@ -175,7 +160,7 @@ $conn->close();
                         <?php endwhile; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="7">No records found</td>
+                            <td colspan="5">No records found</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
