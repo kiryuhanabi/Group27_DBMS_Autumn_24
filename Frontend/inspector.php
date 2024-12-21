@@ -92,10 +92,7 @@ $conn->close();
                             <td><?php echo htmlspecialchars($row['Farm Name']); ?></td>
                             <td>
                             <td>
-                                <form method="POST" action="farm_inspection.php">
-                                    <input type="hidden" name="id" value="<?php echo $row['Farm ID']; ?>">
-                                    <button type="submit" name="inspect" class="btn"><i class="fa fa-check" aria-hidden="true"></i> Inspect</button>
-                                </form>
+                                <a href="farm_inspect.php"><button type="submit" name="inspect" class="btn" ><i class="fa fa-check" aria-hidden="true"></i> Inspect</button></a>
                             </td>
                         </tr>
                     <?php endwhile; ?>
@@ -124,10 +121,7 @@ $conn->close();
                             <td><?php echo htmlspecialchars($row['Date']); ?></td>
                             <td><?php echo htmlspecialchars($row['Batch Barcode']); ?></td>
                             <td>
-                                <form method="POST" action="batch_inspection.php">
-                                    <input type="hidden" name="id" value="<?php echo $row['Batch Barcode']; ?>">
-                                    <button type="submit" name="inspect" class="btn"><i class="fa fa-check" aria-hidden="true"></i> Inspect</button>
-                                </form>
+                                <a href="batch_inspection.php"><button type="submit" name="inspect" class="btn" ><i class="fa fa-check" aria-hidden="true"></i> Inspect</button></a>
                             </td>
                         </tr>
                     <?php endwhile; ?>
@@ -155,10 +149,7 @@ $conn->close();
                         <tr>
                             <td><?php echo htmlspecialchars($row['Center ID']); ?></td>
                             <td>
-                                <form method="POST" action="lot_inspection.php">
-                                    <input type="hidden" name="id" value="<?php echo $row['Lot Number']; ?>">
-                                    <button type="submit" name="inspect" class="btn"><i class="fa fa-check" aria-hidden="true"></i> Inspect</button>
-                                </form>
+                                <a href="lot_inspection.php"><button type="submit" name="inspect" class="btn" ><i class="fa fa-check" aria-hidden="true"></i> Inspect</button></a>
                             </td>
                         </tr>
                     <?php endwhile; ?>
@@ -186,10 +177,7 @@ $conn->close();
                         <tr>
                             <td><?php echo htmlspecialchars($row['Center ID']); ?></td>
                             <td>
-                                <form method="POST" action="p_inspect.php">
-                                    <input type="hidden" name="id" value="<?php echo $row['Center ID']; ?>">
-                                    <button type="submit" name="inspect" class="btn"><i class="fa fa-check" aria-hidden="true"></i> Inspect</button>
-                                </form>
+                                <a href="p_inspect.php"><button type="submit" name="inspect" class="btn" ><i class="fa fa-check" aria-hidden="true"></i> Inspect</button></a>
                             </td>
                         </tr>
                     <?php endwhile; ?>
@@ -217,10 +205,7 @@ $conn->close();
                         <tr>
                             <td><?php echo htmlspecialchars($row['sTorage ID']); ?></td>
                             <td>
-                                <form method="POST" action="storage_inspection.php">
-                                    <input type="hidden" name="id" value="<?php echo $row['Storage ID']; ?>">
-                                    <button type="submit" name="inspect" class="btn"><i class="fa fa-check" aria-hidden="true"></i> Inspect</button>
-                                </form>
+                                <a href="storage_inspect.php"><button type="submit" name="inspect" class="btn" ><i class="fa fa-check" aria-hidden="true"></i> Inspect</button></a>
                             </td>
                         </tr>
                     <?php endwhile; ?>
