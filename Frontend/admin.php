@@ -11,7 +11,12 @@
         <nav class="navbar">
             <ul>
                 <li><a href="admin_user.php">User</a></li>
-                <li><a href="#farm">Farm</a></li>
+                <li><a href="#" class="dropdown">Farm</a>
+                    <ul class="dropdown-content">
+                        <li><a href="admin_farm.php">Farm Information</a></li>
+                        <li><a href="admin_farm_product.php">Farm Product</a></li>
+                        <li><a href="admin_farm_batch.php">Farm Batch</a></li>
+                    </ul></li>
                 <li>
                     <a href="#" class="dropdown">Processing Center</a>
                     <ul class="dropdown-content">
@@ -22,7 +27,7 @@
                 </li>
                 <li><a href="#storage">Storage</a></li>
                 <li><a href="#transport">Transport</a></li>
-                <li><a href="#retailer">Retailer</a></li>
+                <li><a href="admin_retailer_order.php">Retailer</a></li>
                 <li><a href="starting_page.php" class="btn-logout">Log Out</a></li>
             </ul>
         </nav>
