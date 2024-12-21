@@ -3,6 +3,13 @@
 <head>
     <link rel="stylesheet" href="admin_style.css">
     <link href="logo.png" rel="icon" type="image/png">
+    <script>
+        function confirmDelete(barcode) {
+            if (confirm("Are you sure you want to delete this batch?")) {
+                window.location.href = `admin_farm_batch.php?barcode=${barcode}`;
+            }
+        }
+    </script>
     <title>Admin Dashboard</title>
 </head>
 <body class="admin-page">
