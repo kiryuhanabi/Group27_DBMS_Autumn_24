@@ -5,8 +5,8 @@
     <link href="logo.png" rel="icon" type="image/png">
     <title>Admin Dashboard</title>
 </head>
-<body class="admin-page">
-    <header>
+<body class="admin-page"></body>
+<header>
         <img src="logo.png" alt="Logo" class="logo">
         <nav class="navbar">
             <ul>
@@ -41,9 +41,4 @@
             </ul>
         </nav>
     </header>
-    <main>
-        <h1>Welcome to the Admin Dashboard</h1>
-        <p>Select a section from the navigation bar to proceed.</p>
-    </main>
-</body>
-</html>
+    <main></main>

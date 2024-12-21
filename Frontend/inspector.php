@@ -19,8 +19,8 @@ $result_farm = $conn->query($sql_farm);
 $sql_batch = "SELECT * FROM tblbatch";
 $result_batch = $conn->query($sql_batch);
 
-/*$sql_lot = "SELECT * FROM tbllot";
-$result_lot = $conn->query($sql_lot);*/
+$sql_lot = "SELECT * FROM tblprocessinglot";
+$result_lot = $conn->query($sql_lot);
 
 $sql_processing = "SELECT * FROM tblprocessingcenter";
 $result_processing = $conn->query($sql_processing);
@@ -139,6 +139,37 @@ $conn->close();
             </tbody>
         </table>
     </div> 
+
+    <h2>Registered Lots</h2>
+    <div class="table-container">
+        <table id="inspectionTable">
+            <thead>
+                <tr>
+                    <th>Lot Number</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="inspectionTableBody">
+                <?php if ($result_lot->num_rows > 0): ?>
+                    <?php while ($row = $result_lot->fetch_assoc()): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($row['Center ID']); ?></td>
+                            <td>
+                                <form method="POST" action="lot_inspection.php">
+                                    <input type="hidden" name="id" value="<?php echo $row['Lot Number']; ?>">
+                                    <button type="submit" name="inspect" class="btn"><i class="fa fa-check" aria-hidden="true"></i> Inspect</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="2">No records found</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
     
     <h2>Registered Processing Centers</h2>
     <div class="table-container">

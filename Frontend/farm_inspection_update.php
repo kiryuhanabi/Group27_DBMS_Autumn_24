@@ -94,7 +94,7 @@ $conn->close();
         <h2>Farm Inspection</h2>
         <script src="farm_inspection.js"></script>
         <div class="inspection-filters">
-            <h3>Add New Inspection</h3>
+            <h3>Update Inspection</h3>
             <form accept="" method="POST">
                 <div class="form-group">
                     <div class="left-column">
