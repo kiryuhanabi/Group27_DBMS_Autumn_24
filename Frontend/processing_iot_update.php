@@ -1,104 +1,101 @@
 <?php
-// Include database connection
+// Include the database connection file
 include('connect.php');
 
-// Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $lotNumber = $_POST['lotNumber'];
-    $date = $_POST['date'];
+// Initialize variables to hold form data
+$iot_id = $center_id = $temperature = $humidity = $time = $date = "";
+
+// Check if the form is being submitted for "Update"
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $iot_id = $_POST['iot_id'];
+    $center_id = $_POST['center_id'];
+    $temperature = $_POST['temperature'];
+    $humidity = $_POST['humidity'];
     $time = $_POST['time'];
-    $manufacturedDate = $_POST['manufacturedDate'];
-    $expiryDate = $_POST['expiryDate'];
-    $transportID = $_POST['transportID'];
-    $centerID = $_POST['centerID'];
+    $date = $_POST['date'];
 
-    // Update query
-    $updateQuery = "UPDATE tblprocessinglot 
-                    SET `Date` = '$date', `Time` = '$time', `Manufactured Date` = '$manufacturedDate', 
-                        `Expiry Date` = '$expiryDate', `stTransport ID` = '$transportID', `Center ID` = '$centerID' 
-                    WHERE `Lot Number` = '$lotNumber'";
+    // Update operation (Update the existing record)
+    $sql = "UPDATE tblprocessingiot 
+            SET `Center ID` = '$center_id', `Temperature` = '$temperature', `Humidity` = '$humidity', `Time` = '$time', `Date` = '$date' 
+            WHERE `pIoT ID` = '$iot_id'";
 
-    if (mysqli_query($conn, $updateQuery)) {
-        echo "<script>alert('Lot Number $lotNumber updated successfully.');</script>";
-        echo "<script>window.location.href = 'processing_lot.php';</script>";
+    if ($conn->query($sql) === TRUE) {
+        // Redirect to processing_center.php after successful update
+        header("Location: processing_center.php");
+        exit(); // Ensure the script stops after redirect
     } else {
-        echo "<script>alert('Error: Unable to update Lot Number $lotNumber.');</script>";
+        $message = "Error: " . $sql . "<br>" . $conn->error;
     }
 }
 
-// Fetch the lot details for pre-filling the form
-if (isset($_GET['lotNumber'])) {
-    $lotNumber = $_GET['lotNumber'];
-    $fetchQuery = "SELECT * FROM tblprocessinglot WHERE `Lot Number` = '$lotNumber'";
-    $result = mysqli_query($conn, $fetchQuery);
-
-    if ($result && mysqli_num_rows($result) > 0) {
-        $lotDetails = mysqli_fetch_assoc($result);
-    } else {
-        echo "<script>alert('Lot not found.');</script>";
-        echo "<script>window.location.href = 'processing_lot.php';</script>";
-    }
-} else {
-    echo "<script>window.location.href = 'processing_lot.php';</script>";
-}
+$conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Processing Lot</title>
-    <link rel="stylesheet" href="processing_lot_style.css">
-    <link href="logo.png" rel="icon" type="image/png">
+    <title>Update IoT Processing Data</title>
+    <link rel="stylesheet" href="processing_iot_update_style.css">
 </head>
 <body>
-    <header class="title-header">
-        <h1>Update Processing Lot</h1>
+    <header>
+        <h1><img src="logo.png" alt="Logo" class="logo-img">IoT Processing Center</h1>
     </header>
-
-    <nav class="nav">
+    <nav>
         <ul class="ul">
-            <li><a href="processing_center.php">Home</a></li>
-            <li><a href="processing_inspection.php">Inspection</a></li>
-            <li><a href="processing_lot.php">Processing Lot</a></li>
-            <li><a href="starting_page.php">Logout</a></li>
+            <li><a href="home.php">Home</a></li>
+            <li><a href="view_data.php">View Data</a></li>
+            <li><a href="processing_iot_update.php">Update Data</a></li>
         </ul>
     </nav>
+    <div class="iot-update-container">
+        <h2>Update IoT Processing Data</h2>
 
-    <div class="background-image">
-        <section class="lot-container">
-            <h2>Update Lot Details</h2>
-            <form method="POST" action="">
-                <input type="hidden" name="lotNumber" value="<?php echo $lotDetails['Lot Number']; ?>">
+        <?php
+        if (isset($message)) {
+            echo "<p>$message</p>"; // Display the success/error message
+        }
+        ?>
 
-                <label for="date">Date:</label>
-                <input type="date" id="date" name="date" value="<?php echo $lotDetails['Date']; ?>" required>
-                <br>
+        <form method="POST">
+            <div>
+                <label for="iot_id">pIoT ID:</label>
+                <input type="text" id="iot_id" name="iot_id" placeholder="Enter IoT ID" required value="<?php echo $iot_id; ?>">
+            </div>
 
+            <div>
+                <label for="center_id">Center ID:</label>
+                <input type="text" id="center_id" name="center_id" placeholder="Enter Center ID" required value="<?php echo $center_id; ?>">
+            </div>
+
+            <div>
+                <label for="temperature">Temperature:</label>
+                <input type="number" id="temperature" name="temperature" placeholder="Enter Temperature" step="0.01" required value="<?php echo $temperature; ?>">
+            </div>
+
+            <div>
+                <label for="humidity">Humidity:</label>
+                <input type="number" id="humidity" name="humidity" placeholder="Enter Humidity" step="0.01" required value="<?php echo $humidity; ?>">
+            </div>
+
+            <div>
                 <label for="time">Time:</label>
-                <input type="time" id="time" name="time" value="<?php echo $lotDetails['Time']; ?>" required>
-                <br>
+                <input type="time" id="time" name="time" required value="<?php echo $time; ?>">
+            </div>
 
-                <label for="manufacturedDate">Manufactured Date:</label>
-                <input type="date" id="manufacturedDate" name="manufacturedDate" value="<?php echo $lotDetails['Manufactured Date']; ?>" required>
-                <br>
+            <div>
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required value="<?php echo $date; ?>">
+            </div>
 
-                <label for="expiryDate">Expiry Date:</label>
-                <input type="date" id="expiryDate" name="expiryDate" value="<?php echo $lotDetails['Expiry Date']; ?>" required>
-                <br>
-
-                <label for="transportID">Transport ID:</label>
-                <input type="text" id="transportID" name="transportID" value="<?php echo $lotDetails['stTransport ID']; ?>" required>
-                <br>
-
-                <label for="centerID">Center ID:</label>
-                <input type="text" id="centerID" name="centerID" value="<?php echo $lotDetails['Center ID']; ?>" required>
-                <br>
-
-                <button type="submit">Update</button>
-            </form>
-        </section>
+            <div class="btn-container">
+                <!-- Update Button -->
+                <button type="submit" name="update" class="update-btn">Update</button>
+            </div>
+        </form>
     </div>
 </body>
 </html>
