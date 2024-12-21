@@ -63,10 +63,10 @@ if (isset($_GET['lotNumber'])) {
 
     <nav class="nav">
         <ul class="ul">
-            <li><a href="processing_center.html">Home</a></li>
+            <li><a href="processing_center.php">Home</a></li>
             <li><a href="processing_inspection.html">Inspection</a></li>
             <li><a href="processing_lot.php">Processing Lot</a></li>
-            <li><a href="starting_page.html">Logout</a></li>
+            <li><a href="starting_page.php">Logout</a></li>
         </ul>
     </nav>
 
