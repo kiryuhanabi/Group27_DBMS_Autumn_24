@@ -145,3 +145,170 @@ h1 {
         padding: 10px;
     }
 }
+
+/* Table Styling */
+/* Styling for the table */
+table {
+    width: 100%;
+    border-collapse: collapse; /* Ensures borders are merged */
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+}
+
+table td {
+    background-color: #fff;
+    color: #555;
+}
+
+table tr:nth-child(even) td {
+    background-color: #f2f2f2; /* Zebra striping for alternate rows */
+}
+
+table tr:hover {
+    background-color: #f1f1f1; /* Highlight row on hover */
+}
+
+table td[colspan="2"] {
+    text-align: center;
+    font-style: italic;
+    color: #888;
+}
+
+h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+.tableFields{
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; /* Limit the width for better alignment */
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+/* Styling for the inputFields div */
+.inputFields {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; /* Limit the width for better alignment */
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+h2 {
+    color: #25d96a;
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+form label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-size: 14px;
+}
+
+form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+form input:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+form input::placeholder {
+    color: #888;
+}
+
+/* Add some spacing between form fields */
+form br {
+    margin-bottom: 10px;
+}
+
+.mappField{
+    margin-top: 30px;
+    
+}
+
+/* Container for the two fields and the map */
+/* Container to hold all the elements */
+.container {
+    display: flex;
+    height: 100vh; /* Make the container take up the full viewport height */
+}
+
+/* Left side: .tableFields and .inputFields */
+.left-side {
+    width: 33.33%; /* Take up one-third of the width */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Space out the two fields vertically */
+
+    
+}
+
+/* .tableFields and .inputFields styling */
+.tableFields, .inputFields {
+    flex: 1;
+    background-color: #fff;
+    padding: 25px;
+    margin-bottom: 20px; /* Add spacing between fields */
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Right side: Map */
+#map {
+    width:260%; /* Take up two-thirds of the width */
+    height: 100%; /* Full height */
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
