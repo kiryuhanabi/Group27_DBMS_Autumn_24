@@ -58,7 +58,7 @@ $conn->close();
     
     <nav class="nav">
         <ul>
-            <li><a href="inspector.html">Home</a></li>
+            <li><a href="inspector.php">Home</a></li>
             <li><a href="#">Inspection Type</a>
                 <ul class="dropdown">
                     <li><a href="farm_inspection.php">Farm</a></li>

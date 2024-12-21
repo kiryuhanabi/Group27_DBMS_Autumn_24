@@ -92,7 +92,7 @@ $conn->close();
                             <td><?php echo htmlspecialchars($row['Farm Name']); ?></td>
                             <td>
                             <td>
-                                <a href="farm_inspect.php"><button type="submit" name="inspect" class="btn" ><i class="fa fa-check" aria-hidden="true"></i> Inspect</button></a>
+                                <a href="farm_inspection.php"><button type="submit" name="inspect" class="btn" ><i class="fa fa-check" aria-hidden="true"></i> Inspect</button></a>
                             </td>
                         </tr>
                     <?php endwhile; ?>
@@ -146,7 +146,7 @@ $conn->close();
                 <?php if ($result_lot->num_rows > 0): ?>
                     <?php while ($row = $result_lot->fetch_assoc()): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($row['Center ID']); ?></td>
+                            <td><?php echo htmlspecialchars($row['Lot Number']); ?></td>
                             <td>
                                 <a href="lot_inspection.php"><button type="submit" name="inspect" class="btn" ><i class="fa fa-check" aria-hidden="true"></i> Inspect</button></a>
                             </td>
