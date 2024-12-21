@@ -88,7 +88,7 @@ $conn->close();
                 <?php if ($result_farm->num_rows > 0): ?>
                     <?php while ($row = $result_farm->fetch_assoc()): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($row['Farm ID']); ?></td>
+                            <td><?php echo htmlspecialchars($row['farm ID']); ?></td>
                             <td><?php echo htmlspecialchars($row['Farm Name']); ?></td>
                             <td>
                             <td>
@@ -118,7 +118,6 @@ $conn->close();
                 <?php if ($result_batch->num_rows > 0): ?>
                     <?php while ($row = $result_batch->fetch_assoc()): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($row['Date']); ?></td>
                             <td><?php echo htmlspecialchars($row['Batch Barcode']); ?></td>
                             <td>
                                 <a href="batch_inspection.php"><button type="submit" name="inspect" class="btn" ><i class="fa fa-check" aria-hidden="true"></i> Inspect</button></a>
@@ -203,7 +202,7 @@ $conn->close();
                 <?php if ($result_storage->num_rows > 0): ?>
                     <?php while ($row = $result_storage->fetch_assoc()): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($row['sTorage ID']); ?></td>
+                            <td><?php echo htmlspecialchars($row['Storage ID']); ?></td>
                             <td>
                                 <a href="storage_inspect.php"><button type="submit" name="inspect" class="btn" ><i class="fa fa-check" aria-hidden="true"></i> Inspect</button></a>
                             </td>
