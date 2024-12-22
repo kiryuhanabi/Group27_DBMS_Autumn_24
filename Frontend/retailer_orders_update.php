@@ -88,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <ul class="ul">
             <li><a href="retailer.php">Home</a></li>
             <li><a href="retailer_orders.php">Orders</a></li>
-            <li><a href="login.php">Logout</a></li>
+            <li><a href="Starting_page.php">Logout</a></li>
         </ul>
     </nav>
 

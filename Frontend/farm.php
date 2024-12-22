@@ -19,7 +19,7 @@
             <li><a href="farm.php">Home</a></li>
             <li><a href="farm_product.php">Product</a></li>
             <li><a href="farm_batch.php">Batch</a></li>
-            <li><a href="login.php">Logout</a></li>
+            <li><a href="starting_page.php">Logout</a></li>
         </ul>
     </nav>
 
