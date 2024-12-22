@@ -15,7 +15,7 @@ if (isset($_POST['id'])) {
     $sql = "DELETE FROM tblfarminspection WHERE `Farm ID` = $id";
 
     if ($conn->query($sql) === TRUE) {
-        header("Location: farm_inspection.php");
+        header("Location: admin_farm_inspection.php");
         exit;
     } else {
         echo "Error deleting record: " . $conn->error;

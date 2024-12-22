@@ -15,7 +15,7 @@ if (isset($_POST['id'])) {
     $sql = "DELETE FROM tblbatchinspection WHERE `Batch Barcode` = $id";
     $sql_cer = "DELETE FROM tblbatchcertification WHERE `Batch Barcode` = $id";
     if ($conn->query($sql) === TRUE && $conn->query($sql_cer) === True) {
-        header("Location: batch_inspection.php");
+        header("Location: admin_batch_inspection.php");
         exit;
     } else {
         echo "Error deleting record: " . $conn->error;

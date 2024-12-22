@@ -15,7 +15,7 @@ if (isset($_POST['id'])) {
     $sql = "DELETE FROM tbllotinspection WHERE `Lot Number` = $id";
 
     if ($conn->query($sql) === TRUE) {
-        header("Location: lot_inspection.php");
+        header("Location: admin_lot_inspection.php");
         exit;
     } else {
         echo "Error deleting record: " . $conn->error;
@@ -24,3 +24,4 @@ if (isset($_POST['id'])) {
 
 $conn->close();
 ?>
+

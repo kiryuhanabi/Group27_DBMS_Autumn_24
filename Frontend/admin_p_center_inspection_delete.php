@@ -15,7 +15,7 @@ if (isset($_POST['id'])) {
     $sql = "DELETE FROM tblprocessinginspection WHERE `Center ID` = $id";
 
     if ($conn->query($sql) === TRUE) {
-        header("Location: p_inspect.php");
+        header("Location: admin_p_center_inspection.php");
         exit;
     } else {
         echo "Error deleting record: " . $conn->error;
