@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fertilizerGrade = $_POST['fertilizerGrade'];
     $soilQualityGrade = $_POST['soilQualityGrade'];
 
-    $sql = "INSERT INTO tblfarminspection (`Date`, `Inspector ID`, `Maintenance Grade`, `Farm ID`, `Fertilizer Grade`, `Soil Quality Grade`)
+    $sql = "INSERT INTO tblbatchinspection (`Date`, `Inspector ID`, `Maintenance Grade`, `Farm ID`, `Fertilizer Grade`, `Soil Quality Grade`)
         VALUES ('$inspectionDate', '$inspectorID', '$maintenanceGrade', '$farmID', '$fertilizerGrade', '$soilQualityGrade')";
 
     if ($conn->query($sql) === TRUE) {
