@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retailer Store</title>
+    <link rel="stylesheet" href="retailer_store.css">
+    <link href="logo.png" rel="icon" type="image/png">
+</head>
+<body>
+    <header>
+        <h1>
+            <img src="logo.png" alt="Retail Logo" class="logo-img">
+            Retailer Store
+        </h1>
+        <nav class="nav">
+            <ul class="ul">
+                <li><a href="retailer.html">Home</a></li>
+                <li><a href="retailer_store.html">Store</a></li>
+                <li><a href="retailer_orders.html">Orders</a></li>
+                <li><a href="login.html">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        
+        <section class="store-info">
+            <h2>Store Information</h2>
+            <form id="storeForm">
+                <div class="input-row">
+                    <label for="storeName">Store Name:</label>
+                    <input type="text" id="storeName" name="storeName" value="Store" required>
+                </div>
+                <div class="input-row">
+                    <label for="storeAddress">Address:</label>
+                    <textarea id="storeAddress" name="storeAddress" required>123 Green Street, Agro City</textarea>
+                </div>
+                <button type="button" class="btn" onclick="saveStoreInfo()">Save Changes</button>
+            </form>
+        </section>
+
+        <br>
+        <section class="store-table">
+            <h2>Shipment Details</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Shipment ID</th>
+                        <th>Product</th>
+                        <th>Shipment Status</th>
+                    </tr>
+                </thead>
+                <tbody id="shipmentsBody">
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="retailer_store.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="inspector_style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>
+        <img src="logo.png" alt="Agro Logo" class="logo-img">
+        Agro
+    </h1>
+    <nav class="nav">
+        <ul class="ul">
+            <li><a href="inspector.html">Home</a></li>
+            <li>
+                <a href="#">Inspection Type</a>
+                <ul class="dropdown">
+                    <li><a href="farm_inspection.php">Farm</a></li>
+                    <li><a href="batch_inspection.html">Batch</a></li>
+                    <li><a href="lot_inspection.php">Lot</a></li>
+                    <li><a href="p_inspect.php">Processing Center</a></li>
+                    <li><a href="storage_inspection.php">Storage</a></li>
+                </ul>
+            </li>
+            <li><a href="login.html">Log out</a></li>
+        </ul>
+    </nav>
+
+    <section class="chart-container">
+        <h2>Inspection Results</h2>
+        <div class="chart">
+            <canvas id="inspectionChart"></canvas>
+        </div>
+    </section>
+
+    <h2>Inspections Overview</h2>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Farm</td>
+                    <td>2024-10-28</td>
+                </tr>
+                <tr>
+                    <td>Storage</td>
+                    <td>2024-10-30</td>
+                </tr>
+                <tr>
+                    <td>Processing-Center</td>
+                    <td>2024-10-30</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('inspectionChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Acceptable', 'Decent', 'Perfect', 'Poor'],
+                datasets: [{
+                    data: [20, 15, 10, 5],
+                    backgroundColor: ['#4CAF50', '#FFC107', '#2196F3', '#F44336']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'white'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

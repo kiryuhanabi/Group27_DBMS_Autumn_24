@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retailer</title>
+    <link rel="stylesheet" href="retailer_style.css">
+    <link href="logo.png" rel="icon" type="image/png">
+</head>
+<body>
+    <h1>
+        <img src="logo.png" alt="Retail Logo" class="logo-img">
+        Agro Retailer
+    </h1>
+
+    <!-- Full-width Navigation bar -->
+    <nav class="nav">
+        <ul class="ul">
+            <li><a href="retailer.html">Home</a></li>
+            <li><a href="retailer_store.html">Store</a></li>
+            <li><a href="retailer_orders.html">Orders</a></li>
+            <li><a href="login.html">Logout</a></li>
+        </ul>
+    </nav>
+
+   
+    <section class="retailer-info-container">
+        <h2>Retailer Information</h2>
+        <form id="retailerForm">
+            <div class="input-row">
+                <label for="retailerID">Retailer ID:</label>
+                <input type="text" id="retailerID" name="retailerID" readonly>
+            </div>
+            <div class="input-row">
+                <label for="retailerName">Retailer Name:</label>
+                <input type="text" id="retailerName" name="retailerName" required>
+            </div>
+            <div class="input-row">
+                <label for="retailerPhone">Phone:</label>
+                <input type="tel" id="retailerPhone" name="retailerPhone" required>
+            </div>
+            <div class="input-row">
+                <label for="retailerEmail">Email:</label>
+                <input type="email" id="retailerEmail" name="retailerEmail" required>
+            </div>
+            <button type="button" class="btn" onclick="editRetailerInfo()">Save Changes</button>
+        </form>
+    </section>
+
+    <script src="retailer.js"></script>
+</body>
+</html>
