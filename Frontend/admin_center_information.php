@@ -57,7 +57,7 @@ if (isset($_GET['delete_center_id'])) {
                         <li><a href="admin_processing_lot.php">Processing Lot</a></li>
                     </ul>
                 </li>
-                <li><a href="#storage">Storage</a></li>
+                <li><a href="admin_storage.php">Storage</a></li>
                 <li><a href="#transport">Transport</a></li>
                 <li><a href="admin_retailer_order.php">Retailer</a></li>
                 <li><a href="starting_page.php" class="btn-logout">Log Out</a></li>

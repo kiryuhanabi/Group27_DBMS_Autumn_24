@@ -58,9 +58,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <li><a href="admin_processing_lot.php">Processing Lot</a></li>
                     </ul>
                 </li>
-                <li><a href="#storage">Storage</a></li>
-                <li><a href="#transport">Transport</a></li>
-                <li><a href="admin_retailer.php">Retailer</a></li>
+                <li><a href="#" class="dropdown">Inspector</a>
+                    <ul class="dropdown-content">
+                        <li><a href="admin_farm_inspection.php">Farm</a></li>
+                        <li><a href="admin_batch_inspection.php">Batch</a></li>
+                        <li><a href="admin_lot_inspection.php">Lot</a></li>
+                        <li><a href="admin_processing_center_inspection.php">Processing Center</a></li>
+                        <li><a href="admin_storage_batch.php">Storage</a></li>
+                    </ul></li>
+                <li>
+                <li><a href="admin_storage.php">Storage</a></li>
+                <li><a href="admin_transport.php">Transport</a></li>
+                <li><a href="admin_retailer_order.php">Retailer</a></li>
                 <li><a href="starting_page.php" class="btn-logout">Log Out</a></li>
             </ul>
         </nav>
